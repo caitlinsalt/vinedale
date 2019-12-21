@@ -1,0 +1,91 @@
+﻿Features to Implement
+---------------------
+  Expressions/operators
+  Proper implementation of redefinability
+
+
+Core commands
+-------------
+* abs
+* and
+* arctan
+* ascii
+* butfirst
+* butlast
+* bye
+* char
+  chdir
+  clearname
+  clearnames
+* cos
+  count
+  currentdir
+  difference
+  directories
+  dolist
+  dotimes
+  emptyp
+  equalp
+  erfile
+  exp
+  files
+  first
+  fput
+  greaterp
+* help
+  identicalp
+  if
+  ifelse
+  int
+  item
+  last
+  lessp
+  let
+  list
+  listp
+  ln
+  local
+  log
+  lput
+* make
+  memberp
+  [tasks above here transferred to BitBucket]
+
+  minus
+  name
+  namep
+  names
+* nodes
+  not
+  numberp
+  or
+  parse
+* pi	
+  pick
+  power
+* print
+  product
+  quotient
+  random
+* recycle
+  remainder
+* repeat
+  rerandom
+  round
+  run
+  sentence
+* sin
+* space
+  sqrt
+  sum
+* tan
+  thing
+  wait
+  word
+  wordp
+
+
+Bugs
+----
+
+
