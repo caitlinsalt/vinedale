@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logo.Tests.Unit", "Logo.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinedale.Tests.Unit", "Vinedale.Tests.Unit\Vinedale.Tests.Unit.csproj", "{2E512E2A-64B5-4E02-9138-73378BC0F575}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinedale.Turtle", "Vinedale.Turtle\Vinedale.Turtle.csproj", "{C9D270E4-60D6-4C75-B6E3-DAAC689668DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{2E512E2A-64B5-4E02-9138-73378BC0F575}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E512E2A-64B5-4E02-9138-73378BC0F575}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E512E2A-64B5-4E02-9138-73378BC0F575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9D270E4-60D6-4C75-B6E3-DAAC689668DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9D270E4-60D6-4C75-B6E3-DAAC689668DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9D270E4-60D6-4C75-B6E3-DAAC689668DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9D270E4-60D6-4C75-B6E3-DAAC689668DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{1EC62BED-B979-4323-A4F7-46C970395B89} = {483A0B59-76CD-451C-A2CB-8F9097B34063}
 		{0B7C3660-2E9B-4D15-9AFC-42C026B8ABAC} = {1EC62BED-B979-4323-A4F7-46C970395B89}
 		{2E512E2A-64B5-4E02-9138-73378BC0F575} = {1EC62BED-B979-4323-A4F7-46C970395B89}
+		{C9D270E4-60D6-4C75-B6E3-DAAC689668DF} = {DEF6BD83-E6D8-4ED3-9ED5-AB2C1854FEEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07C1B731-0736-451E-A0F5-54B26857692A}

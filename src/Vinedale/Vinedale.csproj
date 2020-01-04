@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logo\Logo.csproj" />
+    <ProjectReference Include="..\Vinedale.Turtle\Vinedale.Turtle.csproj" />
   </ItemGroup>
 
 </Project>
