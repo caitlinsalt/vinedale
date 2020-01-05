@@ -116,6 +116,7 @@ namespace Logo.Interpretation
         /// <returns>A value indicating whether the line was interpreted fully and successfully, was interpreted successfullly but requires more input, or was not interpreted.</returns>
         public InterpretationResult Interpret(string input)
         {
+            DateTime watermark = DateTime.Now;
             TokeniserResult tokeniserResult = Token.TokeniseString(_inputBuffer + input);
 
             if (DebugVerbosity >= DebugMessageLevel.Verbose)
@@ -186,6 +187,11 @@ namespace Logo.Interpretation
             if (executionResult != InterpretationResult.SuccessIncomplete)
             {
                 _tokBuffer.Clear();
+                if (DebugVerbosity >= DebugMessageLevel.Chatty)
+                {
+                    TimeSpan processingTime = DateTime.Now - watermark;
+                    WriteDebugOutputLine(processingTime.TotalSeconds.ToString());
+                }
             }
 
             return executionResult;
