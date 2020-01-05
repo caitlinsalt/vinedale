@@ -65,7 +65,7 @@ namespace Logo.Interpretation
             StandardOutputWriter = standardOutputDestination;
             DebugOutputWriter = debugMessageDestination;
             DebugVerbosity = debugVerbosity;
-            //LoadModule(new CoreCommands());
+            LoadModule(new CoreCommands());
         }
 
         /// <summary>
