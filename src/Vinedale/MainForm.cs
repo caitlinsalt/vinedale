@@ -1,4 +1,5 @@
 ﻿using Logo.Interpretation;
+using Logo.Os;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace Vinedale
             _debugOutput = new StreamWriter(new ShellOutputStream(debugShell)) { AutoFlush = true };
             _standardOutput = new StreamWriter(new ShellOutputStream(interpShell)) { AutoFlush = true };
             _interp = new Interpretor(_standardOutput, _debugOutput, DebugMessageLevel.Logorrheic);
-            //_interp.LoadModule(new SystemCommands());
+            _interp.LoadModule(new SystemCommands());
             _interp.LoadModule(new ShellCommands());
             //_interp.LoadModule(new TurtleCommands(_turtle));
             _interp.StartInteractiveInterpretor();
