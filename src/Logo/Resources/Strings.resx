@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CommandAbsExampleText" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="CommandAbsHelpText" xml:space="preserve">
+    <value>Returns the absolute (positive) value of a number.</value>
+  </data>
+  <data name="CommandAbsWrongTypeError" xml:space="preserve">
+    <value>I can only use abs on numbers.</value>
+  </data>
+  <data name="CommandAndExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandAndHelpText" xml:space="preserve">
+    <value>Returns 'true' if everything in the list is true.</value>
+  </data>
+  <data name="CommandAndWrongTypeError" xml:space="preserve">
+    <value>I can only use and on lists.</value>
+  </data>
+  <data name="CommandArctanExampleText" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="CommandArctanHelpText" xml:space="preserve">
+    <value>Returns the arctangent value of a number.</value>
+  </data>
+  <data name="CommandArctanWrongTypeError" xml:space="preserve">
+    <value>I can only use arctan on numbers.</value>
+  </data>
+  <data name="CommandAsciiExampleText" xml:space="preserve">
+    <value>word</value>
+  </data>
+  <data name="CommandAsciiHelpText" xml:space="preserve">
+    <value>Returns the ASCII number of the first letter of the word.</value>
+  </data>
+  <data name="CommandAsciiWrongTypeError" xml:space="preserve">
+    <value>I can only use ascii on a string.</value>
+  </data>
+  <data name="CommandButfirstExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandButfirstHelpText" xml:space="preserve">
+    <value>Returns the list, without its first item.</value>
+  </data>
+  <data name="CommandButfirstWrongTypeError" xml:space="preserve">
+    <value>I can't use butfirst on something that isn't a list.</value>
+  </data>
+  <data name="CommandButlastExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandButlastHelpText" xml:space="preserve">
+    <value>Returns the list, without its last item.</value>
+  </data>
+  <data name="CommandButlastWrongTypeError" xml:space="preserve">
+    <value>I can't use butlast on something that isn't a list.</value>
+  </data>
+  <data name="CommandCharExampleText" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="CommandCharHelpText" xml:space="preserve">
+    <value>Converts the number to a letter.</value>
+  </data>
+  <data name="CommandCharWrongTypeError" xml:space="preserve">
+    <value>I can only use char on a number.</value>
+  </data>
+  <data name="CommandClearnameExampleText" xml:space="preserve">
+    <value>"A</value>
+  </data>
+  <data name="CommandClearnameHelpText" xml:space="preserve">
+    <value>Makes me forget variable A.</value>
+  </data>
+  <data name="CommandClearnamesHelpText" xml:space="preserve">
+    <value>Makes me forget all variables.</value>
+  </data>
+  <data name="CommandCosExampleText" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="CommandCosHelpText" xml:space="preserve">
+    <value>Returns the cosine of a number.</value>
+  </data>
+  <data name="CommandCosWrongTypeError" xml:space="preserve">
+    <value>I can only use cos on numbers.</value>
+  </data>
+  <data name="CommandCountExampleText" xml:space="preserve">
+    <value>[list] or word</value>
+  </data>
+  <data name="CommandCountHelpText" xml:space="preserve">
+    <value>Counts the number of things in a list or the number of letters in a word.</value>
+  </data>
+  <data name="CommandDifferenceExampleText" xml:space="preserve">
+    <value>X Y</value>
+  </data>
+  <data name="CommandDifferenceHelpText" xml:space="preserve">
+    <value>Takes Y from X.</value>
+  </data>
+  <data name="CommandDifferenceTypeError" xml:space="preserve">
+    <value>I don't know how to take that kind of thing from that.</value>
+  </data>
+  <data name="CommandHelpActionCountOutput" xml:space="preserve">
+    <value>{0} does {1} things.</value>
+  </data>
+  <data name="CommandHelpExampleText" xml:space="preserve">
+    <value>"something</value>
+  </data>
+  <data name="CommandHelpHeadingOutput" xml:space="preserve">
+    <value>This is what I currently know how to do:</value>
+  </data>
+  <data name="CommandHelpHelpText" xml:space="preserve">
+    <value>Prints out information on what something does.</value>
+  </data>
+  <data name="CommandHelpUnknownProcedureError" xml:space="preserve">
+    <value>I can't give you help with {0} because I don't know how to do it.</value>
+  </data>
+  <data name="CommandMakeEndDebugMessage" xml:space="preserve">
+    <value>...{0} to {1}</value>
+  </data>
+  <data name="CommandMakeExampleText" xml:space="preserve">
+    <value>"A B</value>
+  </data>
+  <data name="CommandMakeHelpText" xml:space="preserve">
+    <value>Sets variable A to value B.</value>
+  </data>
+  <data name="CommandMakeStartDebugMessage" xml:space="preserve">
+    <value>Setting variable...</value>
+  </data>
+  <data name="CommandNodesHelpText" xml:space="preserve">
+    <value>Prints out how many things I can do.</value>
+  </data>
+  <data name="CommandNodesOutput" xml:space="preserve">
+    <value>There are {0} procedures and {1} procedure names.</value>
+  </data>
+  <data name="CommandPiHelpText" xml:space="preserve">
+    <value>Returns the number Pi (3.14159...).</value>
+  </data>
+  <data name="CommandPrintExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandPrintHelpText" xml:space="preserve">
+    <value>Prints the contents of a list.</value>
+  </data>
+  <data name="CommandRecycleHelpText" xml:space="preserve">
+    <value>Recycles spare space that I was using.</value>
+  </data>
+  <data name="CommandRepeatExampleText" xml:space="preserve">
+    <value>X [list]</value>
+  </data>
+  <data name="CommandRepeatHelpText" xml:space="preserve">
+    <value>Performs a list of things, X number of times.</value>
+  </data>
+  <data name="CommandRepeatWrongListTypeError" xml:space="preserve">
+    <value>I can only repeat a list of things.</value>
+  </data>
+  <data name="CommandRepeatWrongRepeatTypeError" xml:space="preserve">
+    <value>I need to know how many times to repeat something.</value>
+  </data>
+  <data name="CommandSinExampleText" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="CommandSinHelpText" xml:space="preserve">
+    <value>Returns the sine of a number.</value>
+  </data>
+  <data name="CommandSinWrongTypeError" xml:space="preserve">
+    <value>I can only use sin on numbers.</value>
+  </data>
+  <data name="CommandSpaceHelpText" xml:space="preserve">
+    <value>Returns the amount of space I am using.</value>
+  </data>
+  <data name="CommandTanExampleText" xml:space="preserve">
+    <value>number</value>
+  </data>
+  <data name="CommandTanHelpText" xml:space="preserve">
+    <value>Returns the tangent of a number.</value>
+  </data>
+  <data name="CommandTanWrongTypeError" xml:space="preserve">
+    <value>I can only use tan on numbers.</value>
+  </data>
+  <data name="ExpressionConstructorIncompleteError" xml:space="preserve">
+    <value>I couldn't understand your expression '{0}' because something inside it wasn't finished.</value>
+  </data>
+  <data name="InterpretorDefineProcedureProcedureIsNonRedefinableError" xml:space="preserve">
+    <value>You can't tell me how to do {0}.</value>
+  </data>
+  <data name="InterpretorDumpTokenOutput" xml:space="preserve">
+    <value>{0}Token: type {1}, literal value '{2}'.</value>
+  </data>
+  <data name="InterpretorEvaluateExpressionContentsIncompleteContentsError" xml:space="preserve">
+    <value>Your expression '{0}' contained something that was incomplete, so I couldn't work out what it meant.</value>
+  </data>
+  <data name="InterpretorEvaluateExpressionDebugMessage" xml:space="preserve">
+    <value>Evaluating expression {0}.</value>
+  </data>
+  <data name="InterpretorEvaluateExpressionEndsWithOperatorError" xml:space="preserve">
+    <value>I couldn't see anything after your '{0}' sign in '{1}'.</value>
+  </data>
+  <data name="InterpretorEvaluateExpressionGeneralError" xml:space="preserve">
+    <value>I couldn't work out how to understand '{0}'.</value>
+  </data>
+  <data name="InterpretorEvaluateExpressionStartsWithOperatorError" xml:space="preserve">
+    <value>I couldn't see anything before your '{0}' sign in '{1}'.</value>
+  </data>
+  <data name="InterpretorEvaluateListContentsDebugMessage" xml:space="preserve">
+    <value>Evaluating list {0}.</value>
+  </data>
+  <data name="InterpretorEvaluateListIncompleteContentsError" xml:space="preserve">
+    <value>Your list '{0}' contained something that was incomplete, so I couldn't work out what it meant.</value>
+  </data>
+  <data name="InterpretorExecuteTokenBufferCannotExecuteBareExpressionError" xml:space="preserve">
+    <value>I don't know what to do with the expression {0}.</value>
+  </data>
+  <data name="InterpretorExecuteTokenBufferCannotExecuteBareListError" xml:space="preserve">
+    <value>I don't know what to do with the list {0}.</value>
+  </data>
+  <data name="InterpretorExecuteWordUndefinedProcedureError" xml:space="preserve">
+    <value>I don't know how to {0}.</value>
+  </data>
+  <data name="InterpretorInterpretProcedureIsNonRedefinableError" xml:space="preserve">
+    <value>You can't tell me how to do that.</value>
+  </data>
+  <data name="InterpretorInterpretTokenCountDebugMessage" xml:space="preserve">
+    <value>{0} tokens returned by tokeniser.</value>
+  </data>
+  <data name="InterpretorInterpretTokeniserResultDebugMessage" xml:space="preserve">
+    <value>Tokeniser result was: {0}.</value>
+  </data>
+  <data name="InterpretorLoadedModuleDebugMessage" xml:space="preserve">
+    <value>Loaded module {0}</value>
+  </data>
+  <data name="InterpretorModuleLoadingDebugMessage" xml:space="preserve">
+    <value>Loading module {0} from assembly {1}</value>
+  </data>
+  <data name="InterpretorRegisteredProcedureDebugMessage" xml:space="preserve">
+    <value>Registered procedure {0}</value>
+  </data>
+  <data name="InterpretorWelcomeMessage" xml:space="preserve">
+    <value>Hello.  This is Vinedale.</value>
+  </data>
+  <data name="ListConstructorIncompleteError" xml:space="preserve">
+    <value>I couldn't understand your list '{0}' because something inside it wasn't finished.</value>
+  </data>
+  <data name="OperatorAdditionTypeError" xml:space="preserve">
+    <value>I don't know how to add those kinds of things together.</value>
+  </data>
+  <data name="OperatorDivisionTypeError" xml:space="preserve">
+    <value>I don't know how to divide that kind of thing by that.</value>
+  </data>
+  <data name="OperatorMultiplicationTypeError" xml:space="preserve">
+    <value>I don't know how to multiply those kinds of things together.</value>
+  </data>
+  <data name="OperatorSubtractionTypeError" xml:space="preserve">
+    <value>I don't know how to take that kind of thing from that.</value>
+  </data>
+  <data name="OperatorUnknownOperationError" xml:space="preserve">
+    <value>I don't know how to do that kind of operation.</value>
+  </data>
+</root>
