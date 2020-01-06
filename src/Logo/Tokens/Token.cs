@@ -40,9 +40,6 @@ namespace Logo.Tokens
         /// <returns>A <c>TokeniserResult</c> containing the list of output tokens, and information on the state of the tokeniser on completion.</returns>
         public static TokeniserResult TokeniseString(string input)
         {
-            TokeniserResult result = new TokeniserResult();
-            result.TokenisedData = new List<Token>();
-
             int idx = 0;
             bool inWord = false;
             bool inComment = false;
@@ -50,6 +47,7 @@ namespace Logo.Tokens
             int listNest = 0;
             int exprNest = 0;
             const string singleSymbolWords = "+-*/";
+            List<Token> tokensProduced = new List<Token>();
 
             try
             {
@@ -76,7 +74,7 @@ namespace Logo.Tokens
                         }
                         else if (singleSymbolWords.Contains(input[idx]))
                         {
-                            result.TokenisedData.Add(new LogoOperator(input.Substring(idx, 1)));
+                            tokensProduced.Add(new LogoOperator(input.Substring(idx, 1)));
                         }
                         else
                         {
@@ -89,19 +87,19 @@ namespace Logo.Tokens
                     {
                         if (char.IsWhiteSpace(input[idx]))
                         {
-                            result.TokenisedData.Add(new Word { Literal = input.Substring(startPos, idx - startPos) });
+                            tokensProduced.Add(new Word { Literal = input.Substring(startPos, idx - startPos) });
                             inWord = false;
                         }
                         else if (input[idx] == '[')
                         {
-                            result.TokenisedData.Add(new Word { Literal = input.Substring(startPos, idx - startPos) });
+                            tokensProduced.Add(new Word { Literal = input.Substring(startPos, idx - startPos) });
                             inWord = false;
                             listNest++;
                             startPos = idx;
                         }
                         else if (input[idx] == ';')
                         {
-                            result.TokenisedData.Add(new Word { Literal = input.Substring(startPos, idx - startPos) });
+                            tokensProduced.Add(new Word { Literal = input.Substring(startPos, idx - startPos) });
                             inWord = false;
                             inComment = true;
                             startPos = idx;
@@ -120,7 +118,7 @@ namespace Logo.Tokens
                                 listNest--;
                                 if (listNest == 0)
                                 {
-                                    result.TokenisedData.Add(new LogoList(input.Substring(startPos, idx + 1 - startPos)));
+                                    tokensProduced.Add(new LogoList(input.Substring(startPos, idx + 1 - startPos)));
                                 }
                             }
                             else if (input[idx] == ';')
@@ -145,7 +143,7 @@ namespace Logo.Tokens
                             exprNest--;
                             if (exprNest == 0)
                             {
-                                result.TokenisedData.Add(new LogoExpression(input.Substring(startPos, idx + 1 - startPos)));
+                                tokensProduced.Add(new LogoExpression(input.Substring(startPos, idx + 1 - startPos)));
                             }
                         }
                         else if (input[idx] == ';')
@@ -162,7 +160,7 @@ namespace Logo.Tokens
                     {
                         if (input.Substring(idx).StartsWith(Environment.NewLine))
                         {
-                            result.TokenisedData.Add(new LogoComment { Literal = input.Substring(startPos, idx - startPos) });
+                            tokensProduced.Add(new LogoComment { Literal = input.Substring(startPos, idx - startPos) });
                             idx += (Environment.NewLine.Length - 1);
                             inComment = false;
                         }
@@ -171,32 +169,26 @@ namespace Logo.Tokens
 
                 if (inWord)
                 {
-                    result.TokenisedData.Add(new Word { Literal = input.Substring(startPos) });
+                    tokensProduced.Add(new Word { Literal = input.Substring(startPos) });
                 }
                 else if (listNest == 0 && exprNest == 0 && inComment)
                 {
-                    result.TokenisedData.Add(new LogoComment { Literal = input.Substring(startPos) });
+                    tokensProduced.Add(new LogoComment { Literal = input.Substring(startPos) });
                 }
 
                 if (listNest > 0 || exprNest > 0)
                 {
-                    result.ResultType = TokeniserResultType.SuccessIncomplete;
-                    result.NonConsumedInput = input.Substring(startPos);
+                    return new TokeniserResult(TokeniserResultType.SuccessIncomplete, tokensProduced, input.Substring(startPos));
                 }
                 else
                 {
-                    result.ResultType = TokeniserResultType.SuccessComplete;
-                    result.NonConsumedInput = "";
+                    return new TokeniserResult(TokeniserResultType.SuccessComplete, tokensProduced);
                 }
             }
             catch (TokeniserException ex)
             {
-                result.TokenisedData.Clear();
-                result.ResultType = TokeniserResultType.Failure;
-                result.ErrorMessage = ex.Message;
+                return new TokeniserResult(TokeniserResultType.Failure, Array.Empty<Token>(), null, ex.Message);
             }
-
-            return result;
         }
     }
 }
