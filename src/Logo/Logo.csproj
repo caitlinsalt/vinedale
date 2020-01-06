@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Will\Source\Repos\vinedale\src\Logo\Logo.xml</DocumentationFile>
+    <DocumentationFile>Logo.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Logo.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
