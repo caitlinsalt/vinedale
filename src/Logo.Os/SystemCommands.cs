@@ -96,10 +96,11 @@ namespace Logo.Os
             {
                 Evaluated = true,
                 Literal = "directories",
-                InnerContents = Directory.GetDirectories(Directory.GetCurrentDirectory())
-                    .Select(d => new Token { Evaluated = true, Literal = d, TokenValue = new LogoValue(LogoValueType.Text, d) })
-                    .ToList()
+                
             };
+            list.Contents.AddRange(
+                Directory.GetDirectories(Directory.GetCurrentDirectory()).Select(d => new Token { Evaluated = true, Literal = d, TokenValue = new LogoValue(LogoValueType.Text, d) })
+            );
             list.TokenValue = new LogoValue(LogoValueType.List, list);
             return list;
         }
@@ -129,10 +130,9 @@ namespace Logo.Os
             {
                 Evaluated = true,
                 Literal = "files",
-                InnerContents = Directory.GetFiles(Directory.GetCurrentDirectory(), pattern)
-                    .Select(f => new Token { Evaluated = true, Literal = Path.GetFileName(f), TokenValue = new LogoValue(LogoValueType.Text, Path.GetFileName(f)) })
-                    .ToList(),
             };
+            list.Contents.AddRange(Directory.GetFiles(Directory.GetCurrentDirectory(), pattern)
+                .Select(f => new Token { Evaluated = true, Literal = Path.GetFileName(f), TokenValue = new LogoValue(LogoValueType.Text, Path.GetFileName(f)) }));
             list.TokenValue = new LogoValue(LogoValueType.List, list);
             return list;
         }

@@ -21,7 +21,7 @@ namespace Logo.Tokens
             {
                 throw new TokeniserException(string.Format(Strings.ExpressionConstructorIncompleteError, literal));
             }
-            InnerContents.AddRange(r.TokenisedData);
+            Contents.AddRange(r.TokenisedData);
         }
 
         private LogoExpression() { }
@@ -33,7 +33,7 @@ namespace Logo.Tokens
         public override Token Clone()
         {
             LogoExpression newExpr = new LogoExpression() { Evaluated = Evaluated, Literal = Literal };
-            newExpr.InnerContents.AddRange(InnerContents.Select(t => t.Clone()));
+            newExpr.Contents.AddRange(Contents.Select(t => t.Clone()));
             return newExpr;
         }
     }
