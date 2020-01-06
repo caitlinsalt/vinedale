@@ -1,4 +1,5 @@
 ﻿using Logo.Resources;
+using System.Globalization;
 using System.Linq;
 
 namespace Logo.Tokens
@@ -14,12 +15,16 @@ namespace Logo.Tokens
         /// <param name="literal">The input to be tokenised.</param>
         public LogoExpression(string literal)
         {
+            if (literal == null)
+            {
+                literal = "";
+            }
             Literal = literal;
 
             TokeniserResult r = TokeniseString(literal.Substring(1, literal.Length - 2));
             if (r.ResultType == TokeniserResultType.SuccessIncomplete)
             {
-                throw new TokeniserException(string.Format(Strings.ExpressionConstructorIncompleteError, literal));
+                throw new TokeniserException(string.Format(CultureInfo.CurrentCulture, Strings.ExpressionConstructorIncompleteError, literal));
             }
             Contents.AddRange(r.TokenisedData);
         }
