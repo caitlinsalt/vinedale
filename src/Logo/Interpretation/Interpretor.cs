@@ -117,7 +117,7 @@ namespace Logo.Interpretation
         public InterpretationResult Interpret(string input)
         {
             DateTime watermark = DateTime.Now;
-            TokeniserResult tokeniserResult = Token.TokeniseString(_inputBuffer + input);
+            TokeniserResult tokeniserResult = Tokeniser.TokeniseString(_inputBuffer + input);
 
             if (DebugVerbosity >= DebugMessageLevel.Verbose)
             {
