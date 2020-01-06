@@ -261,7 +261,7 @@ namespace Logo.Interpretation
             }
             if (tokenType == typeof(LogoList))
             {
-                tokens[index].TokenValue = new LogoValue { Type = LogoValueType.List, Value = tokens[index].Clone() };
+                tokens[index].TokenValue = new LogoValue(LogoValueType.List, tokens[index].Clone());
                 tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
@@ -294,7 +294,7 @@ namespace Logo.Interpretation
 
             if (tokens[index].Literal[0] == '\"')
             {
-                tokens[index].TokenValue = new LogoValue { Type = LogoValueType.Text, Value = tokens[index].Literal.Substring(1) };
+                tokens[index].TokenValue = new LogoValue(LogoValueType.Text, tokens[index].Literal.Substring(1));
                 tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
@@ -308,26 +308,26 @@ namespace Logo.Interpretation
 
             if (char.IsDigit(tokens[index].Literal[0]))
             {
-                tokens[index].TokenValue = new LogoValue { Type = LogoValueType.Number, Value = decimal.Parse(tokens[index].Literal) };
+                tokens[index].TokenValue = new LogoValue(LogoValueType.Number, decimal.Parse(tokens[index].Literal));
                 tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
             if (tokens[index].Literal == "true")
             {
-                tokens[index].TokenValue = new LogoValue { Type = LogoValueType.Bool, Value = true };
+                tokens[index].TokenValue = new LogoValue(LogoValueType.Bool, true);
                 tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
             if (tokens[index].Literal == "false")
             {
-                tokens[index].TokenValue = new LogoValue { Type = LogoValueType.Bool, Value = false };
+                tokens[index].TokenValue = new LogoValue(LogoValueType.Bool, false);
                 tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
 
             if (literalEvaluateUndefinedWords && !Context.ProcedureNames.ContainsKey(tokens[index].Literal))
             {
-                tokens[index].TokenValue = new LogoValue { Type = LogoValueType.Text, Value = tokens[index].Literal };
+                tokens[index].TokenValue = new LogoValue(LogoValueType.Text, tokens[index].Literal);
                 tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
@@ -396,11 +396,11 @@ namespace Logo.Interpretation
                 }
                 else if (returnToken is LogoList)
                 {
-                    tokens[index].TokenValue = new LogoValue { Type = LogoValueType.List, Value = returnToken };
+                    tokens[index].TokenValue = new LogoValue(LogoValueType.List, returnToken);
                 }
                 else if (returnToken is Word)
                 {
-                    tokens[index].TokenValue = new LogoValue { Type = LogoValueType.Word, Value = returnToken };
+                    tokens[index].TokenValue = new LogoValue(LogoValueType.Word, returnToken);
                 }
                 tokens[index].Evaluated = true;
             }
