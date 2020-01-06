@@ -16,7 +16,7 @@ namespace Logo.Tokens
         {
             Literal = literal;
 
-            TokeniserResult r = TokeniseString(literal.Substring(1, literal.Length - 2));
+            TokeniserResult r = Tokeniser.TokeniseString(literal.Substring(1, literal.Length - 2));
             if (r.ResultType == TokeniserResultType.SuccessIncomplete)
             {
                 throw new TokeniserException(string.Format(Strings.ExpressionConstructorIncompleteError, literal));
