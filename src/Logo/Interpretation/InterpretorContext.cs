@@ -93,7 +93,7 @@ namespace Logo.Interpretation
             }
             if (!Globals.ContainsKey(varName))
             {
-                Globals.Add(varName, new LogoValue { Type = LogoValueType.Unknown, Value = null });
+                Globals.Add(varName, new LogoValue(LogoValueType.Unknown, null));
             }
             return Globals[varName];
         }

@@ -79,7 +79,7 @@ namespace Logo.Os
             {
                 Evaluated = true,
                 Literal = "currentdir",
-                TokenValue = new LogoValue { Type = LogoValueType.Text, Value = Directory.GetCurrentDirectory() }
+                TokenValue = new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()),
             };
         }
 
@@ -97,10 +97,10 @@ namespace Logo.Os
                 Evaluated = true,
                 Literal = "directories",
                 InnerContents = Directory.GetDirectories(Directory.GetCurrentDirectory())
-                    .Select(d => new Token { Evaluated = true, Literal = d, TokenValue = new LogoValue { Type = LogoValueType.Text, Value = d } })
+                    .Select(d => new Token { Evaluated = true, Literal = d, TokenValue = new LogoValue(LogoValueType.Text, d) })
                     .ToList()
             };
-            list.TokenValue = new LogoValue { Type = LogoValueType.List, Value = list };
+            list.TokenValue = new LogoValue(LogoValueType.List, list);
             return list;
         }
 
@@ -130,10 +130,10 @@ namespace Logo.Os
                 Evaluated = true,
                 Literal = "files",
                 InnerContents = Directory.GetFiles(Directory.GetCurrentDirectory(), pattern)
-                    .Select(f => new Token { Evaluated = true, Literal = Path.GetFileName(f), TokenValue = new LogoValue { Type = LogoValueType.Text, Value = Path.GetFileName(f) } })
+                    .Select(f => new Token { Evaluated = true, Literal = Path.GetFileName(f), TokenValue = new LogoValue(LogoValueType.Text, Path.GetFileName(f)) })
                     .ToList(),
             };
-            list.TokenValue = new LogoValue { Type = LogoValueType.List, Value = list };
+            list.TokenValue = new LogoValue(LogoValueType.List, list);
             return list;
         }
 
