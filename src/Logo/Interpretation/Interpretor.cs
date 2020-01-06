@@ -417,10 +417,10 @@ namespace Logo.Interpretation
         public InterpretationResult EvaluateListContents(LogoList list, bool literalEvaluateUndefinedWords)
         {
             DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateListContentsDebugMessage, list.Literal));
-            while (list.InnerContents.Any(t => !t.Evaluated))
+            while (list.Contents.Any(t => !t.Evaluated))
             {
-                int firstNonEvaldWord = list.InnerContents.FindIndex(t => !t.Evaluated);
-                InterpretationResult result = EvaluateWord(list.InnerContents, firstNonEvaldWord, literalEvaluateUndefinedWords);
+                int firstNonEvaldWord = list.Contents.FindIndex(t => !t.Evaluated);
+                InterpretationResult result = EvaluateWord(list.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
 
                 if (result == InterpretationResult.SuccessIncomplete)
                 {
@@ -454,9 +454,9 @@ namespace Logo.Interpretation
 
             foreach (OperatorType type in Enum.GetValues(typeof(OperatorType)))
             {
-                while (expr.InnerContents.Select(t => t as LogoOperator).Any(t => t != null && t.Operation == type && !t.Evaluated))
+                while (expr.Contents.Select(t => t as LogoOperator).Any(t => t != null && t.Operation == type && !t.Evaluated))
                 {
-                    result = EvaluateOperator(expr, expr.InnerContents.FindIndex(t => t is LogoOperator && ((LogoOperator)t).Operation == type && !t.Evaluated));
+                    result = EvaluateOperator(expr, expr.Contents.FindIndex(t => t is LogoOperator && ((LogoOperator)t).Operation == type && !t.Evaluated));
                     if (result != InterpretationResult.SuccessComplete)
                     {
                         return result;
@@ -464,13 +464,13 @@ namespace Logo.Interpretation
                 }
             }
 
-            if (expr.InnerContents.Count != 1)
+            if (expr.Contents.Count != 1)
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionGeneralError, expr.Literal));
                 return InterpretationResult.Failure;
             }
 
-            expr.TokenValue = expr.InnerContents[0].TokenValue;
+            expr.TokenValue = expr.Contents[0].TokenValue;
             expr.Evaluated = true;
             return InterpretationResult.SuccessComplete;
         }
@@ -479,19 +479,19 @@ namespace Logo.Interpretation
         {
             if (idx == 0)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.InnerContents[idx].Literal, expr.Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.Contents[idx].Literal, expr.Literal));
                 return InterpretationResult.Failure;
             }
 
-            if (idx == expr.InnerContents.Count - 1)
+            if (idx == expr.Contents.Count - 1)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.InnerContents[idx].Literal, expr.Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.Contents[idx].Literal, expr.Literal));
                 return InterpretationResult.Failure;
             }
 
-            LogoOperator op = (LogoOperator)expr.InnerContents[idx];
-            Token firstArg = expr.InnerContents[idx - 1];
-            Token secondArg = expr.InnerContents[idx + 1];
+            LogoOperator op = (LogoOperator)expr.Contents[idx];
+            Token firstArg = expr.Contents[idx - 1];
+            Token secondArg = expr.Contents[idx + 1];
             if (firstArg.TokenValue.Type == LogoValueType.Unknown)
             {
                 firstArg.TokenValue = LogoValue.GetDefaultValue(secondArg.TokenValue.Type);
@@ -509,20 +509,20 @@ namespace Logo.Interpretation
             }
 
             op.Evaluated = true;
-            expr.InnerContents.RemoveAt(idx + 1);
-            expr.InnerContents.RemoveAt(idx - 1);
+            expr.Contents.RemoveAt(idx + 1);
+            expr.Contents.RemoveAt(idx - 1);
             return InterpretationResult.SuccessComplete;
         }
 
         private InterpretationResult EvaluateExpressionContents(LogoExpression expr, bool literalEvaluateUndefinedWords)
         {
-            if (expr.InnerContents.Count == 0 || expr.InnerContents.Where(t => !(t is LogoOperator)).All(t => t.Evaluated))
+            if (expr.Contents.Count == 0 || expr.Contents.Where(t => !(t is LogoOperator)).All(t => t.Evaluated))
             {
                 return InterpretationResult.SuccessComplete;
             }
 
-            int firstNonEvaldWord = expr.InnerContents.FindIndex(t => !(t is LogoOperator) && !t.Evaluated);
-            InterpretationResult result = EvaluateToken(expr.InnerContents, firstNonEvaldWord, literalEvaluateUndefinedWords);
+            int firstNonEvaldWord = expr.Contents.FindIndex(t => !(t is LogoOperator) && !t.Evaluated);
+            InterpretationResult result = EvaluateToken(expr.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
 
             if (result == InterpretationResult.SuccessIncomplete)
             {
@@ -569,7 +569,7 @@ namespace Logo.Interpretation
             writer.WriteLine(string.Format(Strings.InterpretorDumpTokenOutput, prefix, tok.GetType(), tok.Literal));
             if (tok.GetType().IsSubclassOf(typeof(ContainerToken)))
             {
-                foreach (Token innerTok in ((ContainerToken)tok).InnerContents)
+                foreach (Token innerTok in ((ContainerToken)tok).Contents)
                 {
                     DumpToken(prefix + " ", writer, innerTok);
                 }

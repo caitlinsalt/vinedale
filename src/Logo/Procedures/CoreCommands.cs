@@ -316,7 +316,7 @@ namespace Logo.Procedures
             {
                 clonedList = (LogoList)input[0].TokenValue.Value;
             }
-            clonedList.InnerContents.RemoveAt(0);
+            clonedList.Contents.RemoveAt(0);
             clonedList.TokenValue = new LogoValue(LogoValueType.List, clonedList.Clone());
             clonedList.RecreateLiteralValue();
             return clonedList;
@@ -345,7 +345,7 @@ namespace Logo.Procedures
             {
                 clonedList = (LogoList)input[0].TokenValue.Value;
             }
-            clonedList.InnerContents.RemoveAt(clonedList.InnerContents.Count - 1);
+            clonedList.Contents.RemoveAt(clonedList.Contents.Count - 1);
             clonedList.TokenValue = new LogoValue(LogoValueType.List, clonedList.Clone());
             clonedList.RecreateLiteralValue();
             return clonedList;
@@ -521,7 +521,7 @@ namespace Logo.Procedures
                 Evaluated = true,
                 Literal = "and",
                 TokenValue = new LogoValue(LogoValueType.Bool, 
-                    (inputList.InnerContents.Count > 0) && inputList.InnerContents.All(t => t.TokenValue.Type == LogoValueType.Bool) && inputList.InnerContents.All(t => (bool)t.TokenValue.Value)),
+                    (inputList.Contents.Count > 0) && inputList.Contents.All(t => t.TokenValue.Type == LogoValueType.Bool) && inputList.Contents.All(t => (bool)t.TokenValue.Value)),
             };
         }
 
@@ -594,7 +594,7 @@ namespace Logo.Procedures
             {
                 if (context.Interpretor.EvaluateListContents((LogoList)output[0].TokenValue.Value, true) == InterpretationResult.SuccessComplete)
                 {
-                    context.Interpretor.WriteOutputLine(string.Join(" ", ((ContainerToken)output[0].TokenValue.Value).InnerContents.Select(t => t.TokenValue.Value.ToString())));
+                    context.Interpretor.WriteOutputLine(string.Join(" ", ((ContainerToken)output[0].TokenValue.Value).Contents.Select(t => t.TokenValue.Value.ToString())));
                 }
             }
             else if (paramType == typeof(Word) || paramType == typeof(LogoExpression))
@@ -610,7 +610,7 @@ namespace Logo.Procedures
             }
             else
             {
-                context.Interpretor.WriteOutputLine(string.Join(" ", ((ContainerToken)output[0]).InnerContents.Select(t => t.Literal)));
+                context.Interpretor.WriteOutputLine(string.Join(" ", ((ContainerToken)output[0]).Contents.Select(t => t.Literal)));
             }
             return null;
         }
@@ -718,7 +718,7 @@ namespace Logo.Procedures
                 {
                     Evaluated = true,
                     Literal = "count",
-                    TokenValue = new LogoValue(LogoValueType.Number, (decimal)(parameters[0].TokenValue.Value as LogoList).InnerContents.Count),
+                    TokenValue = new LogoValue(LogoValueType.Number, (decimal)(parameters[0].TokenValue.Value as LogoList).Contents.Count),
                 };
             }
             return new Token
