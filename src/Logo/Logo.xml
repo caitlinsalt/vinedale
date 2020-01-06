@@ -1,0 +1,1364 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Logo</name>
+    </assembly>
+    <members>
+        <member name="T:Logo.Interpretation.DebugMessageLevel">
+            <summary>
+            Defines the degree of debug information to output.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.DebugMessageLevel.Silent">
+            <summary>
+            No output.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.DebugMessageLevel.Terse">
+            <summary>
+            Brief output.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.DebugMessageLevel.Chatty">
+            <summary>
+            Medium amount of output.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.DebugMessageLevel.Verbose">
+            <summary>
+            Large amout of output.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.DebugMessageLevel.Logorrheic">
+            <summary>
+            Maxiumum output.
+            </summary>
+        </member>
+        <member name="T:Logo.Interpretation.InterpretationResult">
+            <summary>
+            Defines the possible results of processing an input line
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.InterpretationResult.SuccessComplete">
+            <summary>
+            The input was parsed with no errors, and was executed immediately.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.InterpretationResult.SuccessIncomplete">
+            <summary>
+            The input was parsed with no errors, but is incomplete, and more input is required to complete execution.
+            </summary>
+        </member>
+        <member name="F:Logo.Interpretation.InterpretationResult.Failure">
+            <summary>
+            A parsing error occurred.
+            </summary>
+        </member>
+        <member name="T:Logo.Interpretation.Interpretor">
+            <summary>
+            The core of the language interpretation engine.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.Interpretor.Context">
+            <summary>
+            The system context for this interpretor, including the symbol table and object stack.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.Interpretor.DebugOutputWriter">
+            <summary>
+            Output writer for debugging information.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.Interpretor.StandardOutputWriter">
+            <summary>
+            Output writer for normal output.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.Interpretor.DebugVerbosity">
+            <summary>
+            Level of information to output to the <c>DebugOutputWriter</c> writer.
+            </summary>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+            <remarks>The <c>DebugVerbosity</c> property is set to <c>DebugMessageLevel.Terse</c> by default.</remarks>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.#ctor(System.IO.TextWriter,System.IO.TextWriter,Logo.Interpretation.DebugMessageLevel)">
+            <summary>
+            Constructor which sets initial values of public properties.
+            </summary>
+            <param name="standardOutputDestination">Initial value of the <c>StandardOutputWriter</c> property.</param>
+            <param name="debugMessageDestination">Initial value of the <c>DebugOutputWriter</c> property.</param>
+            <param name="debugVerbosity">Initial value of the <c>DebugVerbosity</c> property.</param>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.StartInteractiveInterpretor">
+            <summary>
+            This method is called to initialise an interactive instance of the class, as distinct to other instances.
+            </summary>
+            <remarks>At present the primary purpose of this method is to print out a welcome message, as there is no other difference between interactive and other instances.
+            In future however it may be used for interactive interpretor specific initialisation.</remarks>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.LoadModule(Logo.Procedures.ICommandModule)">
+            <summary>
+            Imports the commands defined in an <c>ICommandModule</c> into the interpretor context's symbol table.
+            </summary>
+            <param name="module"></param>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.Interpret(System.String)">
+            <summary>
+            Interprets a line of input.
+            </summary>
+            <param name="input">The line of code to be interpreted.</param>
+            <returns>A value indicating whether the line was interpreted fully and successfully, was interpreted successfullly but requires more input, or was not interpreted.</returns>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.EvaluateToken(System.Collections.Generic.IList{Logo.Tokens.Token},System.Int32,System.Boolean)">
+            <summary>
+            Evaluates the indicated token in a list of input tokens.
+            </summary>
+            <param name="tokens">The list of input tokens.  This will be modified in-place.</param>
+            <param name="index">The index of the token to be evaluated</param>
+            <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
+            <returns>A value indicating success, failure, or that more input is required.</returns>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.EvaluateWord(System.Collections.Generic.IList{Logo.Tokens.Token},System.Int32,System.Boolean)">
+            <summary>
+            Evaluates the indicated word in a list of input tokens.
+            </summary>
+            <param name="tokens">The list of input tokens.  This will be modified in-place.</param>
+            <param name="index">The index of the token to be evaluated</param>
+            <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
+            <returns>A value indicating success, failure, or that more input is required.</returns>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.EvaluateListContents(Logo.Tokens.LogoList,System.Boolean)">
+            <summary>
+            Evaluates an entire list.
+            </summary>
+            <param name="list">The list to be evaluated.</param>
+            <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
+            <returns>A value indicating success or failure.</returns>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.EvaluateExpression(Logo.Tokens.LogoExpression,System.Boolean)">
+            <summary>
+            Evaluates an expression.
+            </summary>
+            <param name="expr">The expression to be evaluated.</param>
+            <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
+            <returns>A value indicating success or failure.</returns>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.WriteOutput(System.String)">
+            <summary>
+            Write a string to the normal output writer.
+            </summary>
+            <param name="output">A string to be written to the output.</param>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.WriteOutputLine(System.String)">
+            <summary>
+            Write a string to the normal output writer, terminated with a new line.
+            </summary>
+            <param name="output">A string to be written to the output.</param>
+        </member>
+        <member name="M:Logo.Interpretation.Interpretor.WriteDebugOutputLine(System.String)">
+            <summary>
+            Write a string to the debug output writer, followed by a new line.
+            </summary>
+            <param name="output">A string to be written to the output.</param>
+        </member>
+        <member name="T:Logo.Interpretation.InterpretorContext">
+            <summary>
+            Defines the execution environment of the interpretor.
+            </summary>
+            <remarks>The interpretor context includes the interpretor's current stack and symbol spaces.</remarks>
+        </member>
+        <member name="P:Logo.Interpretation.InterpretorContext.Interpretor">
+            <summary>
+            The interpretor running in this context.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.InterpretorContext.LoadedModules">
+            <summary>
+            The collection of <c>ICommandModule</c> classes which have been loaded into the environment.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.InterpretorContext.Procedures">
+            <summary>
+            The collection of all <c>LogoProcedure</c> definitions availanble in the environment, including both those with .NET definitions and those defined within Logo.
+            </summary>
+        </member>
+        <member name="P:Logo.Interpretation.InterpretorContext.ProcedureNames">
+            <summary>
+            The <c>IDictionary</c> of all <c>LogoProcedure</c> names and aliases registered in the environment, for quick access on execution.
+            </summary>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.#ctor(Logo.Interpretation.Interpretor)">
+            <summary>
+            <c>InterpretorContext</c> has a single constructor which requires an interpretor.
+            </summary>
+            <param name="interp">The interpretor which this is to be the environment for.</param>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.RegisterProcedure(Logo.Procedures.LogoProcedure)">
+            <summary>
+            Add a procedure to the environment.
+            </summary>
+            <param name="p">The procedure definition to be added.</param>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.GetVariable(System.String)">
+            <summary>
+            Gets the value of a variable from the appropriate namespace.
+            </summary>
+            <remarks>
+            If the variable name exists in the current local namespace, that variable is returned.  If not, but the name exists in the global namespace, that variable is returned.
+            If no variable called <c>varName</c> exists, a new variable with the given name and of unknown type is created in the global namespace.
+            </remarks>
+            <param name="varName">The variable name.</param>
+            <returns>The <c>LogoValue</c> object of the variable.</returns>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.SetVariable(System.String,Logo.Tokens.LogoValue)">
+            <summary>
+            Sets the value of a variable.
+            </summary>
+            <remarks>
+            If the variable name exists in the current local namespace, that variable has its value set.  If not, the variable is set in the global namespace.
+            </remarks>
+            <param name="varName">The name of the variable to set.</param>
+            <param name="value">The value to be set.</param>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.ClearVariable(System.String)">
+            <summary>
+            Removes a variable from the global namespace.
+            </summary>
+            <param name="varName">The variable to remove.</param>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.ClearAllVariables">
+            <summary>
+            Clears the global variable namespace.
+            </summary>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.StackFrameCreate">
+            <summary>
+            Create a new variable namespace on the local namespace stack, and set it as the current local namespace.
+            </summary>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.StackFrameCreate(Logo.Tokens.Token[])">
+            <summary>
+            Create a new variable namespace on the local namespace stack, set it as the current local namespace, and set the supplied list of evaluated tokens as variables in the namespace.
+            </summary>
+            <param name="paramList">An array of tokens to set as variables in the new local namespace.</param>
+        </member>
+        <member name="M:Logo.Interpretation.InterpretorContext.StackFrameDestroy">
+            <summary>
+            Delete the current local namespace and set the next namespace on the stack as the current one.
+            </summary>
+        </member>
+        <member name="T:Logo.Procedures.CommandImplementation">
+            <summary>
+            A delegate type to represent the .NET implementation of a Logo procedure.
+            </summary>
+            <param name="interpretationContext">The interpretor context which represents the environment the procedure is being executed in, so that it can access variables and other 
+            environment features.</param>
+            <param name="parameters">The parameters to the procedure.  The interpretor guarantees the number of elements in the array will match the specified number of parameters in the 
+            procedure definition.</param>
+            <returns>A <c>LogoToken</c> if the command returns a value, or <c>null</c> otherwise.</returns>
+        </member>
+        <member name="T:Logo.Procedures.CoreCommands">
+            <summary>
+            This class contains the implementations of core language features.
+            </summary>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.RegisterProcedures">
+            <summary>
+            Provides the definitions of procedures implemented in this class.
+            </summary>
+            <returns>The list of procedures defined in this class.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.AsciiToChar(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Converts a number to a character.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one parameter representing a number.</param>
+            <returns>A token containing a string.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.AsciiValue(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Converts a character to its ASCII number.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one parameter representing a string.</param>
+            <returns>A token containing a number.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.ListButFirst(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Removes the first element from a list.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain a single token of list type.</param>
+            <returns>A token containing a list.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.ListButLast(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Removes the last element from a list.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain a single token of list type.</param>
+            <returns>A token containing a list.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.MakeVariable(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Defines and/or sets the value of a variable.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain two tokens, the first being the variable name and the second the variable value.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.ClearVariable(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Removes a variable from the global namespace.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing the variable name to remove.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.ClearGlobalVariables(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Clears the global variable namespace.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Not used.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.MathCos(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Implements the mathematical cosine function.
+            </summary>
+            <remarks>All trigonometrical functions assume the input is in radians.</remarks>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing a number.</param>
+            <returns>A token containing the cosine of the input.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.MathAtan(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Implements the mathematical arctangent function.
+            </summary>
+            <remarks>All trigonometrical functions assume the input is in radians.</remarks>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing a number.</param>
+            <returns>A token containing the arctangent of the input.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.MathSin(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Implements the sine function.
+            </summary>
+            <remarks>All trigonometrical functions assume the input is in radians.</remarks>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing a number.</param>
+            <returns>A token containing the sine of the input.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.MathTan(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Implements the tangent function
+            </summary>
+            <remarks>All trigonometrical functions assume the input is in radians.</remarks>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing a number.</param>
+            <returns>A token containing the tangent of the input.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.BoolAnd(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Performs a boolean AND operation on the elements of a list.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing a list.</param>
+            <returns><c>true</c> if all elements in the input list evaluate to <c>true</c>, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.MathAbs(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Returns the absolute value of a number.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="input">Should contain one token containing a number.</param>
+            <returns>The absolute value of the input.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.ReturnPi(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Returns π.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="dummy">Not used.</param>
+            <returns>A token containing the number π.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.Recycle(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Calls the runtime garbage collector.  Largely implemented for nostalgia purposes.
+            </summary>
+            <param name="contaxt">Not used.</param>
+            <param name="input">Not used.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.SpaceUsed(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Returns the total amount of system memory used by the running process.  Largely implemented for nostalgia purposes.
+            </summary>
+            <param name="context">Not used.</param>
+            <param name="input">Not used.</param>
+            <returns>A token containing the bytes used by the running process.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.Print(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Outputs the first parameter token to the context's output writer, followed by a new line.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="output">Should contain one token whose value is to be printed.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.Nodes(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Prints the total number of defined procedures and the number of distinct procedure names and aliases in the interpretor context, to the context's output writer.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="dummy">Not used.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.OutputHelpText(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Prints the example text and help text for the given procedure or alias, to the context's output writer.
+            </summary>
+            <remarks>If the user has asked for help about the help command, by entering <c>help "help</c>, also prints a list of all procedures.</remarks>
+            <param name="context">The interpretor context.</param>
+            <param name="cmd">Should contain one token containing a string.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.Repeat(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Executes a list of instructions a defined number of times.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="parameters">Should contain two tokens: the first should be the number of times to repeat the instruction list, and the second should be that list.</param>
+            <returns><c>null</c></returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.Count(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Gives the length of a list or string.
+            </summary>
+            <param name="context">The intepretor context.</param>
+            <param name="parameters">Should contain a single token, either a list or a string.</param>
+            <returns>A token containing the number of elements (characters or list items) in the input token.</returns>
+        </member>
+        <member name="M:Logo.Procedures.CoreCommands.Difference(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            Subtracts one number from another.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="parameters">Should contain two tokens, both numbers.</param>
+            <returns>A token containing the difference between the two numbers.</returns>
+        </member>
+        <member name="T:Logo.Procedures.ICommandModule">
+            <summary>
+            The interface for classes which implement Logo commands in .NET.
+            </summary>
+        </member>
+        <member name="M:Logo.Procedures.ICommandModule.RegisterProcedures">
+            <summary>
+            Provide definitions of the procedures implemented by this class.
+            </summary>
+            <returns>A list of procedure definitions.</returns>
+        </member>
+        <member name="T:Logo.Procedures.LogoCommand">
+            <summary>
+            A <c>LogoCommand</c> is a subclass of <c>LogoProcedure</c> which represents a procedure implemented in .NET code.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoCommand.Implementation">
+            <summary>
+            The reference to the delegate which is called to execute the command.
+            </summary>
+        </member>
+        <member name="T:Logo.Procedures.LogoDefinition">
+            <summary>
+            A subclass of <c>LogoProcedure</c> which represents a procedure defined within Logo itself (using the <c>to PROCEDURE</c> command).
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoDefinition.Parameters">
+            <summary>
+            The list of parameter names of this procedure.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoDefinition.TokenisedDefinition">
+            <summary>
+            The procedure definition, pre-interpreted into a list of tokens to be executed at runtime.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoDefinition.RawDefinition">
+            <summary>
+            The raw text of the procedure definition, so that it can be edited and reloaded later if required.
+            </summary>
+        </member>
+        <member name="M:Logo.Procedures.LogoDefinition.Execute(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
+            <summary>
+            The method which executes this procedure's code.
+            </summary>
+            <param name="context">The interpretor context.</param>
+            <param name="parameters">The parameters to the procedure.</param>
+            <returns>A token containing the procedure output, or <c>null</c>.</returns>
+        </member>
+        <member name="M:Logo.Procedures.LogoDefinition.#ctor(System.String,System.Collections.Generic.List{Logo.Tokens.Token})">
+            <summary>
+            The constructor for the <c>LogoDefinition</c> class builds a procedure definition from a list of tokens.
+            </summary>
+            <remarks>
+            If the definition starts with one or more variables, these are used as the formal parameters of the procedure.  If the next token is a comment, that comment is used as the
+            interactive help text for the procedure.  The remaining tokens are used as the executable code of the procedure.
+            </remarks>
+            <param name="rawCode">The original input text, saved so that it can be edited later.</param>
+            <param name="tokens">The tokenised code of the procedure.</param>
+        </member>
+        <member name="T:Logo.Procedures.LogoProcedure">
+            <summary>
+            The <c>LogoProcedure</c> class provides the definition of a generic Logo procedure, either implemented in .NET or implemented in Logo (whether built-in or user-defined).
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoProcedure.Name">
+            <summary>
+            The primary name of the procedure.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoProcedure.Aliases">
+            <summary>
+            A list of alternative names that can also be used to call this procedure, such as "fd" for "forward".  At present these can only be defined for .NET-implemented commands.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoProcedure.ParameterCount">
+            <summary>
+            The number of formal parameters of this procedure.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoProcedure.Redefinability">
+            <summary>
+            Indicates whether or not subsequently-loaded commands can replace this one.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoProcedure.HelpText">
+            <summary>
+            Text to be printed out by the <c>help</c> command to explain what this procedure does.
+            </summary>
+        </member>
+        <member name="P:Logo.Procedures.LogoProcedure.ExampleText">
+            <summary>
+            Text to be printed out by the <c>help</c> command to indicate the syntax for calling this procedure.
+            </summary>
+        </member>
+        <member name="T:Logo.Procedures.RedefinabilityType">
+            <summary>
+            Indicates whether or not a procedure can have its definition altered or replaced.
+            </summary>
+        </member>
+        <member name="F:Logo.Procedures.RedefinabilityType.NonRedefinable">
+            <summary>
+            The procedure cannot be replaced once defined.
+            </summary>
+        </member>
+        <member name="F:Logo.Procedures.RedefinabilityType.DefineAlongside">
+            <summary>
+            Enable other modules to provide a parallel implementation of this procedure.
+            </summary>
+        </member>
+        <member name="F:Logo.Procedures.RedefinabilityType.Replace">
+            <summary>
+            Enable other modules or user-defined code to replace this procedure entirely with a new definition.
+            </summary>
+        </member>
+        <member name="T:Logo.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAbsExampleText">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAbsHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the absolute (positive) value of a number..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAbsWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use abs on numbers..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAndExampleText">
+            <summary>
+              Looks up a localized string similar to [list].
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAndHelpText">
+            <summary>
+              Looks up a localized string similar to Returns &apos;true&apos; if everything in the list is true..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAndWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use and on lists..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandArctanExampleText">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandArctanHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the arctangent value of a number..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandArctanWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use arctan on numbers..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAsciiExampleText">
+            <summary>
+              Looks up a localized string similar to word.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAsciiHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the ASCII number of the first letter of the word..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandAsciiWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use ascii on a string..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandButfirstExampleText">
+            <summary>
+              Looks up a localized string similar to [list].
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandButfirstHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the list, without its first item..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandButfirstWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can&apos;t use butfirst on something that isn&apos;t a list..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandButlastExampleText">
+            <summary>
+              Looks up a localized string similar to [list].
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandButlastHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the list, without its last item..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandButlastWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can&apos;t use butlast on something that isn&apos;t a list..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCharExampleText">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCharHelpText">
+            <summary>
+              Looks up a localized string similar to Converts the number to a letter..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCharWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use char on a number..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandClearnameExampleText">
+            <summary>
+              Looks up a localized string similar to &quot;A.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandClearnameHelpText">
+            <summary>
+              Looks up a localized string similar to Makes me forget variable A..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandClearnamesHelpText">
+            <summary>
+              Looks up a localized string similar to Makes me forget all variables..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCosExampleText">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCosHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the cosine of a number..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCosWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use cos on numbers..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCountExampleText">
+            <summary>
+              Looks up a localized string similar to [list] or word.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandCountHelpText">
+            <summary>
+              Looks up a localized string similar to Counts the number of things in a list or the number of letters in a word..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandDifferenceExampleText">
+            <summary>
+              Looks up a localized string similar to X Y.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandDifferenceHelpText">
+            <summary>
+              Looks up a localized string similar to Takes Y from X..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandDifferenceTypeError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to take that kind of thing from that..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandHelpActionCountOutput">
+            <summary>
+              Looks up a localized string similar to {0} does {1} things..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandHelpExampleText">
+            <summary>
+              Looks up a localized string similar to &quot;something.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandHelpHeadingOutput">
+            <summary>
+              Looks up a localized string similar to This is what I currently know how to do:.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandHelpHelpText">
+            <summary>
+              Looks up a localized string similar to Prints out information on what something does..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandHelpUnknownProcedureError">
+            <summary>
+              Looks up a localized string similar to I can&apos;t give you help with {0} because I don&apos;t know how to do it..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandMakeEndDebugMessage">
+            <summary>
+              Looks up a localized string similar to ...{0} to {1}.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandMakeExampleText">
+            <summary>
+              Looks up a localized string similar to &quot;A B.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandMakeHelpText">
+            <summary>
+              Looks up a localized string similar to Sets variable A to value B..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandMakeStartDebugMessage">
+            <summary>
+              Looks up a localized string similar to Setting variable....
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandNodesHelpText">
+            <summary>
+              Looks up a localized string similar to Prints out how many things I can do..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandNodesOutput">
+            <summary>
+              Looks up a localized string similar to There are {0} procedures and {1} procedure names..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandPiHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the number Pi (3.14159...)..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandPrintExampleText">
+            <summary>
+              Looks up a localized string similar to [list].
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandPrintHelpText">
+            <summary>
+              Looks up a localized string similar to Prints the contents of a list..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandRecycleHelpText">
+            <summary>
+              Looks up a localized string similar to Recycles spare space that I was using..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandRepeatExampleText">
+            <summary>
+              Looks up a localized string similar to X [list].
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandRepeatHelpText">
+            <summary>
+              Looks up a localized string similar to Performs a list of things, X number of times..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandRepeatWrongListTypeError">
+            <summary>
+              Looks up a localized string similar to I can only repeat a list of things..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandRepeatWrongRepeatTypeError">
+            <summary>
+              Looks up a localized string similar to I need to know how many times to repeat something..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandSinExampleText">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandSinHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the sine of a number..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandSinWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use sin on numbers..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandSpaceHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the amount of space I am using..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandTanExampleText">
+            <summary>
+              Looks up a localized string similar to number.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandTanHelpText">
+            <summary>
+              Looks up a localized string similar to Returns the tangent of a number..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.CommandTanWrongTypeError">
+            <summary>
+              Looks up a localized string similar to I can only use tan on numbers..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.ExpressionConstructorIncompleteError">
+            <summary>
+              Looks up a localized string similar to I couldn&apos;t understand your expression &apos;{0}&apos; because something inside it wasn&apos;t finished..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorDefineProcedureProcedureIsNonRedefinableError">
+            <summary>
+              Looks up a localized string similar to You can&apos;t tell me how to do {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorDumpTokenOutput">
+            <summary>
+              Looks up a localized string similar to {0}Token: type {1}, literal value &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateExpressionContentsIncompleteContentsError">
+            <summary>
+              Looks up a localized string similar to Your expression &apos;{0}&apos; contained something that was incomplete, so I couldn&apos;t work out what it meant..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateExpressionDebugMessage">
+            <summary>
+              Looks up a localized string similar to Evaluating expression {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateExpressionEndsWithOperatorError">
+            <summary>
+              Looks up a localized string similar to I couldn&apos;t see anything after your &apos;{0}&apos; sign in &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateExpressionGeneralError">
+            <summary>
+              Looks up a localized string similar to I couldn&apos;t work out how to understand &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateExpressionStartsWithOperatorError">
+            <summary>
+              Looks up a localized string similar to I couldn&apos;t see anything before your &apos;{0}&apos; sign in &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateListContentsDebugMessage">
+            <summary>
+              Looks up a localized string similar to Evaluating list {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorEvaluateListIncompleteContentsError">
+            <summary>
+              Looks up a localized string similar to Your list &apos;{0}&apos; contained something that was incomplete, so I couldn&apos;t work out what it meant..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorExecuteTokenBufferCannotExecuteBareExpressionError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know what to do with the expression {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorExecuteTokenBufferCannotExecuteBareListError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know what to do with the list {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorExecuteWordUndefinedProcedureError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorInterpretProcedureIsNonRedefinableError">
+            <summary>
+              Looks up a localized string similar to You can&apos;t tell me how to do that..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorInterpretTokenCountDebugMessage">
+            <summary>
+              Looks up a localized string similar to {0} tokens returned by tokeniser..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorInterpretTokeniserResultDebugMessage">
+            <summary>
+              Looks up a localized string similar to Tokeniser result was: {0}..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorLoadedModuleDebugMessage">
+            <summary>
+              Looks up a localized string similar to Loaded module {0}.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorModuleLoadingDebugMessage">
+            <summary>
+              Looks up a localized string similar to Loading module {0} from assembly {1}.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorRegisteredProcedureDebugMessage">
+            <summary>
+              Looks up a localized string similar to Registered procedure {0}.
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.InterpretorWelcomeMessage">
+            <summary>
+              Looks up a localized string similar to Hello.  This is Vinedale..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.ListConstructorIncompleteError">
+            <summary>
+              Looks up a localized string similar to I couldn&apos;t understand your list &apos;{0}&apos; because something inside it wasn&apos;t finished..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.OperatorAdditionTypeError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to add those kinds of things together..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.OperatorDivisionTypeError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to divide that kind of thing by that..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.OperatorMultiplicationTypeError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to multiply those kinds of things together..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.OperatorSubtractionTypeError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to take that kind of thing from that..
+            </summary>
+        </member>
+        <member name="P:Logo.Resources.Strings.OperatorUnknownOperationError">
+            <summary>
+              Looks up a localized string similar to I don&apos;t know how to do that kind of operation..
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.ContainerToken">
+            <summary>
+            A type of <c>LogoToken</c> which contains zero or more other tokens, such as a list or an expression.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.ContainerToken.InnerContents">
+            <summary>
+            The tokens contained within this token.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.ContainerToken.#ctor">
+            <summary>
+            The default constructor for this class initialises the <c>InnerContents</c> property to be an empty list of tokens.
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.LogoComment">
+            <summary>
+            A token which contains only comments.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoComment.Clone">
+            <summary>
+            Create a copy of this token.
+            </summary>
+            <returns>A token equal to this one.</returns>
+        </member>
+        <member name="T:Logo.Tokens.LogoExpression">
+            <summary>
+            A token which represents an expression.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoExpression.#ctor(System.String)">
+            <summary>
+            The standard constructor for this class builds a list of tokens from an input string.
+            </summary>
+            <param name="literal">The input to be tokenised.</param>
+        </member>
+        <member name="M:Logo.Tokens.LogoExpression.Clone">
+            <summary>
+            Produce a copy of this token.
+            </summary>
+            <returns>A token which is identical to this one.</returns>
+        </member>
+        <member name="T:Logo.Tokens.LogoList">
+            <summary>
+            A type of token which consists of a list of other tokens.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.LogoList.EvaluatedContents">
+            <summary>
+            This property is false unless all of the tokens that this token contains have also been evaluated.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoList.#ctor(System.String)">
+            <summary>
+            Construct a <c>LogoList</c> token from an input string.
+            </summary>
+            <param name="literal">The input string to be tokenised.</param>
+        </member>
+        <member name="M:Logo.Tokens.LogoList.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoList.Clone">
+            <summary>
+            Create a copy of this token.
+            </summary>
+            <returns>A token identical to this token.</returns>
+        </member>
+        <member name="T:Logo.Tokens.LogoOperator">
+            <summary>
+            A token representating an operator within an expression.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.LogoOperator.Operation">
+            <summary>
+            The kind of operation which this token represents.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoOperator.#ctor">
+            <summary>
+            The default constructor.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoOperator.#ctor(System.String)">
+            <summary>
+            Constructs a token from an input string.
+            </summary>
+            <remarks>The input to this constructor should be a single-character string consisting of an operator symbol.</remarks>
+            <param name="sym">The symbol to build a token from.</param>
+        </member>
+        <member name="M:Logo.Tokens.LogoOperator.Clone">
+            <summary>
+            Produce a copy of this token.
+            </summary>
+            <returns>A token identical to this one.</returns>
+        </member>
+        <member name="M:Logo.Tokens.LogoOperator.Perform(Logo.Tokens.Token[])">
+            <summary>
+            Carry out the computation represented by this operator.  The <c>TokenValue</c> property of this token is set to the result of the computation.
+            </summary>
+            <param name="args">The operator's arguments.</param>
+            <returns>An <c>OperatorEvaluationResult</c> indicating success or failure and containing any error messages.</returns>
+        </member>
+        <member name="T:Logo.Tokens.LogoValue">
+            <summary>
+            A struct representing a loosely typed data value.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.#ctor(Logo.Tokens.LogoValueType,System.Object)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="type">The type of the value.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="P:Logo.Tokens.LogoValue.Type">
+            <summary>
+            The kind of value that this struct contains.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.LogoValue.Value">
+            <summary>
+            The object which encapsulates the actual value.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.Equals(System.Object)">
+            <summary>
+            Equality testing method.
+            </summary>
+            <param name="obj">An object to compare with.</param>
+            <returns>True if the other object equals this value, false if it does not.</returns>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.Equals(Logo.Tokens.LogoValue)">
+            <summary>
+            Equality testing method.
+            </summary>
+            <param name="v">Another <see cref="T:Logo.Tokens.LogoValue" /> to compare against.</param>
+            <returns>True if the other value equals this one, false if it does not.</returns>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.GetHashCode">
+            <summary>
+            Generate a hash code for this value.
+            </summary>
+            <returns>Returns the hash code of the underlying value, or a fixed hash code if the underlying value is null.</returns>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.op_Equality(Logo.Tokens.LogoValue,Logo.Tokens.LogoValue)">
+            <summary>
+            Equality operator.
+            </summary>
+            <param name="a">A <see cref="T:Logo.Tokens.LogoValue" />.</param>
+            <param name="b">A second <see cref="T:Logo.Tokens.LogoValue" />.</param>
+            <returns>True if the two parameters are equal, false if not.</returns>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.op_Inequality(Logo.Tokens.LogoValue,Logo.Tokens.LogoValue)">
+            <summary>
+            Inequality operator
+            </summary>
+            <param name="a">A <see cref="T:Logo.Tokens.LogoValue" />.</param>
+            <param name="b">A second <see cref="T:Logo.Tokens.LogoValue" />.</param>
+            <returns>True if the two parameters are not equal, false if they are.</returns>
+        </member>
+        <member name="M:Logo.Tokens.LogoValue.GetDefaultValue(System.ValueType)">
+            <summary>
+            Gets a default-valued <see cref="T:Logo.Tokens.LogoValue" /> for a given <see cref="T:Logo.Tokens.LogoValueType" />.
+            </summary>
+            <param name="type">The type of value to return a default for.</param>
+            <returns>A <see cref="T:Logo.Tokens.LogoValue" /> object of the given <see cref="T:Logo.Tokens.LogoValueType" />.</returns>
+        </member>
+        <member name="T:Logo.Tokens.LogoValueType">
+            <summary>
+            The possible data types of the value of a variable or result in Logo.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.Unknown">
+            <summary>
+            The data type of an undefined variable.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.Bool">
+            <summary>
+            Boolean.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.Text">
+            <summary>
+            String.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.Number">
+            <summary>
+            Numeric data.  Internally stored as the .NET <c>decimal</c> type.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.Word">
+            <summary>
+            Word.  Represents a Logo procedure, command, variable or constant.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.List">
+            <summary>
+            A list of tokens or values.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.LogoValueType.Parcel">
+            <summary>
+            An external object.  Used to pass around, for example, references to implementation objects such as turtles or windows.
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.OperatorEvaluationResult">
+            <summary>
+            Encapsulates the results of operator evaluation.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.OperatorEvaluationResult.Result">
+            <summary>
+            The success or failure of operator evaluation.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.OperatorEvaluationResult.Message">
+            <summary>
+            Any error message generated by operator evaluation.
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.OperatorType">
+            <summary>
+            The operator types supported in the language.
+            </summary>
+            <remarks>The integer values of the enum define the operator precedence order, with the lowest enum value being the highest-precedence operator.</remarks>
+        </member>
+        <member name="F:Logo.Tokens.OperatorType.Multiply">
+            <summary>
+            Multiplication.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.OperatorType.Divide">
+            <summary>
+            Division.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.OperatorType.Add">
+            <summary>
+            Addition.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.OperatorType.Subtract">
+            <summary>
+            Subtraction.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.OperatorType.Equals">
+            <summary>
+            Equality testing.
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.Token">
+            <summary>
+            The parent class of all Logo input tokens.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.Token.Literal">
+            <summary>
+            A textual representation of this token, such as the text originally entered by the user.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.Token.Evaluated">
+            <summary>
+            Whether this token has already had its value computed.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.Token.TokenValue">
+            <summary>
+            The value of this token.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.Token.Clone">
+            <summary>
+            Produces a copy of this token.
+            </summary>
+            <returns>A token identical to this one.</returns>
+        </member>
+        <member name="M:Logo.Tokens.Token.TokeniseString(System.String)">
+            <summary>
+            Convert an input string into a list of tokens.
+            </summary>
+            <param name="input">The input text to be tokenised.</param>
+            <returns>A <c>TokeniserResult</c> containing the list of output tokens, and information on the state of the tokeniser on completion.</returns>
+        </member>
+        <member name="T:Logo.Tokens.TokeniserException">
+            <summary>
+            An <c>Exception</c> subclass representing exceptions occurring during tokenisation.
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.TokeniserException.#ctor(System.String)">
+            <summary>
+            The sole constructor for this class.
+            </summary>
+            <param name="message">The error message to be used to populate the <c>Message</c> property.</param>
+        </member>
+        <member name="T:Logo.Tokens.TokeniserResult">
+            <summary>
+            A class that encapsulates the results and output of tokenisation.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.TokeniserResult.ResultType">
+            <summary>
+            The overall result of tokenisation, in terms of success, failure; completeness and incompleteness.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.TokeniserResult.TokenisedData">
+            <summary>
+            The list of tokens produced by tokenisation.
+            </summary>
+        </member>
+        <member name="P:Logo.Tokens.TokeniserResult.NonConsumedInput">
+            <summary>
+            Any remaining input which was not able to be processed by tokenisation.  If the <c>ResultType</c> is <c>TokeniserResultType.SuccessComplete</c>, this should be an empty string.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.TokeniserResult.ErrorMessage">
+            <summary>
+            Any error message produced by tokenisation.
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.TokeniserResultType">
+            <summary>
+            The possible result states of tokenisation.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.TokeniserResultType.SuccessComplete">
+            <summary>
+            All input was successfully tokenised and produced a complete token list.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.TokeniserResultType.SuccessIncomplete">
+            <summary>
+            Input was successfully tokenised, but the token list is incomplete and cannot be executed.
+            </summary>
+        </member>
+        <member name="F:Logo.Tokens.TokeniserResultType.Failure">
+            <summary>
+            Input was not successfully tokenised.
+            </summary>
+        </member>
+        <member name="T:Logo.Tokens.Word">
+            <summary>
+            A token representing a "word".
+            </summary>
+        </member>
+        <member name="M:Logo.Tokens.Word.Clone">
+            <summary>
+            Create a copy of this token.
+            </summary>
+            <returns>A token equal to this one.</returns>
+        </member>
+    </members>
+</doc>

@@ -84,19 +84,19 @@ namespace Logo.Tokens
         {
             if (args[0].TokenValue.Type == args[1].TokenValue.Type && args[0].TokenValue.Type == LogoValueType.Number)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)args[0].TokenValue.Value + (decimal)args[1].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Number, (decimal)args[0].TokenValue.Value + (decimal)args[1].TokenValue.Value);
             }
             else if (args[0].TokenValue.Type == args[1].TokenValue.Type && args[0].TokenValue.Type == LogoValueType.Text)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Text, Value = (string)args[0].TokenValue.Value + (string)args[1].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Text, (string)args[0].TokenValue.Value + (string)args[1].TokenValue.Value);
             }
             else if (args[0].TokenValue.Type == LogoValueType.Text && args[1].TokenValue.Type == LogoValueType.Number)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Text, Value = (string)args[0].TokenValue.Value + (decimal)args[1].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Text, (string)args[0].TokenValue.Value + (decimal)args[1].TokenValue.Value);
             }
             else if (args[0].TokenValue.Type == LogoValueType.Number && args[1].TokenValue.Type == LogoValueType.Text)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Text, Value = (string)args[1].TokenValue.Value + (decimal)args[0].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Text, (string)args[1].TokenValue.Value + (decimal)args[0].TokenValue.Value);
             }
             else
             {
@@ -110,7 +110,7 @@ namespace Logo.Tokens
         {
             if (args[0].TokenValue.Type == args[1].TokenValue.Type && args[0].TokenValue.Type == LogoValueType.Number)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)args[0].TokenValue.Value - (decimal)args[1].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Number, (decimal)args[0].TokenValue.Value - (decimal)args[1].TokenValue.Value);
             }
             else
             {
@@ -124,7 +124,7 @@ namespace Logo.Tokens
         {
             if (args[0].TokenValue.Type == args[1].TokenValue.Type && args[0].TokenValue.Type == LogoValueType.Number)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)args[0].TokenValue.Value * (decimal)args[1].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Number, (decimal)args[0].TokenValue.Value * (decimal)args[1].TokenValue.Value);
             }
             else
             {
@@ -138,7 +138,7 @@ namespace Logo.Tokens
         {
             if (args[0].TokenValue.Type == args[1].TokenValue.Type && args[0].TokenValue.Type == LogoValueType.Number)
             {
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)args[0].TokenValue.Value / (decimal)args[1].TokenValue.Value };
+                TokenValue = new LogoValue(LogoValueType.Number, (decimal)args[0].TokenValue.Value / (decimal)args[1].TokenValue.Value);
             }
             else
             {
