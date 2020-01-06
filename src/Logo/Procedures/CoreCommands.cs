@@ -263,7 +263,7 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "char",
-                TokenValue = new LogoValue { Type = LogoValueType.Text, Value = Encoding.ASCII.GetString(new[] { Convert.ToByte(input[0].TokenValue.Value) }) }
+                TokenValue = new LogoValue(LogoValueType.Text, Encoding.ASCII.GetString(new[] { Convert.ToByte(input[0].TokenValue.Value) })),
             };
         }
 
@@ -283,13 +283,13 @@ namespace Logo.Procedures
             }
             if (string.IsNullOrEmpty((string)input[0].TokenValue.Value))
             {
-                return new Token { Evaluated = true, Literal = "", TokenValue = new LogoValue { Type = LogoValueType.Number, Value = 0 } };
+                return new Token { Evaluated = true, Literal = "", TokenValue = new LogoValue(LogoValueType.Number, 0) };
             }
             return new Token
             {
                 Evaluated = true,
                 Literal = "ascii",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = Encoding.ASCII.GetBytes((string)input[0].TokenValue.Value)[0] }
+                TokenValue = new LogoValue(LogoValueType.Number, Encoding.ASCII.GetBytes((string)input[0].TokenValue.Value)[0]),
             };
         }
 
@@ -317,7 +317,7 @@ namespace Logo.Procedures
                 clonedList = (LogoList)input[0].TokenValue.Value;
             }
             clonedList.InnerContents.RemoveAt(0);
-            clonedList.TokenValue = new LogoValue { Type = LogoValueType.List, Value = clonedList.Clone() };
+            clonedList.TokenValue = new LogoValue(LogoValueType.List, clonedList.Clone());
             clonedList.RecreateLiteralValue();
             return clonedList;
         }
@@ -346,7 +346,7 @@ namespace Logo.Procedures
                 clonedList = (LogoList)input[0].TokenValue.Value;
             }
             clonedList.InnerContents.RemoveAt(clonedList.InnerContents.Count - 1);
-            clonedList.TokenValue = new LogoValue { Type = LogoValueType.List, Value = clonedList.Clone() };
+            clonedList.TokenValue = new LogoValue(LogoValueType.List, clonedList.Clone());
             clonedList.RecreateLiteralValue();
             return clonedList;
         }
@@ -368,7 +368,7 @@ namespace Logo.Procedures
             }
             else if (input[1].GetType() == typeof(LogoList))
             {
-                context.SetVariable((string)input[0].TokenValue.Value, new LogoValue { Type = LogoValueType.List, Value = input[1] });
+                context.SetVariable((string)input[0].TokenValue.Value, new LogoValue(LogoValueType.List, input[1]));
             }
             else
             {
@@ -426,7 +426,7 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "cos",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].TokenValue.Value))) }
+                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
             };
         }
 
@@ -449,7 +449,7 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "arctan",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].TokenValue.Value))) }
+                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
             };
         }
 
@@ -472,7 +472,7 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "sin",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].TokenValue.Value))) }
+                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
             };
         }
 
@@ -495,7 +495,7 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "tan",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].TokenValue.Value))) }
+                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
             };
         }
 
@@ -520,12 +520,8 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "and",
-                TokenValue = new LogoValue
-                {
-                    Type = LogoValueType.Bool,
-                    Value = (inputList.InnerContents.Count > 0) && inputList.InnerContents.All(t => t.TokenValue.Type == LogoValueType.Bool) && 
-                        inputList.InnerContents.All(t => (bool)t.TokenValue.Value)
-                }
+                TokenValue = new LogoValue(LogoValueType.Bool, 
+                    (inputList.InnerContents.Count > 0) && inputList.InnerContents.All(t => t.TokenValue.Type == LogoValueType.Bool) && inputList.InnerContents.All(t => (bool)t.TokenValue.Value)),
             };
         }
 
@@ -543,7 +539,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandAbsWrongTypeError);
                 return null;
             }
-            return new Token { Evaluated = true, Literal = "abs", TokenValue = new LogoValue { Type = LogoValueType.Number, Value = Math.Abs((decimal)input[0].TokenValue.Value) } };
+            return new Token { Evaluated = true, Literal = "abs", TokenValue = new LogoValue(LogoValueType.Number, Math.Abs((decimal)input[0].TokenValue.Value))};
         }
 
 
@@ -555,7 +551,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the number π.</returns>
         public Token ReturnPi(InterpretorContext context, params Token[] dummy)
         {
-            return new Token { Evaluated = true, Literal = Math.PI.ToString(CultureInfo.InvariantCulture), TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)Math.PI } };
+            return new Token { Evaluated = true, Literal = Math.PI.ToString(CultureInfo.InvariantCulture), TokenValue = new LogoValue(LogoValueType.Number, (decimal)Math.PI)};
         }
 
 
@@ -580,7 +576,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the bytes used by the running process.</returns>
         public Token SpaceUsed(InterpretorContext context, params Token[] input)
         {
-            LogoValue val = new LogoValue { Type = LogoValueType.Number, Value = (decimal)GC.GetTotalMemory(false) };
+            LogoValue val = new LogoValue(LogoValueType.Number, (decimal)GC.GetTotalMemory(false));
             return new Token { Evaluated = true, Literal = "space", TokenValue = val };
         }
 
@@ -714,7 +710,7 @@ namespace Logo.Procedures
                 {
                     Evaluated = true,
                     Literal = "count",
-                    TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)(parameters[0].TokenValue.Value as string).Length }
+                    TokenValue = new LogoValue(LogoValueType.Number, (decimal)(parameters[0].TokenValue.Value as string).Length),
                 };
             else if (parameters[0].TokenValue.Type == LogoValueType.List)
             {
@@ -722,14 +718,14 @@ namespace Logo.Procedures
                 {
                     Evaluated = true,
                     Literal = "count",
-                    TokenValue = new LogoValue { Type = LogoValueType.Number, Value = (decimal)(parameters[0].TokenValue.Value as LogoList).InnerContents.Count }
+                    TokenValue = new LogoValue(LogoValueType.Number, (decimal)(parameters[0].TokenValue.Value as LogoList).InnerContents.Count),
                 };
             }
             return new Token
             {
                 Evaluated = true,
                 Literal = "count",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = 1m }
+                TokenValue = new LogoValue(LogoValueType.Number, 1m),
             };
         }
 
@@ -751,7 +747,7 @@ namespace Logo.Procedures
             {
                 Evaluated = true,
                 Literal = "difference",
-                TokenValue = new LogoValue { Type = LogoValueType.Number, Value = ((decimal)parameters[0].TokenValue.Value) - ((decimal)parameters[1].TokenValue.Value) },
+                TokenValue = new LogoValue(LogoValueType.Number, ((decimal)parameters[0].TokenValue.Value) - ((decimal)parameters[1].TokenValue.Value)),
             };
         }
     }

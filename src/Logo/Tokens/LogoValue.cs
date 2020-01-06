@@ -8,14 +8,25 @@ namespace Logo.Tokens
     public struct LogoValue : IEquatable<LogoValue>
     {
         /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="type">The type of the value.</param>
+        /// <param name="value">The value.</param>
+        public LogoValue(LogoValueType type, object value)
+        {
+            Type = type;
+            Value = value;
+        }
+
+        /// <summary>
         /// The kind of value that this struct contains.
         /// </summary>
-        public LogoValueType Type { get; set; }
+        public LogoValueType Type { get; private set; }
 
         /// <summary>
         /// The object which encapsulates the actual value.
         /// </summary>
-        public object Value { get; set; }
+        public object Value { get; private set; }
 
         /// <summary>
         /// Equality testing method.
