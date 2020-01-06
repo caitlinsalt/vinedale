@@ -20,7 +20,7 @@ namespace Logo.Tokens
         {
             get
             {
-                return _evalContents && InnerContents.All(t => t.Evaluated);
+                return _evalContents && Contents.All(t => t.Evaluated);
             }
             set
             {
@@ -41,7 +41,7 @@ namespace Logo.Tokens
             {
                 throw new TokeniserException(string.Format(Strings.ListConstructorIncompleteError, literal));
             }
-            InnerContents.AddRange(r.TokenisedData);
+            Contents.AddRange(r.TokenisedData);
         }
 
         /// <summary>
@@ -56,13 +56,13 @@ namespace Logo.Tokens
         public override Token Clone()
         {
             LogoList newList = new LogoList() { Evaluated = Evaluated, Literal = Literal };
-            newList.InnerContents.AddRange(InnerContents.Select(t => t.Clone()));
+            newList.Contents.AddRange(Contents.Select(t => t.Clone()));
             return newList;
         }
 
         internal void RecreateLiteralValue()
         {
-            Literal = "[" + string.Join(" ", InnerContents.Select(t => t.Literal)) + "]";
+            Literal = "[" + string.Join(" ", Contents.Select(t => t.Literal)) + "]";
         }
     }
 }

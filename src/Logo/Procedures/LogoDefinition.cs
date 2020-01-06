@@ -36,11 +36,11 @@ namespace Logo.Procedures
             context.StackFrameCreate(parameters.Select((p, i) => new Token { Evaluated = true, Literal = Parameters[i], TokenValue = p.TokenValue }).ToArray());
             LogoList runList = (LogoList)TokenisedDefinition.Clone();
             InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
-            if (result != InterpretationResult.SuccessComplete || runList.InnerContents.Count == 0)
+            if (result != InterpretationResult.SuccessComplete || runList.Contents.Count == 0)
             {
                 return null;
             }
-            return new Token { Evaluated = true, Literal = RawDefinition, TokenValue = runList.InnerContents.Last().TokenValue };
+            return new Token { Evaluated = true, Literal = RawDefinition, TokenValue = runList.Contents.Last().TokenValue };
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Logo.Procedures
             TokenisedDefinition = new LogoList { Evaluated = false, Literal = RawDefinition };
             for (int i = paramIdx; i < tokens.Count - 1; ++i)
             {
-                TokenisedDefinition.InnerContents.Add(tokens[i]);
+                TokenisedDefinition.Contents.Add(tokens[i]);
             }
         }
     }
