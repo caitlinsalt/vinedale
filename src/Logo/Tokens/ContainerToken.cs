@@ -10,14 +10,14 @@ namespace Logo.Tokens
         /// <summary>
         /// The tokens contained within this token.
         /// </summary>
-        public List<Token> InnerContents { get; set; }
+        public List<Token> Contents { get; private set; }
 
         /// <summary>
         /// The default constructor for this class initialises the <c>InnerContents</c> property to be an empty list of tokens.
         /// </summary>
         public ContainerToken()
         {
-            InnerContents = new List<Token>();
+            Contents = new List<Token>();
         }
     }
 }
