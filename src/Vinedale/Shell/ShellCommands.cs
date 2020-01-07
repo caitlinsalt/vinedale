@@ -40,7 +40,7 @@ namespace Vinedale.Shell
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Not used.</param>
         /// <returns><c>null</c></returns>
-        public static Token SysExit(InterpretorContext context, params Token[] input)
+        public static Token SysExit(InterpretorContext context, params LogoValue[] input)
         {
             Environment.Exit(0);
             return null;

@@ -1,0 +1,65 @@
+﻿using Logo.Interpretation;
+using Logo.Resources;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+
+namespace Logo.Tokens
+{
+    /// <summary>
+    /// A type of token which consists of a list of other tokens.
+    /// </summary>
+    public class ListToken : ContainerToken
+    {
+        //private bool _evalContents;
+
+        /// <summary>
+        /// This property is false unless all of the tokens that this token contains have also been evaluated.
+        /// </summary>
+        //public bool EvaluatedContents
+        //{
+        //    get
+        //    {
+        //        return _evalContents && Contents.All(t => t.Evaluated);
+        //    }
+        //    set
+        //    {
+        //        _evalContents = value;
+        //    }
+        //}
+
+        /// <summary>
+        /// Construct a <c>LogoList</c> token from an input string.
+        /// </summary>
+        /// <param name="text">The input string to be tokenised.</param>
+        public ListToken(string text, bool parse = true) : base(text)
+        {
+            if (parse)
+            {
+                TokeniserResult r = Tokeniser.TokeniseString(text.Substring(1, text.Length - 2));
+                if (r.ResultType == TokeniserResultType.SuccessIncomplete)
+                {
+                    throw new TokeniserException(string.Format(CultureInfo.CurrentCulture, Strings.ListConstructorIncompleteError, text));
+                }
+                Contents.AddRange(r.TokenisedData);
+            }
+        }
+
+        public ListToken(IList<Token> contents) : base(CreateText(contents))
+        {
+            Contents.AddRange(contents);
+        }
+
+        public override LogoValue Evaluate(InterpretorContext context)
+        {
+            return new LogoValue(LogoValueType.List, new ListToken(Contents));
+        }
+
+        private static string CreateText(IList<Token> fromTokens)
+        {
+            return "[" + string.Join(" ", fromTokens.Select(t => t is LiteralToken literal ? literal.Value.ToString() : t.Text)) + "]";
+        }
+    }
+}

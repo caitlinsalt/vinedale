@@ -1,32 +1,36 @@
-﻿namespace Logo.Tokens
+﻿using Logo.Interpretation;
+
+namespace Logo.Tokens
 {
     /// <summary>
     /// The parent class of all Logo input tokens.
     /// </summary>
-    public class Token
+    public abstract class Token
     {
         /// <summary>
         /// A textual representation of this token, such as the text originally entered by the user.
         /// </summary>
-        public string Literal { get; set; }
+        public string Text { get; private set; }
 
         /// <summary>
         /// Whether this token has already had its value computed.
         /// </summary>
-        public virtual bool Evaluated { get; set; }
+        //public virtual bool Evaluated { get; set; }
 
         /// <summary>
         /// The value of this token.
         /// </summary>
-        public LogoValue TokenValue { get; set; }
+        //public LogoValue TokenValue { get; set; }
+
+        public abstract LogoValue Evaluate(InterpretorContext context);
 
         /// <summary>
-        /// Produces a copy of this token.
+        /// Constructor.
         /// </summary>
-        /// <returns>A token identical to this one.</returns>
-        public virtual Token Clone()
+        /// <param name="text">The value to assign to the <see cref="Text" /> property.</param>
+        public Token(string text)
         {
-            return new Token { Evaluated = Evaluated, Literal = Literal, TokenValue = TokenValue };
+            Text = text;
         }
     }
 }

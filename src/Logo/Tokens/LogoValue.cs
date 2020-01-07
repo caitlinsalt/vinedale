@@ -61,6 +61,21 @@ namespace Logo.Tokens
             return Value?.GetHashCode() ?? 4468;
         }
 
+        public override string ToString()
+        {
+            switch (Type)
+            {
+                case LogoValueType.Text:
+                    return Value as string;
+                case LogoValueType.Number:
+                default:
+                    return Value.ToString();
+                case LogoValueType.Word:
+                    Token token = Value as Token;
+                    return token is LiteralToken literal ? literal.Value.ToString() : token.Text;
+            }
+        }
+
         /// <summary>
         /// Equality operator.
         /// </summary>
@@ -95,7 +110,7 @@ namespace Logo.Tokens
                 case LogoValueType.Bool:
                     return new LogoValue { Type = LogoValueType.Bool, Value = false };
                 case LogoValueType.List:
-                    return new LogoValue { Type = LogoValueType.List, Value = new LogoList("[]") };
+                    return new LogoValue { Type = LogoValueType.List, Value = new ListToken("[]") };
                 case LogoValueType.Number:
                     return new LogoValue { Type = LogoValueType.Number, Value = 0m };
                 case LogoValueType.Parcel:
@@ -106,7 +121,7 @@ namespace Logo.Tokens
                 case LogoValueType.Unknown:
                     return new LogoValue { Type = LogoValueType.Unknown, Value = null };
                 case LogoValueType.Word:
-                    return new LogoValue { Type = LogoValueType.Word, Value = new Word() };
+                    return new LogoValue { Type = LogoValueType.Word, Value = null };
             }
         }
     }

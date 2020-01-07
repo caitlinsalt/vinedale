@@ -305,38 +305,6 @@
             </summary>
             <returns>A list of procedure definitions.</returns>
         </member>
-        <member name="M:Vinedale.Turtle.TurtleCommands.Forward(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
-            <summary>
-            Move the turtle forwards.
-            </summary>
-            <param name="context">The interpretor context.</param>
-            <param name="input">Should contain one token containing the distance to move forwards.</param>
-            <returns><c>null</c>.</returns>
-        </member>
-        <member name="M:Vinedale.Turtle.TurtleCommands.Backwards(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
-            <summary>
-            Move the turtle backwards.
-            </summary>
-            <param name="context">The interpretor context.</param>
-            <param name="input">Should contain one token containing the distance to move backwards.</param>
-            <returns><c>null</c>.</returns>
-        </member>
-        <member name="M:Vinedale.Turtle.TurtleCommands.Right(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
-            <summary>
-            Rotate the turtle to the right.
-            </summary>
-            <param name="context">The interpretor context.</param>
-            <param name="input">Should contain one token containing the angle to rotate to the right (in degrees).</param>
-            <returns><c>null</c></returns>
-        </member>
-        <member name="M:Vinedale.Turtle.TurtleCommands.Left(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
-            <summary>
-            Rotate the turtle to the left.
-            </summary>
-            <param name="context">The interpretor context.</param>
-            <param name="input">Should contain one token containing the angle to rotate to the left (in degrees).</param>
-            <returns><c>null</c></returns>
-        </member>
         <member name="M:Vinedale.Turtle.TurtleCommands.PenUp(Logo.Interpretation.InterpretorContext,Logo.Tokens.Token[])">
             <summary>
             Lift the turtle's pen.
