@@ -1,4 +1,6 @@
-﻿using Logo.Resources;
+﻿using Logo.Interpretation;
+using Logo.Resources;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -7,19 +9,18 @@ namespace Logo.Tokens
     /// <summary>
     /// A token which represents an expression.
     /// </summary>
-    public class LogoExpression : ContainerToken
+    public class ExpressionToken : ContainerToken
     {
         /// <summary>
         /// The standard constructor for this class builds a list of tokens from an input string.
         /// </summary>
         /// <param name="literal">The input to be tokenised.</param>
-        public LogoExpression(string literal)
+        public ExpressionToken(string literal) : base(literal)
         {
             if (literal == null)
             {
                 literal = "";
             }
-            Literal = literal;
 
             TokeniserResult r = Tokeniser.TokeniseString(literal.Substring(1, literal.Length - 2));
             if (r.ResultType == TokeniserResultType.SuccessIncomplete)
@@ -29,17 +30,19 @@ namespace Logo.Tokens
             Contents.AddRange(r.TokenisedData);
         }
 
-        private LogoExpression() { }
-
-        /// <summary>
-        /// Produce a copy of this token.
-        /// </summary>
-        /// <returns>A token which is identical to this one.</returns>
-        public override Token Clone()
+        public ExpressionToken(IList<Token> contents) : base(CreateText(contents))
         {
-            LogoExpression newExpr = new LogoExpression() { Evaluated = Evaluated, Literal = Literal };
-            newExpr.Contents.AddRange(Contents.Select(t => t.Clone()));
-            return newExpr;
+            Contents.AddRange(contents);
+        }
+
+        public override LogoValue Evaluate(InterpretorContext context)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private static string CreateText(IList<Token> fromTokens)
+        {
+            return "(" + string.Join(" ", fromTokens.Select(t => t is LiteralToken literal ? literal.Value.ToString() : t.Text)) + ")";
         }
     }
 }

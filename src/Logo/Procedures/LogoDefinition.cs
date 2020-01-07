@@ -1,5 +1,6 @@
 ﻿using Logo.Interpretation;
 using Logo.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +19,7 @@ namespace Logo.Procedures
         /// <summary>
         /// The procedure definition, pre-interpreted into a list of tokens to be executed at runtime.
         /// </summary>
-        public LogoList TokenisedDefinition { get; private set; }
+        public ListToken TokenisedDefinition { get; private set; }
 
         /// <summary>
         /// The raw text of the procedure definition, so that it can be edited and reloaded later if required.
@@ -31,16 +32,17 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="parameters">The parameters to the procedure.</param>
         /// <returns>A token containing the procedure output, or <c>null</c>.</returns>
-        public Token Execute(InterpretorContext context, Token[] parameters)
+        public Token Execute(InterpretorContext context, LogoValue[] parameters)
         {
-            context.StackFrameCreate(parameters.Select((p, i) => new Token { Evaluated = true, Literal = Parameters[i], TokenValue = p.TokenValue }).ToArray());
-            LogoList runList = (LogoList)TokenisedDefinition.Clone();
-            InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
-            if (result != InterpretationResult.SuccessComplete || runList.Contents.Count == 0)
-            {
-                return null;
-            }
-            return new Token { Evaluated = true, Literal = RawDefinition, TokenValue = runList.Contents.Last().TokenValue };
+            throw new NotImplementedException();
+            //context.StackFrameCreate(parameters.Select((p, i) => new Token { Evaluated = true, Text = Parameters[i], TokenValue = p.TokenValue }).ToArray());
+            //ListToken runList = (ListToken)TokenisedDefinition.Clone();
+            //InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
+            //if (result != InterpretationResult.SuccessComplete || runList.Contents.Count == 0)
+            //{
+            //    return null;
+            //}
+            //return new Token { Evaluated = true, Text = RawDefinition, TokenValue = runList.Contents.Last().TokenValue };
         }
 
         /// <summary>
@@ -54,31 +56,32 @@ namespace Logo.Procedures
         /// <param name="tokens">The tokenised code of the procedure.</param>
         public LogoDefinition(string rawCode, List<Token> tokens)
         {
-            Aliases = new string[0];
-            RawDefinition = rawCode;
-            Name = tokens[1].Literal;
-            Redefinability = RedefinabilityType.Replace;
-            Parameters = new List<string>();
+            throw new NotImplementedException();
+            //Aliases = new string[0];
+            //RawDefinition = rawCode;
+            //Name = tokens[1].Text;
+            //Redefinability = RedefinabilityType.Replace;
+            //Parameters = new List<string>();
 
-            int paramIdx = 2;
-            while (tokens[paramIdx].Literal.StartsWith(":"))
-            {
-                ParameterCount++;
-                Parameters.Add(tokens[paramIdx].Literal.Substring(1));
-                paramIdx++;
-            }
+            //int paramIdx = 2;
+            //while (tokens[paramIdx].Text.StartsWith(":"))
+            //{
+            //    ParameterCount++;
+            //    Parameters.Add(tokens[paramIdx].Text.Substring(1));
+            //    paramIdx++;
+            //}
 
-            ExampleText = string.Join(" ", Parameters);
-            if (tokens[paramIdx].GetType() == typeof(LogoComment))
-            {
-                HelpText = tokens[paramIdx].Literal.Substring(1).TrimStart();
-            }
+            //ExampleText = string.Join(" ", Parameters);
+            //if (tokens[paramIdx].GetType() == typeof(CommentToken))
+            //{
+            //    HelpText = tokens[paramIdx].Text.Substring(1).TrimStart();
+            //}
 
-            TokenisedDefinition = new LogoList { Evaluated = false, Literal = RawDefinition };
-            for (int i = paramIdx; i < tokens.Count - 1; ++i)
-            {
-                TokenisedDefinition.Contents.Add(tokens[i]);
-            }
+            //TokenisedDefinition = new ListToken { Evaluated = false, Text = RawDefinition };
+            //for (int i = paramIdx; i < tokens.Count - 1; ++i)
+            //{
+            //    TokenisedDefinition.Contents.Add(tokens[i]);
+            //}
         }
     }
 }
