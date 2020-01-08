@@ -1,9 +1,4 @@
-﻿using Logo.Interpretation;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Logo.Tokens
+﻿namespace Logo.Tokens
 {
     public class VariableToken : Token
     {
@@ -12,11 +7,6 @@ namespace Logo.Tokens
         public VariableToken(string text, string name) : base(text)
         {
             VariableName = name;
-        }
-
-        public override LogoValue Evaluate(InterpretorContext context)
-        {
-            throw new NotImplementedException();
         }
     }
 }

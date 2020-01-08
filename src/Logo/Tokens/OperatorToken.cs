@@ -43,11 +43,6 @@ namespace Logo.Tokens
             }
         }
 
-        public override LogoValue Evaluate(InterpretorContext context)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Carry out the computation represented by this operator.  The <c>TokenValue</c> property of this token is set to the result of the computation.
         /// </summary>

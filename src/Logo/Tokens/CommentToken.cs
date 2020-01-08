@@ -14,14 +14,5 @@ namespace Logo.Tokens
         public CommentToken(string text) : base(text)
         {
         }
-
-        /// <summary>
-        /// Evaluate this token.
-        /// </summary>
-        /// <returns>An unknown (null) value.</returns>
-        public override LogoValue Evaluate(InterpretorContext context)
-        {
-            return new LogoValue(LogoValueType.Unknown, null);
-        }
     }
 }
