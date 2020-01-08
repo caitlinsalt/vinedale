@@ -13,23 +13,6 @@ namespace Logo.Tokens
     /// </summary>
     public class ListToken : ContainerToken
     {
-        //private bool _evalContents;
-
-        /// <summary>
-        /// This property is false unless all of the tokens that this token contains have also been evaluated.
-        /// </summary>
-        //public bool EvaluatedContents
-        //{
-        //    get
-        //    {
-        //        return _evalContents && Contents.All(t => t.Evaluated);
-        //    }
-        //    set
-        //    {
-        //        _evalContents = value;
-        //    }
-        //}
-
         /// <summary>
         /// Construct a <c>LogoList</c> token from an input string.
         /// </summary>
