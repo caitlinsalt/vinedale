@@ -1,6 +1,4 @@
-﻿using Logo.Interpretation;
-
-namespace Logo.Tokens
+﻿namespace Logo.Tokens
 {
     /// <summary>
     /// A token which contains only comments.

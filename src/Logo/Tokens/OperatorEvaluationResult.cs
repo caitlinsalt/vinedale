@@ -12,6 +12,9 @@ namespace Logo.Tokens
         /// </summary>
         public InterpretationResult Result { get; set; }
 
+        /// <summary>
+        /// The value of the result.
+        /// </summary>
         public LogoValue Value { get; set; }
 
         /// <summary>

@@ -34,6 +34,10 @@ namespace Logo.Procedures
         /// <returns>A token containing the procedure output, or <c>null</c>.</returns>
         public Token Execute(InterpretorContext context, LogoValue[] parameters)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             context.StackFrameCreate(parameters.Select((p, i) => new LiteralToken(Parameters[i], p)).ToArray());
             ListToken runList = new ListToken(TokenisedDefinition.Contents);
             InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
@@ -55,6 +59,11 @@ namespace Logo.Procedures
         /// <param name="tokens">The tokenised code of the procedure.</param>
         public LogoDefinition(string rawCode, List<Token> tokens)
         {
+            if (tokens is null)
+            {
+                tokens = new List<Token>();
+            }
+
             Aliases = Array.Empty<string>();
             RawDefinition = rawCode;
             Name = tokens[1].Text;

@@ -1,10 +1,8 @@
-﻿using Logo.Interpretation;
-using Logo.Resources;
+﻿using Logo.Resources;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Logo.Tokens
 {
@@ -14,13 +12,18 @@ namespace Logo.Tokens
     public class ListToken : ContainerToken
     {
         /// <summary>
-        /// Construct a <c>LogoList</c> token from an input string.
+        /// Construct a <see cref="ListToken" /> from an input string.
         /// </summary>
         /// <param name="text">The input string to be tokenised.</param>
+        /// <param name="parse">Whether or not the input string should be parsed and used to set the contents.</param>
         public ListToken(string text, bool parse = true) : base(text)
         {
             if (parse)
             {
+                if (text is null)
+                {
+                    throw new ArgumentNullException(nameof(text));
+                }
                 TokeniserResult r = Tokeniser.TokeniseString(text.Substring(1, text.Length - 2));
                 if (r.ResultType == TokeniserResultType.SuccessIncomplete)
                 {
@@ -30,6 +33,10 @@ namespace Logo.Tokens
             }
         }
 
+        /// <summary>
+        /// Construct a <see cref="ListToken" /> from a list of existing tokens.
+        /// </summary>
+        /// <param name="contents">The tokens that will become the contents of this list token.</param>
         public ListToken(IList<Token> contents) : base(CreateText(contents))
         {
             Contents.AddRange(contents);
