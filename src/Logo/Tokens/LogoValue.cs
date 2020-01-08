@@ -61,6 +61,10 @@ namespace Logo.Tokens
             return Value?.GetHashCode() ?? 4468;
         }
 
+        /// <summary>
+        /// Convert this value to a string.
+        /// </summary>
+        /// <returns>A string representing this value.</returns>
         public override string ToString()
         {
             switch (Type)
@@ -105,12 +109,16 @@ namespace Logo.Tokens
         /// <returns>A <see cref="LogoValue" /> object of the given <see cref="LogoValueType" />.</returns>
         public static LogoValue GetDefaultValue(ValueType type)
         {
+            const string EmptyList = "[ ]";
+
             switch (type)
             {
                 case LogoValueType.Bool:
                     return new LogoValue { Type = LogoValueType.Bool, Value = false };
                 case LogoValueType.List:
-                    return new LogoValue { Type = LogoValueType.List, Value = new ListToken("[]") };
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+                    return new LogoValue { Type = LogoValueType.List, Value = new ListToken(EmptyList) };
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
                 case LogoValueType.Number:
                     return new LogoValue { Type = LogoValueType.Number, Value = 0m };
                 case LogoValueType.Parcel:

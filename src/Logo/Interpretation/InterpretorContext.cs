@@ -56,6 +56,11 @@ namespace Logo.Interpretation
         /// <param name="p">The procedure definition to be added.</param>
         public void RegisterProcedure(LogoProcedure p)
         {
+            if (p is null)
+            {
+                throw new ArgumentNullException(nameof(p));
+            }
+
             Procedures.Add(p);
             if (!ProcedureNames.ContainsKey(p.Name))
             {

@@ -1,5 +1,4 @@
-﻿using Logo.Interpretation;
-using Logo.Resources;
+﻿using Logo.Resources;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -30,6 +29,10 @@ namespace Logo.Tokens
             Contents.AddRange(r.TokenisedData);
         }
 
+        /// <summary>
+        /// Construct an ExpressionToken from a list of pre-parsed tokens.
+        /// </summary>
+        /// <param name="contents">The tokens to build the token from.</param>
         public ExpressionToken(IList<Token> contents) : base(CreateText(contents))
         {
             Contents.AddRange(contents);
