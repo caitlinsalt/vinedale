@@ -34,15 +34,14 @@ namespace Logo.Procedures
         /// <returns>A token containing the procedure output, or <c>null</c>.</returns>
         public Token Execute(InterpretorContext context, LogoValue[] parameters)
         {
-            throw new NotImplementedException();
-            //context.StackFrameCreate(parameters.Select((p, i) => new Token { Evaluated = true, Text = Parameters[i], TokenValue = p.TokenValue }).ToArray());
-            //ListToken runList = (ListToken)TokenisedDefinition.Clone();
-            //InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
-            //if (result != InterpretationResult.SuccessComplete || runList.Contents.Count == 0)
-            //{
-            //    return null;
-            //}
-            //return new Token { Evaluated = true, Text = RawDefinition, TokenValue = runList.Contents.Last().TokenValue };
+            context.StackFrameCreate(parameters.Select((p, i) => new LiteralToken(Parameters[i], p)).ToArray());
+            ListToken runList = new ListToken(TokenisedDefinition.Contents);
+            InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
+            if (result != InterpretationResult.SuccessComplete || runList.Contents.Count == 0)
+            {
+                return null;
+            }
+            return runList.Contents.Last();
         }
 
         /// <summary>
@@ -56,32 +55,27 @@ namespace Logo.Procedures
         /// <param name="tokens">The tokenised code of the procedure.</param>
         public LogoDefinition(string rawCode, List<Token> tokens)
         {
-            throw new NotImplementedException();
-            //Aliases = new string[0];
-            //RawDefinition = rawCode;
-            //Name = tokens[1].Text;
-            //Redefinability = RedefinabilityType.Replace;
-            //Parameters = new List<string>();
+            Aliases = Array.Empty<string>();
+            RawDefinition = rawCode;
+            Name = tokens[1].Text;
+            Redefinability = RedefinabilityType.Replace;
+            Parameters = new List<string>();
 
-            //int paramIdx = 2;
-            //while (tokens[paramIdx].Text.StartsWith(":"))
-            //{
-            //    ParameterCount++;
-            //    Parameters.Add(tokens[paramIdx].Text.Substring(1));
-            //    paramIdx++;
-            //}
+            int paramIdx = 2;
+            while (tokens[paramIdx] is VariableToken vt)
+            {
+                ParameterCount++;
+                Parameters.Add(vt.VariableName);
+                paramIdx++;
+            }
 
-            //ExampleText = string.Join(" ", Parameters);
-            //if (tokens[paramIdx].GetType() == typeof(CommentToken))
-            //{
-            //    HelpText = tokens[paramIdx].Text.Substring(1).TrimStart();
-            //}
+            ExampleText = string.Join(" ", Parameters);
+            if (tokens[paramIdx] is CommentToken ct)
+            {
+                HelpText = ct.Text.TrimStart();
+            }
 
-            //TokenisedDefinition = new ListToken { Evaluated = false, Text = RawDefinition };
-            //for (int i = paramIdx; i < tokens.Count - 1; ++i)
-            //{
-            //    TokenisedDefinition.Contents.Add(tokens[i]);
-            //}
+            TokenisedDefinition = new ListToken(tokens.Skip(paramIdx).ToArray());
         }
     }
 }

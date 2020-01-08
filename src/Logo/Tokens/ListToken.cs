@@ -52,11 +52,6 @@ namespace Logo.Tokens
             Contents.AddRange(contents);
         }
 
-        public override LogoValue Evaluate(InterpretorContext context)
-        {
-            return new LogoValue(LogoValueType.List, new ListToken(Contents));
-        }
-
         private static string CreateText(IList<Token> fromTokens)
         {
             return "[" + string.Join(" ", fromTokens.Select(t => t is LiteralToken literal ? literal.Value.ToString() : t.Text)) + "]";
