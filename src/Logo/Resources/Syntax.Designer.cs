@@ -68,5 +68,23 @@ namespace Logo.Resources {
                 return ResourceManager.GetString("EmptyList", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to false.
+        /// </summary>
+        internal static string False {
+            get {
+                return ResourceManager.GetString("False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to true.
+        /// </summary>
+        internal static string True {
+            get {
+                return ResourceManager.GetString("True", resourceCulture);
+            }
+        }
     }
 }
