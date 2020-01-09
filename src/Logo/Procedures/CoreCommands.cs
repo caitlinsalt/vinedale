@@ -507,7 +507,7 @@ namespace Logo.Procedures
             if (output[0].Type == LogoValueType.List)
             {
                 ListToken copiedList = new ListToken(((ListToken)output[0].Value).Contents);
-                if (context.Interpretor.EvaluateListContents(copiedList, true) == InterpretationResult.SuccessComplete)
+                if (context.Interpretor.EvaluateListContents(copiedList, true) == InterpretationResultType.SuccessComplete)
                 {
                     context.Interpretor.WriteOutputLine(string.Join(" ", copiedList.Contents.Select(t => (t as LiteralToken).Value.Value.ToString())));
                 }
