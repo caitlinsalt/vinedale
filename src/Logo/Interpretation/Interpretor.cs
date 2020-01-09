@@ -3,9 +3,9 @@ using Logo.Resources;
 using Logo.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Logo.Interpretation
 {
@@ -34,10 +34,10 @@ namespace Logo.Interpretation
         /// </summary>
         public DebugMessageLevel DebugVerbosity { get; set; }
 
-        private List<Token> _tokBuffer;
+        private readonly List<Token> _tokBuffer;
         private string _inputBuffer;
         private string _definitionBuffer;
-        private List<Token> _defTokBuffer;
+        private readonly List<Token> _defTokBuffer;
 
         private bool _insideDefinition;
 
@@ -87,9 +87,14 @@ namespace Logo.Interpretation
         /// <param name="module"></param>
         public void LoadModule(ICommandModule module)
         {
+            if (module is null)
+            {
+                throw new ArgumentNullException(nameof(module));
+            }
+
             if (DebugVerbosity >= DebugMessageLevel.Logorrheic)
             {
-                DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorModuleLoadingDebugMessage, module.GetType(), module.GetType().Assembly.GetName().Name));
+                DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorModuleLoadingDebugMessage, module.GetType(), module.GetType().Assembly.GetName().Name));
             }
 
             foreach (LogoProcedure p in module.RegisterProcedures())
@@ -97,7 +102,7 @@ namespace Logo.Interpretation
                 Context.RegisterProcedure(p);
                 if (DebugVerbosity >= DebugMessageLevel.Logorrheic)
                 {
-                    DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorRegisteredProcedureDebugMessage, p.Name));
+                    DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorRegisteredProcedureDebugMessage, p.Name));
                 }
             }
 
@@ -105,7 +110,7 @@ namespace Logo.Interpretation
 
             if (DebugVerbosity >= DebugMessageLevel.Verbose)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorLoadedModuleDebugMessage, module.GetType().Name));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorLoadedModuleDebugMessage, module.GetType().Name));
             }
         }
 
@@ -121,8 +126,8 @@ namespace Logo.Interpretation
 
             if (DebugVerbosity >= DebugMessageLevel.Verbose)
             {
-                DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorInterpretTokeniserResultDebugMessage, tokeniserResult.ResultType));
-                DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorInterpretTokenCountDebugMessage, tokeniserResult.TokenisedData.Count));
+                DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorInterpretTokeniserResultDebugMessage, tokeniserResult.ResultType));
+                DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorInterpretTokenCountDebugMessage, tokeniserResult.TokenisedData.Count));
             }
 
             if (DebugVerbosity >= DebugMessageLevel.Logorrheic)
@@ -190,7 +195,7 @@ namespace Logo.Interpretation
                 if (DebugVerbosity >= DebugMessageLevel.Chatty)
                 {
                     TimeSpan processingTime = DateTime.Now - watermark;
-                    WriteDebugOutputLine(processingTime.TotalSeconds.ToString());
+                    WriteDebugOutputLine(processingTime.TotalSeconds.ToString(CultureInfo.CurrentCulture));
                 }
             }
 
@@ -202,7 +207,7 @@ namespace Logo.Interpretation
             string procName = _defTokBuffer[1].Text;
             if (Context.ProcedureNames.ContainsKey(procName) && Context.ProcedureNames[procName].Any(p => p.Redefinability == RedefinabilityType.NonRedefinable))
             {
-                WriteOutputLine(string.Format(Strings.InterpretorDefineProcedureProcedureIsNonRedefinableError, procName));
+                WriteOutputLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorDefineProcedureProcedureIsNonRedefinableError, procName));
                 return;
             }
             Context.RegisterProcedure(new LogoDefinition(_definitionBuffer, _defTokBuffer));
@@ -230,13 +235,13 @@ namespace Logo.Interpretation
 
             if (tokens[firstTokenIdx] is ListToken)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareListError, tokens[firstTokenIdx].Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorExecuteTokenBufferCannotExecuteBareListError, tokens[firstTokenIdx].Text));
                 return InterpretationResultType.Failure;
             }
 
             if (tokens[firstTokenIdx] is ExpressionToken)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareExpressionError, tokens[firstTokenIdx].Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorExecuteTokenBufferCannotExecuteBareExpressionError, tokens[firstTokenIdx].Text));
                 return InterpretationResultType.Failure;
             }
 
@@ -253,6 +258,11 @@ namespace Logo.Interpretation
         /// <returns>A value indicating success, failure, or that more input is required.</returns>
         public InterpretationResultType EvaluateToken(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
         {
+            if (tokens is null)
+            {
+                throw new ArgumentNullException(nameof(tokens));
+            }
+
             if (!tokens.Any())
             {
                 return InterpretationResultType.SuccessComplete;
@@ -295,14 +305,19 @@ namespace Logo.Interpretation
         /// <returns>A value indicating success, failure, or that more input is required.</returns>
         public InterpretationResultType EvaluateWord(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
         {
-            if (tokens[index].Text == "true")
+            if (tokens is null)
             {
-                tokens[index] = new LiteralToken("true", new LogoValue(LogoValueType.Bool, true));
+                throw new ArgumentNullException(nameof(tokens));
+            }
+
+            if (tokens[index].Text == Syntax.True)
+            {
+                tokens[index] = new LiteralToken(Syntax.True, new LogoValue(LogoValueType.Bool, true));
                 return InterpretationResultType.SuccessComplete;
             }
-            if (tokens[index].Text == "false")
+            if (tokens[index].Text == Syntax.False)
             {
-                tokens[index] = new LiteralToken("false", new LogoValue(LogoValueType.Bool, false));
+                tokens[index] = new LiteralToken(Syntax.False, new LogoValue(LogoValueType.Bool, false));
                 return InterpretationResultType.SuccessComplete;
             }
 
@@ -314,7 +329,7 @@ namespace Logo.Interpretation
 
             if (!Context.ProcedureNames.ContainsKey(tokens[index].Text))
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteWordUndefinedProcedureError, tokens[index].Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorExecuteWordUndefinedProcedureError, tokens[index].Text));
                 return InterpretationResultType.Failure;
             }
 
@@ -384,6 +399,10 @@ namespace Logo.Interpretation
         /// <returns>A value indicating success or failure.</returns>
         public InterpretationResultType EvaluateListContents(ListToken list, bool literalEvaluateUndefinedWords)
         {
+            if (list is null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
             return ExecuteTokens(list.Contents, literalEvaluateUndefinedWords);
         }
 
@@ -392,10 +411,15 @@ namespace Logo.Interpretation
         /// </summary>
         /// <param name="expr">The expression to be evaluated.</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
+        /// <param name="resultValue">The <see cref="LogoValue" /> that is the result of computing the expression.</param>
         /// <returns>A value indicating success or failure.</returns>
         public InterpretationResultType EvaluateExpression(ExpressionToken expr, bool literalEvaluateUndefinedWords, out LogoValue resultValue)
         {
-            DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionDebugMessage, expr.Text));
+            if (expr is null)
+            {
+                throw new ArgumentNullException(nameof(expr));
+            }
+            DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorEvaluateExpressionDebugMessage, expr.Text));
             InterpretationResultType result = EvaluateExpressionContents(expr, literalEvaluateUndefinedWords);
             if (result != InterpretationResultType.SuccessComplete)
             {
@@ -418,7 +442,7 @@ namespace Logo.Interpretation
 
             if (expr.Contents.Count != 1)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionGeneralError, expr.Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorEvaluateExpressionGeneralError, expr.Text));
                 resultValue = new LogoValue();
                 return InterpretationResultType.Failure;
             }
@@ -431,13 +455,13 @@ namespace Logo.Interpretation
         {
             if (idx == 0)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.Contents[idx].Text, expr.Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.Contents[idx].Text, expr.Text));
                 return InterpretationResultType.Failure;
             }
 
             if (idx == expr.Contents.Count - 1)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.Contents[idx].Text, expr.Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.Contents[idx].Text, expr.Text));
                 return InterpretationResultType.Failure;
             }
 
@@ -489,7 +513,7 @@ namespace Logo.Interpretation
 
             if (result == InterpretationResultType.SuccessIncomplete)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionContentsIncompleteContentsError, expr.Text));
+                StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorEvaluateExpressionContentsIncompleteContentsError, expr.Text));
                 return InterpretationResultType.Failure;
             }
             if (result == InterpretationResultType.Failure)
@@ -529,7 +553,7 @@ namespace Logo.Interpretation
 
         private void DumpToken(string prefix, TextWriter writer, Token tok)
         {
-            writer.WriteLine(string.Format(Strings.InterpretorDumpTokenOutput, prefix, tok.GetType(), tok.Text));
+            writer.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorDumpTokenOutput, prefix, tok.GetType(), tok.Text));
             if (tok.GetType().IsSubclassOf(typeof(ContainerToken)))
             {
                 foreach (Token innerTok in ((ContainerToken)tok).Contents)
