@@ -42,6 +42,16 @@ namespace Logo.Tokens
             Contents.AddRange(contents);
         }
 
+        /// <summary>
+        /// Get a token that represents an empty list.
+        /// </summary>
+        /// <returns></returns>
+        public static ListToken Empty()
+        {
+            return new ListToken(Syntax.EmptyList, false);
+        }
+
+
         private static string CreateText(IList<Token> fromTokens)
         {
             return "[" + string.Join(" ", fromTokens.Select(t => t is LiteralToken literal ? literal.Value.ToString() : t.Text)) + "]";

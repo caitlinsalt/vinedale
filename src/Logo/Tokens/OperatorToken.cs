@@ -1,8 +1,5 @@
 ﻿using Logo.Interpretation;
 using Logo.Resources;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Logo.Tokens
 {
