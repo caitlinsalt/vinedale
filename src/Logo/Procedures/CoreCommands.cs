@@ -252,19 +252,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one parameter representing a number.</param>
         /// <returns>A token containing a string.</returns>
-        public Token AsciiToChar(InterpretorContext context, params Token[] input)
+        public Token AsciiToChar(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandCharWrongTypeError);
                 return null;
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "char",
-                TokenValue = new LogoValue(LogoValueType.Text, Encoding.ASCII.GetString(new[] { Convert.ToByte(input[0].TokenValue.Value) })),
-            };
+            return new LiteralToken("char", new LogoValue(LogoValueType.Text, Encoding.ASCII.GetString(new[] { Convert.ToByte(input[0].Value) })));
         }
 
 
@@ -274,23 +269,18 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one parameter representing a string.</param>
         /// <returns>A token containing a number.</returns>
-        public Token AsciiValue(InterpretorContext context, params Token[] input)
+        public Token AsciiValue(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Text)
+            if (input[0].Type != LogoValueType.Text)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandAsciiWrongTypeError);
                 return null;
             }
-            if (string.IsNullOrEmpty((string)input[0].TokenValue.Value))
+            if (string.IsNullOrEmpty((string)input[0].Value))
             {
-                return new Token { Evaluated = true, Literal = "", TokenValue = new LogoValue(LogoValueType.Number, 0) };
+                return new LiteralToken("ascii", new LogoValue(LogoValueType.Number, 0));
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "ascii",
-                TokenValue = new LogoValue(LogoValueType.Number, Encoding.ASCII.GetBytes((string)input[0].TokenValue.Value)[0]),
-            };
+            return new LiteralToken("ascii", new LogoValue(LogoValueType.Number, Encoding.ASCII.GetBytes((string)input[0].Value)[0]));
         }
 
 
@@ -300,26 +290,10 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain a single token of list type.</param>
         /// <returns>A token containing a list.</returns>
-        public Token ListButFirst(InterpretorContext context, params Token[] input)
+        public Token ListButFirst(InterpretorContext context, params LogoValue[] input)
         {
-            LogoList clonedList;
-            if (input[0].GetType() == typeof(LogoList))
-            {
-                clonedList = (LogoList)input[0].Clone();
-            }
-            else if (input[0].TokenValue.Type != LogoValueType.List)
-            {
-                context.Interpretor.StandardOutputWriter.WriteLine(Strings.CommandButfirstWrongTypeError);
-                return null;
-            }
-            else
-            {
-                clonedList = (LogoList)input[0].TokenValue.Value;
-            }
-            clonedList.Contents.RemoveAt(0);
-            clonedList.TokenValue = new LogoValue(LogoValueType.List, clonedList.Clone());
-            clonedList.RecreateLiteralValue();
-            return clonedList;
+            ListToken outList = new ListToken((input[0].Value as ListToken).Contents.Skip(1).ToArray());
+            return new LiteralToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 
 
@@ -329,26 +303,11 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain a single token of list type.</param>
         /// <returns>A token containing a list.</returns>
-        public Token ListButLast(InterpretorContext context, params Token[] input)
+        public Token ListButLast(InterpretorContext context, params LogoValue[] input)
         {
-            LogoList clonedList;
-            if (input[0].GetType() == typeof(LogoList))
-            {
-                clonedList = (LogoList)input[0].Clone();
-            }
-            else if (input[0].TokenValue.Type != LogoValueType.List)
-            {
-                context.Interpretor.StandardOutputWriter.WriteLine(Strings.CommandButlastWrongTypeError);
-                return null;
-            }
-            else
-            {
-                clonedList = (LogoList)input[0].TokenValue.Value;
-            }
-            clonedList.Contents.RemoveAt(clonedList.Contents.Count - 1);
-            clonedList.TokenValue = new LogoValue(LogoValueType.List, clonedList.Clone());
-            clonedList.RecreateLiteralValue();
-            return clonedList;
+            List<Token> inContents = (input[0].Value as ListToken).Contents;
+            ListToken outList = new ListToken(inContents.Take(inContents.Count - 1).ToArray());
+            return new LiteralToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 
 
@@ -358,23 +317,10 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain two tokens, the first being the variable name and the second the variable value.</param>
         /// <returns><c>null</c></returns>
-        public Token MakeVariable(InterpretorContext context, params Token[] input)
+        public Token MakeVariable(InterpretorContext context, params LogoValue[] input)
         {
             context.Interpretor.DebugOutputWriter.WriteLine(Strings.CommandMakeStartDebugMessage);
-            if (input[1].Evaluated)
-            {
-                context.SetVariable((string)input[0].TokenValue.Value, input[1].TokenValue);
-                context.Interpretor.DebugOutputWriter.WriteLine(string.Format(Strings.CommandMakeEndDebugMessage, input[0].TokenValue.Value, input[1].TokenValue.Value));
-            }
-            else if (input[1].GetType() == typeof(LogoList))
-            {
-                context.SetVariable((string)input[0].TokenValue.Value, new LogoValue(LogoValueType.List, input[1]));
-            }
-            else
-            {
-                context.Interpretor.EvaluateToken(input, 1, true);
-                return MakeVariable(context, input);
-            }
+            context.SetVariable((string)input[0].Value, input[1]);
             return null;
         }
 
@@ -385,12 +331,9 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing the variable name to remove.</param>
         /// <returns><c>null</c></returns>
-        public Token ClearVariable(InterpretorContext context, params Token[] input)
+        public Token ClearVariable(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type == LogoValueType.Text)
-            {
-                context.ClearVariable((string)input[0].TokenValue.Value);
-            }
+            context.ClearVariable((string)input[0].Value);
             return null;
         }
 
@@ -401,7 +344,7 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Not used.</param>
         /// <returns><c>null</c></returns>
-        public Token ClearGlobalVariables(InterpretorContext context, params Token[] input)
+        public Token ClearGlobalVariables(InterpretorContext context, params LogoValue[] input)
         {
             context.ClearAllVariables();
             return null;
@@ -415,19 +358,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing a number.</param>
         /// <returns>A token containing the cosine of the input.</returns>
-        public Token MathCos(InterpretorContext context, params Token[] input)
+        public Token MathCos(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandCosWrongTypeError);
                 return null;
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "cos",
-                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
-            };
+            return new LiteralToken("cos", new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
 
@@ -438,19 +376,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing a number.</param>
         /// <returns>A token containing the arctangent of the input.</returns>
-        public Token MathAtan(InterpretorContext context, params Token[] input)
+        public Token MathAtan(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandArctanWrongTypeError);
                 return null;
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "arctan",
-                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
-            };
+            return new LiteralToken("arctan", new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
 
@@ -461,19 +394,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing a number.</param>
         /// <returns>A token containing the sine of the input.</returns>
-        public Token MathSin(InterpretorContext context, params Token[] input)
+        public Token MathSin(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandSinWrongTypeError);
                 return null;
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "sin",
-                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
-            };
+            return new LiteralToken("sin", new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
 
@@ -484,19 +412,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing a number.</param>
         /// <returns>A token containing the tangent of the input.</returns>
-        public Token MathTan(InterpretorContext context, params Token[] input)
+        public Token MathTan(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandTanWrongTypeError);
                 return null;
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "tan",
-                TokenValue = new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].TokenValue.Value)))),
-            };
+            return new LiteralToken("tan", new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
 
@@ -506,23 +429,18 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing a list.</param>
         /// <returns><c>true</c> if all elements in the input list evaluate to <c>true</c>, <c>false</c> otherwise.</returns>
-        public Token BoolAnd(InterpretorContext context, params Token[] input)
+        public Token BoolAnd(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.List)
+            if (input[0].Type != LogoValueType.List)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandAndWrongTypeError);
                 return null;
             }
 
-            LogoList inputList = (LogoList)input[0].TokenValue.Value;
+            ListToken inputList = new ListToken(((ListToken)input[0].Value).Contents);
             context.Interpretor.EvaluateListContents(inputList, false);
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "and",
-                TokenValue = new LogoValue(LogoValueType.Bool, 
-                    (inputList.Contents.Count > 0) && inputList.Contents.All(t => t.TokenValue.Type == LogoValueType.Bool) && inputList.Contents.All(t => (bool)t.TokenValue.Value)),
-            };
+            return new LiteralToken("and", new LogoValue(LogoValueType.Bool,
+                (inputList.Contents.Count > 0) && inputList.Contents.All(t => t is LiteralToken tl && tl.Value.Type == LogoValueType.Bool && (bool)tl.Value.Value)));
         }
 
 
@@ -532,14 +450,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing a number.</param>
         /// <returns>The absolute value of the input.</returns>
-        public Token MathAbs(InterpretorContext context, params Token[] input)
+        public Token MathAbs(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandAbsWrongTypeError);
                 return null;
             }
-            return new Token { Evaluated = true, Literal = "abs", TokenValue = new LogoValue(LogoValueType.Number, Math.Abs((decimal)input[0].TokenValue.Value))};
+            return new LiteralToken("abs", new LogoValue(LogoValueType.Number, Math.Abs((decimal)input[0].Value)));
         }
 
 
@@ -549,11 +467,10 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="dummy">Not used.</param>
         /// <returns>A token containing the number π.</returns>
-        public Token ReturnPi(InterpretorContext context, params Token[] dummy)
+        public Token ReturnPi(InterpretorContext context, params LogoValue[] dummy)
         {
-            return new Token { Evaluated = true, Literal = Math.PI.ToString(CultureInfo.InvariantCulture), TokenValue = new LogoValue(LogoValueType.Number, (decimal)Math.PI)};
+            return new LiteralToken(Math.PI.ToString(CultureInfo.InvariantCulture), new LogoValue(LogoValueType.Number, (decimal)Math.PI));
         }
-
 
         /// <summary>
         /// Calls the runtime garbage collector.  Largely implemented for nostalgia purposes.
@@ -561,12 +478,11 @@ namespace Logo.Procedures
         /// <param name="contaxt">Not used.</param>
         /// <param name="input">Not used.</param>
         /// <returns><c>null</c></returns>
-        public Token Recycle(InterpretorContext contaxt, params Token[] input)
+        public Token Recycle(InterpretorContext contaxt, params LogoValue[] input)
         {
             GC.Collect();
             return null;
         }
-
 
         /// <summary>
         /// Returns the total amount of system memory used by the running process.  Largely implemented for nostalgia purposes.
@@ -574,12 +490,11 @@ namespace Logo.Procedures
         /// <param name="context">Not used.</param>
         /// <param name="input">Not used.</param>
         /// <returns>A token containing the bytes used by the running process.</returns>
-        public Token SpaceUsed(InterpretorContext context, params Token[] input)
+        public Token SpaceUsed(InterpretorContext context, params LogoValue[] input)
         {
             LogoValue val = new LogoValue(LogoValueType.Number, (decimal)GC.GetTotalMemory(false));
-            return new Token { Evaluated = true, Literal = "space", TokenValue = val };
+            return new LiteralToken("space", val);
         }
-
 
         /// <summary>
         /// Outputs the first parameter token to the context's output writer, followed by a new line.
@@ -587,30 +502,19 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="output">Should contain one token whose value is to be printed.</param>
         /// <returns><c>null</c></returns>
-        public Token Print(InterpretorContext context, params Token[] output)
+        public Token Print(InterpretorContext context, params LogoValue[] output)
         {
-            Type paramType = output[0].GetType();
-            if (paramType == typeof(LogoList) || (paramType == typeof(Word) && output[0].TokenValue.Type == LogoValueType.List))
+            if (output[0].Type == LogoValueType.List)
             {
-                if (context.Interpretor.EvaluateListContents((LogoList)output[0].TokenValue.Value, true) == InterpretationResult.SuccessComplete)
+                ListToken copiedList = new ListToken(((ListToken)output[0].Value).Contents);
+                if (context.Interpretor.EvaluateListContents(copiedList, true) == InterpretationResult.SuccessComplete)
                 {
-                    context.Interpretor.WriteOutputLine(string.Join(" ", ((ContainerToken)output[0].TokenValue.Value).Contents.Select(t => t.TokenValue.Value.ToString())));
-                }
-            }
-            else if (paramType == typeof(Word) || paramType == typeof(LogoExpression))
-            {
-                if (output[0].TokenValue.Value != null)
-                {
-                    context.Interpretor.WriteOutputLine(output[0].TokenValue.Value.ToString());
-                }
-                else
-                {
-                    context.Interpretor.WriteOutputLine(string.Empty);
+                    context.Interpretor.WriteOutputLine(string.Join(" ", copiedList.Contents.Select(t => (t as LiteralToken).Value.Value.ToString())));
                 }
             }
             else
             {
-                context.Interpretor.WriteOutputLine(string.Join(" ", ((ContainerToken)output[0]).Contents.Select(t => t.Literal)));
+                context.Interpretor.WriteOutputLine(output[0].Value.ToString());
             }
             return null;
         }
@@ -622,7 +526,7 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="dummy">Not used.</param>
         /// <returns><c>null</c></returns>
-        public Token Nodes(InterpretorContext context, params Token[] dummy)
+        public Token Nodes(InterpretorContext context, params LogoValue[] dummy)
         {
             context.Interpretor.WriteOutputLine(string.Format(Strings.CommandNodesOutput, context.Procedures.Count, context.ProcedureNames.Count));
             return null;
@@ -636,25 +540,25 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="cmd">Should contain one token containing a string.</param>
         /// <returns><c>null</c></returns>
-        public Token OutputHelpText(InterpretorContext context, params Token[] cmd)
+        public Token OutputHelpText(InterpretorContext context, params LogoValue[] cmd)
         {
-            if (!context.ProcedureNames.ContainsKey(cmd[0].TokenValue.Value.ToString()))
+            if (!context.ProcedureNames.ContainsKey(cmd[0].Value.ToString()))
             {
-                context.Interpretor.WriteOutputLine(string.Format(Strings.CommandHelpUnknownProcedureError, cmd[0].TokenValue.Value));
+                context.Interpretor.WriteOutputLine(string.Format(Strings.CommandHelpUnknownProcedureError, cmd[0].Value.ToString()));
                 return null;
             }
 
-            IList<LogoProcedure> procList = context.ProcedureNames[cmd[0].TokenValue.Value.ToString()];
+            IList<LogoProcedure> procList = context.ProcedureNames[cmd[0].Value.ToString()];
             if (procList.Count > 1)
             {
-                context.Interpretor.WriteOutputLine(string.Format(Strings.CommandHelpActionCountOutput, cmd[0].TokenValue.Value, procList.Count));
+                context.Interpretor.WriteOutputLine(string.Format(Strings.CommandHelpActionCountOutput, cmd[0].Value.ToString(), procList.Count));
             }
             foreach (LogoProcedure proc in procList)
             {
-                context.Interpretor.WriteOutputLine(cmd[0].TokenValue.Value + " " + proc.ExampleText);
+                context.Interpretor.WriteOutputLine(cmd[0].Value.ToString() + " " + proc.ExampleText);
                 context.Interpretor.WriteOutputLine(proc.HelpText + "\n");
             }
-            if ("help" == (string)cmd[0].TokenValue.Value)
+            if ("help" == (string)cmd[0].Value)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandHelpHeadingOutput);
                 foreach (string procName in context.ProcedureNames.Keys.OrderBy(s => s))
@@ -666,36 +570,34 @@ namespace Logo.Procedures
             return null;
         }
 
-
         /// <summary>
         /// Executes a list of instructions a defined number of times.
         /// </summary>
         /// <param name="context">The interpretor context.</param>
         /// <param name="parameters">Should contain two tokens: the first should be the number of times to repeat the instruction list, and the second should be that list.</param>
         /// <returns><c>null</c></returns>
-        public Token Repeat(InterpretorContext context, params Token[] parameters)
+        public Token Repeat(InterpretorContext context, params LogoValue[] parameters)
         {
-            if (parameters[0].TokenValue.Type != LogoValueType.Number)
+            if (parameters[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandRepeatWrongRepeatTypeError);
                 return null;
             }
 
-            if (parameters[1].GetType() != typeof(LogoList))
+            if (parameters[1].Type != LogoValueType.List)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandRepeatWrongListTypeError);
                 return null;
             }
 
-            for (int i = 0; i < Convert.ToInt32(parameters[0].TokenValue.Value); ++i)
+            for (int i = 0; i < Convert.ToInt32(parameters[0].Value); ++i)
             {
-                LogoList exec = (LogoList)((LogoList)parameters[1].TokenValue.Value).Clone();
+                ListToken exec = new ListToken((parameters[1].Value as ListToken).Contents);
                 context.Interpretor.EvaluateListContents(exec, false);
             }
 
             return null;
         }
-
 
         /// <summary>
         /// Gives the length of a list or string.
@@ -703,32 +605,18 @@ namespace Logo.Procedures
         /// <param name="context">The intepretor context.</param>
         /// <param name="parameters">Should contain a single token, either a list or a string.</param>
         /// <returns>A token containing the number of elements (characters or list items) in the input token.</returns>
-        public Token Count(InterpretorContext context, params Token[] parameters)
+        public Token Count(InterpretorContext context, params LogoValue[] parameters)
         {
-            if (parameters[0].TokenValue.Type == LogoValueType.Text)
-                return new Token
-                {
-                    Evaluated = true,
-                    Literal = "count",
-                    TokenValue = new LogoValue(LogoValueType.Number, (decimal)(parameters[0].TokenValue.Value as string).Length),
-                };
-            else if (parameters[0].TokenValue.Type == LogoValueType.List)
+            if (parameters[0].Type == LogoValueType.Text)
             {
-                return new Token
-                {
-                    Evaluated = true,
-                    Literal = "count",
-                    TokenValue = new LogoValue(LogoValueType.Number, (decimal)(parameters[0].TokenValue.Value as LogoList).Contents.Count),
-                };
+                return new LiteralToken("count", new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as string).Length));
             }
-            return new Token
+            else if (parameters[0].Type == LogoValueType.List)
             {
-                Evaluated = true,
-                Literal = "count",
-                TokenValue = new LogoValue(LogoValueType.Number, 1m),
-            };
+                return new LiteralToken("count", new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as ListToken).Contents.Count));
+            }
+            return new LiteralToken("count", new LogoValue(LogoValueType.Number, 1m));
         }
-
 
         /// <summary>
         /// Subtracts one number from another.
@@ -736,19 +624,14 @@ namespace Logo.Procedures
         /// <param name="context">The interpretor context.</param>
         /// <param name="parameters">Should contain two tokens, both numbers.</param>
         /// <returns>A token containing the difference between the two numbers.</returns>
-        public Token Difference(InterpretorContext context, params Token[] parameters)
+        public Token Difference(InterpretorContext context, params LogoValue[] parameters)
         {
-            if (parameters[0].TokenValue.Type != LogoValueType.Number || parameters[1].TokenValue.Type != LogoValueType.Number)
+            if (parameters[0].Type != LogoValueType.Number || parameters[1].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandDifferenceTypeError);
                 return null;
             }
-            return new Token
-            {
-                Evaluated = true,
-                Literal = "difference",
-                TokenValue = new LogoValue(LogoValueType.Number, ((decimal)parameters[0].TokenValue.Value) - ((decimal)parameters[1].TokenValue.Value)),
-            };
+            return new LiteralToken("difference", new LogoValue(LogoValueType.Number, ((decimal)parameters[0].Value) - ((decimal)parameters[1].Value)));
         }
     }
 }

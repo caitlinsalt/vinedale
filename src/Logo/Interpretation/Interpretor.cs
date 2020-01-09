@@ -135,7 +135,7 @@ namespace Logo.Interpretation
 
             _tokBuffer.AddRange(tokeniserResult.TokenisedData);
 
-            if (_tokBuffer.Any() && _tokBuffer[0].Literal == "to")
+            if (_tokBuffer.Any() && _tokBuffer[0].Text == "to")
             {
                 _insideDefinition = true;
             }
@@ -158,10 +158,10 @@ namespace Logo.Interpretation
                 while (_tokBuffer.Any())
                 {
                     _defTokBuffer.Add(_tokBuffer[0]);
-                    if (_tokBuffer[0].Literal == "end")
+                    if (_tokBuffer[0].Text == "end")
                     {
                         _insideDefinition = false;
-                        if (_defTokBuffer[1].Literal == "to")
+                        if (_defTokBuffer[1].Text == "to")
                         {
                             WriteOutputLine(Strings.InterpretorInterpretProcedureIsNonRedefinableError);
                         }
@@ -199,7 +199,7 @@ namespace Logo.Interpretation
 
         private void DefineProcedure()
         {
-            string procName = _defTokBuffer[1].Literal;
+            string procName = _defTokBuffer[1].Text;
             if (Context.ProcedureNames.ContainsKey(procName) && Context.ProcedureNames[procName].Any(p => p.Redefinability == RedefinabilityType.NonRedefinable))
             {
                 WriteOutputLine(string.Format(Strings.InterpretorDefineProcedureProcedureIsNonRedefinableError, procName));
@@ -208,36 +208,40 @@ namespace Logo.Interpretation
             Context.RegisterProcedure(new LogoDefinition(_definitionBuffer, _defTokBuffer));
         }
 
-        private InterpretationResult ExecuteTokenBuffer()
+        private InterpretationResult ExecuteTokenBuffer() 
+        { 
+            return ExecuteTokens(_tokBuffer, false);
+        }
+
+        private InterpretationResult ExecuteTokens(List<Token> tokens, bool literalEvaluateUndefinedWords)
         {
-            if (!_tokBuffer.Any(t => !t.Evaluated))
+            if (!tokens.Any(t => !(t is LiteralToken)))
             {
                 return InterpretationResult.SuccessComplete;
             }
 
-            int firstTokenIdx = _tokBuffer.FindIndex(t => !t.Evaluated);
-            Type firstTokenType = _tokBuffer[firstTokenIdx].GetType();
+            int firstTokenIdx = tokens.FindIndex(t => !(t is LiteralToken));
 
-            if (firstTokenType == typeof(LogoComment))
+            if (tokens[firstTokenIdx] is CommentToken)
             {
-                _tokBuffer.RemoveAt(firstTokenIdx);
+                tokens.RemoveAt(firstTokenIdx);
                 return ExecuteTokenBuffer();
             }
 
-            if (firstTokenType == typeof(LogoList))
+            if (tokens[firstTokenIdx] is ListToken)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareListError, _tokBuffer[0].Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareListError, tokens[firstTokenIdx].Text));
                 return InterpretationResult.Failure;
             }
 
-            if (firstTokenType == typeof(LogoExpression))
+            if (tokens[firstTokenIdx] is ExpressionToken)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareExpressionError, _tokBuffer[0].Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareExpressionError, tokens[firstTokenIdx].Text));
                 return InterpretationResult.Failure;
             }
 
-            InterpretationResult execResult = EvaluateWord(_tokBuffer, firstTokenIdx, true);
-            return execResult == InterpretationResult.SuccessComplete ? ExecuteTokenBuffer() : execResult;
+            InterpretationResult execResult = EvaluateWord(tokens, firstTokenIdx, literalEvaluateUndefinedWords);
+            return execResult == InterpretationResult.SuccessComplete ? ExecuteTokens(tokens, literalEvaluateUndefinedWords) : execResult;
         }
 
         /// <summary>
@@ -254,25 +258,29 @@ namespace Logo.Interpretation
                 return InterpretationResult.SuccessComplete;
             }
 
-            Type tokenType = tokens[index].GetType();
-            if (tokenType == typeof(Word))
+            if (tokens[index] is ProcedureToken)
             {
                 return EvaluateWord(tokens, index, literalEvaluateUndefinedWords);
             }
-            if (tokenType == typeof(LogoList))
+            if (tokens[index] is ListToken)
             {
-                tokens[index].TokenValue = new LogoValue(LogoValueType.List, tokens[index].Clone());
-                tokens[index].Evaluated = true;
+                tokens[index] = new LiteralToken(tokens[index].Text, new LogoValue(LogoValueType.List, tokens[index]));
                 return InterpretationResult.SuccessComplete;
             }
-            if (tokenType == typeof(LogoOperator))
+            if (tokens[index] is OperatorToken)
             {
-                tokens[index].Evaluated = true;
                 return InterpretationResult.SuccessComplete;
             }
-            if (tokenType == typeof(LogoExpression))
+            if (tokens[index] is ExpressionToken)
             {
-                return EvaluateExpression((LogoExpression)tokens[index], literalEvaluateUndefinedWords);
+                InterpretationResult result = EvaluateExpression(new ExpressionToken(((ExpressionToken)tokens[index]).Contents), literalEvaluateUndefinedWords, out LogoValue resultValue);
+                tokens[index] = new LiteralToken(tokens[index].Text, resultValue);
+                return result;
+            }
+            if (tokens[index] is VariableToken vt)
+            {
+                tokens[index] = new LiteralToken(vt.Text, Context.GetVariable(vt.VariableName));
+                return InterpretationResult.SuccessComplete;
             }
 
             return InterpretationResult.Failure;
@@ -287,58 +295,30 @@ namespace Logo.Interpretation
         /// <returns>A value indicating success, failure, or that more input is required.</returns>
         public InterpretationResult EvaluateWord(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
         {
-            if (tokens[index].Evaluated)
+            if (tokens[index].Text == "true")
             {
+                tokens[index] = new LiteralToken("true", new LogoValue(LogoValueType.Bool, true));
+                return InterpretationResult.SuccessComplete;
+            }
+            if (tokens[index].Text == "false")
+            {
+                tokens[index] = new LiteralToken("false", new LogoValue(LogoValueType.Bool, false));
                 return InterpretationResult.SuccessComplete;
             }
 
-            if (tokens[index].Literal[0] == '\"')
+            if (literalEvaluateUndefinedWords && !Context.ProcedureNames.ContainsKey(tokens[index].Text))
             {
-                tokens[index].TokenValue = new LogoValue(LogoValueType.Text, tokens[index].Literal.Substring(1));
-                tokens[index].Evaluated = true;
+                tokens[index] = new LiteralToken(tokens[index].Text, new LogoValue(LogoValueType.Text, tokens[index].Text));
                 return InterpretationResult.SuccessComplete;
             }
 
-            if (tokens[index].Literal[0] == ':')
+            if (!Context.ProcedureNames.ContainsKey(tokens[index].Text))
             {
-                tokens[index].TokenValue = Context.GetVariable(tokens[index].Literal.Substring(1));
-                tokens[index].Evaluated = true;
-                return InterpretationResult.SuccessComplete;
-            }
-
-            if (char.IsDigit(tokens[index].Literal[0]))
-            {
-                tokens[index].TokenValue = new LogoValue(LogoValueType.Number, decimal.Parse(tokens[index].Literal));
-                tokens[index].Evaluated = true;
-                return InterpretationResult.SuccessComplete;
-            }
-            if (tokens[index].Literal == "true")
-            {
-                tokens[index].TokenValue = new LogoValue(LogoValueType.Bool, true);
-                tokens[index].Evaluated = true;
-                return InterpretationResult.SuccessComplete;
-            }
-            if (tokens[index].Literal == "false")
-            {
-                tokens[index].TokenValue = new LogoValue(LogoValueType.Bool, false);
-                tokens[index].Evaluated = true;
-                return InterpretationResult.SuccessComplete;
-            }
-
-            if (literalEvaluateUndefinedWords && !Context.ProcedureNames.ContainsKey(tokens[index].Literal))
-            {
-                tokens[index].TokenValue = new LogoValue(LogoValueType.Text, tokens[index].Literal);
-                tokens[index].Evaluated = true;
-                return InterpretationResult.SuccessComplete;
-            }
-
-            if (!Context.ProcedureNames.ContainsKey(tokens[index].Literal))
-            {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteWordUndefinedProcedureError, tokens[index].Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteWordUndefinedProcedureError, tokens[index].Text));
                 return InterpretationResult.Failure;
             }
 
-            int parmCount = Context.ProcedureNames[tokens[index].Literal].First().ParameterCount;
+            int parmCount = Context.ProcedureNames[tokens[index].Text].First().ParameterCount;
 
             for (int i = 0; i < parmCount; ++i)
             {
@@ -357,18 +337,18 @@ namespace Logo.Interpretation
                     {
                         return InterpretationResult.SuccessIncomplete;
                     }
-                } while (!tokens[index + i + 1].Evaluated);
+                } while (!(tokens[index + i + 1] is LiteralToken));
             }
 
-            Token[] parmBuffer = new Token[parmCount];
+            LogoValue[] parmBuffer = new LogoValue[parmCount];
             for (int i = 0; i < parmCount; ++i)
             {
-                parmBuffer[i] = tokens[index + 1];
+                parmBuffer[i] = (tokens[index + 1] as LiteralToken).Value;
                 tokens.RemoveAt(index + 1);
             }
 
             List<Token> returnTokens = new List<Token>();
-            foreach (LogoProcedure cmdToExec in Context.ProcedureNames[tokens[index].Literal])
+            foreach (LogoProcedure cmdToExec in Context.ProcedureNames[tokens[index].Text])
             {
                 if (cmdToExec.GetType() == typeof(LogoCommand))
                 {
@@ -390,19 +370,7 @@ namespace Logo.Interpretation
             else
             {
                 Token returnToken = returnTokens.Last(t => t != null);
-                if (returnToken.Evaluated)
-                {
-                    tokens[index].TokenValue = returnToken.TokenValue;
-                }
-                else if (returnToken is LogoList)
-                {
-                    tokens[index].TokenValue = new LogoValue(LogoValueType.List, returnToken);
-                }
-                else if (returnToken is Word)
-                {
-                    tokens[index].TokenValue = new LogoValue(LogoValueType.Word, returnToken);
-                }
-                tokens[index].Evaluated = true;
+                tokens[index] = returnToken;
             }
 
             return InterpretationResult.SuccessComplete;
@@ -414,27 +382,9 @@ namespace Logo.Interpretation
         /// <param name="list">The list to be evaluated.</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
         /// <returns>A value indicating success or failure.</returns>
-        public InterpretationResult EvaluateListContents(LogoList list, bool literalEvaluateUndefinedWords)
+        public InterpretationResult EvaluateListContents(ListToken list, bool literalEvaluateUndefinedWords)
         {
-            DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateListContentsDebugMessage, list.Literal));
-            while (list.Contents.Any(t => !t.Evaluated))
-            {
-                int firstNonEvaldWord = list.Contents.FindIndex(t => !t.Evaluated);
-                InterpretationResult result = EvaluateWord(list.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
-
-                if (result == InterpretationResult.SuccessIncomplete)
-                {
-                    StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateListIncompleteContentsError, list.Literal));
-                    return InterpretationResult.Failure;
-                }
-                if (result == InterpretationResult.Failure)
-                {
-                    return InterpretationResult.Failure;
-                }
-            }
-
-            list.EvaluatedContents = true;
-            return InterpretationResult.SuccessComplete;
+            return ExecuteTokens(list.Contents, literalEvaluateUndefinedWords);
         }
 
         /// <summary>
@@ -443,22 +393,24 @@ namespace Logo.Interpretation
         /// <param name="expr">The expression to be evaluated.</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
         /// <returns>A value indicating success or failure.</returns>
-        public InterpretationResult EvaluateExpression(LogoExpression expr, bool literalEvaluateUndefinedWords)
+        public InterpretationResult EvaluateExpression(ExpressionToken expr, bool literalEvaluateUndefinedWords, out LogoValue resultValue)
         {
-            DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionDebugMessage, expr.Literal));
+            DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionDebugMessage, expr.Text));
             InterpretationResult result = EvaluateExpressionContents(expr, literalEvaluateUndefinedWords);
             if (result != InterpretationResult.SuccessComplete)
             {
+                resultValue = new LogoValue();
                 return result;
             }
 
             foreach (OperatorType type in Enum.GetValues(typeof(OperatorType)))
             {
-                while (expr.Contents.Select(t => t as LogoOperator).Any(t => t != null && t.Operation == type && !t.Evaluated))
+                while (expr.Contents.Select(t => t as OperatorToken).Any(t => t != null && t.Operation == type))
                 {
-                    result = EvaluateOperator(expr, expr.Contents.FindIndex(t => t is LogoOperator && ((LogoOperator)t).Operation == type && !t.Evaluated));
+                    result = EvaluateOperator(expr, expr.Contents.FindIndex(t => t is OperatorToken && ((OperatorToken)t).Operation == type));
                     if (result != InterpretationResult.SuccessComplete)
                     {
+                        resultValue = new LogoValue();
                         return result;
                     }
                 }
@@ -466,67 +418,78 @@ namespace Logo.Interpretation
 
             if (expr.Contents.Count != 1)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionGeneralError, expr.Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionGeneralError, expr.Text));
+                resultValue = new LogoValue();
                 return InterpretationResult.Failure;
             }
 
-            expr.TokenValue = expr.Contents[0].TokenValue;
-            expr.Evaluated = true;
+            resultValue = (expr.Contents[0] as LiteralToken).Value;
             return InterpretationResult.SuccessComplete;
         }
 
-        private InterpretationResult EvaluateOperator(LogoExpression expr, int idx)
+        private InterpretationResult EvaluateOperator(ExpressionToken expr, int idx)
         {
             if (idx == 0)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.Contents[idx].Literal, expr.Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.Contents[idx].Text, expr.Text));
                 return InterpretationResult.Failure;
             }
 
             if (idx == expr.Contents.Count - 1)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.Contents[idx].Literal, expr.Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.Contents[idx].Text, expr.Text));
                 return InterpretationResult.Failure;
             }
 
-            LogoOperator op = (LogoOperator)expr.Contents[idx];
-            Token firstArg = expr.Contents[idx - 1];
-            Token secondArg = expr.Contents[idx + 1];
-            if (firstArg.TokenValue.Type == LogoValueType.Unknown)
+            OperatorToken op = (OperatorToken)expr.Contents[idx];
+            LiteralToken firstArg = expr.Contents[idx - 1] as LiteralToken;
+            LiteralToken secondArg = expr.Contents[idx + 1] as LiteralToken;
+            LogoValue firstArgValue;
+            LogoValue secondArgValue;
+            if (firstArg.Value.Type == LogoValueType.Unknown)
             {
-                firstArg.TokenValue = LogoValue.GetDefaultValue(secondArg.TokenValue.Type);
+                firstArgValue = LogoValue.GetDefaultValue(secondArg.Value.Type);
             }
-            if (secondArg.TokenValue.Type == LogoValueType.Unknown)
+            else
             {
-                secondArg.TokenValue = LogoValue.GetDefaultValue(firstArg.TokenValue.Type);
+                firstArgValue = firstArg.Value;
+            }
+            if (secondArg.Value.Type == LogoValueType.Unknown)
+            {
+                secondArgValue = LogoValue.GetDefaultValue(firstArg.Value.Type);
+            }
+            else
+            {
+                secondArgValue = secondArg.Value;
             }
 
-            OperatorEvaluationResult opResult = op.Perform(firstArg, secondArg);
+            OperatorEvaluationResult opResult = op.Perform(firstArgValue, secondArgValue);
             if (opResult.Result == InterpretationResult.Failure)
             {
                 StandardOutputWriter.Write(opResult.Message);
                 return InterpretationResult.Failure;
             }
 
-            op.Evaluated = true;
+            expr.Contents[idx] = new LiteralToken(expr.Contents[idx].Text, opResult.Value);
             expr.Contents.RemoveAt(idx + 1);
             expr.Contents.RemoveAt(idx - 1);
+            
             return InterpretationResult.SuccessComplete;
         }
 
-        private InterpretationResult EvaluateExpressionContents(LogoExpression expr, bool literalEvaluateUndefinedWords)
+        private InterpretationResult EvaluateExpressionContents(ExpressionToken expr, bool literalEvaluateUndefinedWords)
         {
-            if (expr.Contents.Count == 0 || expr.Contents.Where(t => !(t is LogoOperator)).All(t => t.Evaluated))
+            if (expr.Contents.Count == 0 || expr.Contents.All(t => t is OperatorToken || t is LiteralToken))
             {
                 return InterpretationResult.SuccessComplete;
             }
 
-            int firstNonEvaldWord = expr.Contents.FindIndex(t => !(t is LogoOperator) && !t.Evaluated);
+            int firstNonEvaldWord = expr.Contents.FindIndex(t => !(t is OperatorToken || t is LiteralToken));
             InterpretationResult result = EvaluateToken(expr.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
 
             if (result == InterpretationResult.SuccessIncomplete)
             {
-                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionContentsIncompleteContentsError, expr.Literal));
+                StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionContentsIncompleteContentsError, expr.Text));
                 return InterpretationResult.Failure;
             }
             if (result == InterpretationResult.Failure)
@@ -566,7 +529,7 @@ namespace Logo.Interpretation
 
         private void DumpToken(string prefix, TextWriter writer, Token tok)
         {
-            writer.WriteLine(string.Format(Strings.InterpretorDumpTokenOutput, prefix, tok.GetType(), tok.Literal));
+            writer.WriteLine(string.Format(Strings.InterpretorDumpTokenOutput, prefix, tok.GetType(), tok.Text));
             if (tok.GetType().IsSubclassOf(typeof(ContainerToken)))
             {
                 foreach (Token innerTok in ((ContainerToken)tok).Contents)

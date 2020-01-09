@@ -11,3 +11,4 @@ repeat 100 [pr [a b c]]
 | 2020-01-06 | Code essentially as imported | 5.704, 6.939, 8.217, 9.727, 11.210, 12.574 | 9.062 |
 | 2020-01-06 | After closing issue #10 | 5.781, 6.644, 8.201, 9.562, 10.861, 12.659 | 8.951 |
 | 2020-01-06 | After closing issue #9 | 6.089, 7.262, 8.499, 9.684, 11.034, 13.114 | 9.280 |
+| 2020-01-07 | After starting to rewrite token types (midway through issue #14) | 2.422, 2.538, 2.650, 2.859, 3.054, 3.176 | 2.783 |

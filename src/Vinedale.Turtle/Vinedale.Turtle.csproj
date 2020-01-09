@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Will\Source\Repos\vinedale\src\Vinedale.Turtle\Vinedale.Turtle.xml</DocumentationFile>
+    <DocumentationFile>.\bin\$(Configuration)\$(TargetFramework)\Vinedale.Turtle.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>.\bin\$(Configuration)\$(TargetFramework)\Vinedale.Turtle.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

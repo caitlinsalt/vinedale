@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Logo.Procedures
+﻿namespace Logo.Procedures
 {
     /// <summary>
     /// The <c>LogoProcedure</c> class provides the definition of a generic Logo procedure, either implemented in .NET or implemented in Logo (whether built-in or user-defined).

@@ -62,6 +62,25 @@ namespace Logo.Tokens
         }
 
         /// <summary>
+        /// Convert this value to a string.
+        /// </summary>
+        /// <returns>A string representing this value.</returns>
+        public override string ToString()
+        {
+            switch (Type)
+            {
+                case LogoValueType.Text:
+                    return Value as string;
+                case LogoValueType.Number:
+                default:
+                    return Value.ToString();
+                case LogoValueType.Word:
+                    Token token = Value as Token;
+                    return token is LiteralToken literal ? literal.Value.ToString() : token.Text;
+            }
+        }
+
+        /// <summary>
         /// Equality operator.
         /// </summary>
         /// <param name="a">A <see cref="LogoValue" />.</param>
@@ -95,7 +114,9 @@ namespace Logo.Tokens
                 case LogoValueType.Bool:
                     return new LogoValue { Type = LogoValueType.Bool, Value = false };
                 case LogoValueType.List:
-                    return new LogoValue { Type = LogoValueType.List, Value = new LogoList("[]") };
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+                    return new LogoValue { Type = LogoValueType.List, Value = ListToken.Empty() };
+#pragma warning restore CA1303 // Do not pass literals as localized parameters
                 case LogoValueType.Number:
                     return new LogoValue { Type = LogoValueType.Number, Value = 0m };
                 case LogoValueType.Parcel:
@@ -106,7 +127,7 @@ namespace Logo.Tokens
                 case LogoValueType.Unknown:
                     return new LogoValue { Type = LogoValueType.Unknown, Value = null };
                 case LogoValueType.Word:
-                    return new LogoValue { Type = LogoValueType.Word, Value = new Word() };
+                    return new LogoValue { Type = LogoValueType.Word, Value = null };
             }
         }
     }

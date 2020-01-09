@@ -56,6 +56,11 @@ namespace Logo.Interpretation
         /// <param name="p">The procedure definition to be added.</param>
         public void RegisterProcedure(LogoProcedure p)
         {
+            if (p is null)
+            {
+                throw new ArgumentNullException(nameof(p));
+            }
+
             Procedures.Add(p);
             if (!ProcedureNames.ContainsKey(p.Name))
             {
@@ -157,9 +162,9 @@ namespace Logo.Interpretation
         /// Create a new variable namespace on the local namespace stack, set it as the current local namespace, and set the supplied list of evaluated tokens as variables in the namespace.
         /// </summary>
         /// <param name="paramList">An array of tokens to set as variables in the new local namespace.</param>
-        public void StackFrameCreate(Token[] paramList)
+        public void StackFrameCreate(LiteralToken[] paramList)
         {
-            Locals.Push(paramList.ToDictionary(p => p.Literal, p => p.TokenValue));
+            Locals.Push(paramList.ToDictionary(p => p.Text, p => p.Value));
         }
 
 
