@@ -117,11 +117,80 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AbsCmd" xml:space="preserve">
+    <value>abs</value>
+  </data>
+  <data name="AndCmd" xml:space="preserve">
+    <value>and</value>
+  </data>
+  <data name="ArctanCmd" xml:space="preserve">
+    <value>arctan</value>
+  </data>
+  <data name="AsciiCmd" xml:space="preserve">
+    <value>ascii</value>
+  </data>
+  <data name="ButfirstCmd" xml:space="preserve">
+    <value>butfirst</value>
+  </data>
+  <data name="ButlastCmd" xml:space="preserve">
+    <value>butlast</value>
+  </data>
+  <data name="CharCmd" xml:space="preserve">
+    <value>char</value>
+  </data>
+  <data name="ClearnameCmd" xml:space="preserve">
+    <value>clearname</value>
+  </data>
+  <data name="ClearnamesCmd" xml:space="preserve">
+    <value>clearnames</value>
+  </data>
+  <data name="CosCmd" xml:space="preserve">
+    <value>cos</value>
+  </data>
+  <data name="CountCmd" xml:space="preserve">
+    <value>count</value>
+  </data>
+  <data name="DifferenceCmd" xml:space="preserve">
+    <value>difference</value>
+  </data>
   <data name="EmptyList" xml:space="preserve">
     <value>[ ]</value>
   </data>
   <data name="False" xml:space="preserve">
     <value>false</value>
+  </data>
+  <data name="HelpCmd" xml:space="preserve">
+    <value>help</value>
+  </data>
+  <data name="MakeCmd" xml:space="preserve">
+    <value>make</value>
+  </data>
+  <data name="NodesCmd" xml:space="preserve">
+    <value>nodes</value>
+  </data>
+  <data name="PiCmd" xml:space="preserve">
+    <value>pi</value>
+  </data>
+  <data name="PrCmd" xml:space="preserve">
+    <value>pr</value>
+  </data>
+  <data name="PrintCmd" xml:space="preserve">
+    <value>print</value>
+  </data>
+  <data name="RecycleCmd" xml:space="preserve">
+    <value>recycle</value>
+  </data>
+  <data name="RepeatCmd" xml:space="preserve">
+    <value>repeat</value>
+  </data>
+  <data name="SinCmd" xml:space="preserve">
+    <value>sin</value>
+  </data>
+  <data name="SpaceCmd" xml:space="preserve">
+    <value>space</value>
+  </data>
+  <data name="TanCmd" xml:space="preserve">
+    <value>tan</value>
   </data>
   <data name="True" xml:space="preserve">
     <value>true</value>
