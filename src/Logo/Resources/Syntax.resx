@@ -120,4 +120,10 @@
   <data name="EmptyList" xml:space="preserve">
     <value>[ ]</value>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>true</value>
+  </data>
 </root>
