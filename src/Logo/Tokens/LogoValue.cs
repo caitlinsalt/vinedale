@@ -109,15 +109,13 @@ namespace Logo.Tokens
         /// <returns>A <see cref="LogoValue" /> object of the given <see cref="LogoValueType" />.</returns>
         public static LogoValue GetDefaultValue(ValueType type)
         {
-            const string EmptyList = "[ ]";
-
             switch (type)
             {
                 case LogoValueType.Bool:
                     return new LogoValue { Type = LogoValueType.Bool, Value = false };
                 case LogoValueType.List:
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
-                    return new LogoValue { Type = LogoValueType.List, Value = new ListToken(EmptyList) };
+                    return new LogoValue { Type = LogoValueType.List, Value = ListToken.Empty() };
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
                 case LogoValueType.Number:
                     return new LogoValue { Type = LogoValueType.Number, Value = 0m };

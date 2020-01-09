@@ -1,6 +1,4 @@
-﻿using Logo.Interpretation;
-
-namespace Logo.Tokens
+﻿namespace Logo.Tokens
 {
     /// <summary>
     /// The parent class of all Logo input tokens.
