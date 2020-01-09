@@ -34,8 +34,8 @@ namespace Vinedale
         {
             if (_interp != null)
             {
-                InterpretationResult result = _interp.Interpret(e.Command);
-                if (result == InterpretationResult.SuccessIncomplete)
+                InterpretationResultType result = _interp.Interpret(e.Command);
+                if (result == InterpretationResultType.SuccessIncomplete)
                 {
                     interpShell.Prompt = "> ";
                 }

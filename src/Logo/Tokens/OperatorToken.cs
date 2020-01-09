@@ -58,7 +58,7 @@ namespace Logo.Tokens
                 case OperatorType.Divide:
                     return PerformDivision(args);
                 default:
-                    return new OperatorEvaluationResult { Result = InterpretationResult.Failure, Message = Strings.OperatorUnknownOperationError };
+                    return new OperatorEvaluationResult(InterpretationResultType.Failure, new LogoValue(), Strings.OperatorUnknownOperationError);
             }
         }
 
@@ -83,9 +83,9 @@ namespace Logo.Tokens
             }
             else
             {
-                return new OperatorEvaluationResult { Result = InterpretationResult.Failure, Message = Strings.OperatorAdditionTypeError, Value = tokenValue };
+                return new OperatorEvaluationResult(InterpretationResultType.Failure, tokenValue, Strings.OperatorAdditionTypeError);
             }
-            return new OperatorEvaluationResult { Result = InterpretationResult.SuccessComplete, Message = string.Empty, Value = tokenValue };
+            return new OperatorEvaluationResult(InterpretationResultType.SuccessComplete, tokenValue);
         }
 
 
@@ -98,9 +98,9 @@ namespace Logo.Tokens
             }
             else
             {
-                return new OperatorEvaluationResult { Result = InterpretationResult.Failure, Message = Strings.OperatorSubtractionTypeError, Value = tokenValue };
+                return new OperatorEvaluationResult(InterpretationResultType.Failure, tokenValue, Strings.OperatorSubtractionTypeError);
             }
-            return new OperatorEvaluationResult { Result = InterpretationResult.SuccessComplete, Message = string.Empty, Value = tokenValue };
+            return new OperatorEvaluationResult(InterpretationResultType.SuccessComplete, tokenValue);
         }
 
 
@@ -113,9 +113,9 @@ namespace Logo.Tokens
             }
             else
             {
-                return new OperatorEvaluationResult { Result = InterpretationResult.Failure, Message = Strings.OperatorMultiplicationTypeError, Value = tokenValue };
+                return new OperatorEvaluationResult(InterpretationResultType.Failure, tokenValue, Strings.OperatorMultiplicationTypeError);
             }
-            return new OperatorEvaluationResult { Result = InterpretationResult.SuccessComplete, Message = string.Empty, Value = tokenValue };
+            return new OperatorEvaluationResult(InterpretationResultType.SuccessComplete, tokenValue);
         }
 
 
@@ -128,9 +128,9 @@ namespace Logo.Tokens
             }
             else
             {
-                return new OperatorEvaluationResult { Result = InterpretationResult.Failure, Message = Strings.OperatorDivisionTypeError, Value = tokenValue };
+                return new OperatorEvaluationResult(InterpretationResultType.Failure, tokenValue, Strings.OperatorDivisionTypeError);
             }
-            return new OperatorEvaluationResult { Result = InterpretationResult.SuccessComplete, Message = string.Empty, Value = tokenValue };
+            return new OperatorEvaluationResult(InterpretationResultType.SuccessComplete, tokenValue);
         }
     }
 }

@@ -114,7 +114,7 @@ namespace Logo.Interpretation
         /// </summary>
         /// <param name="input">The line of code to be interpreted.</param>
         /// <returns>A value indicating whether the line was interpreted fully and successfully, was interpreted successfullly but requires more input, or was not interpreted.</returns>
-        public InterpretationResult Interpret(string input)
+        public InterpretationResultType Interpret(string input)
         {
             DateTime watermark = DateTime.Now;
             TokeniserResult tokeniserResult = Tokeniser.TokeniseString(_inputBuffer + input);
@@ -143,12 +143,12 @@ namespace Logo.Interpretation
             _inputBuffer = tokeniserResult.NonConsumedInput;
             if (tokeniserResult.ResultType == TokeniserResultType.SuccessIncomplete)
             {
-                return InterpretationResult.SuccessIncomplete;
+                return InterpretationResultType.SuccessIncomplete;
             }
             if (tokeniserResult.ResultType == TokeniserResultType.Failure)
             {
                 StandardOutputWriter.WriteLine(tokeniserResult.ErrorMessage);
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             if (_insideDefinition)
@@ -180,11 +180,11 @@ namespace Logo.Interpretation
 
             if (_insideDefinition)
             {
-                return InterpretationResult.SuccessIncomplete;
+                return InterpretationResultType.SuccessIncomplete;
             }
 
-            InterpretationResult executionResult = ExecuteTokenBuffer();
-            if (executionResult != InterpretationResult.SuccessIncomplete)
+            InterpretationResultType executionResult = ExecuteTokenBuffer();
+            if (executionResult != InterpretationResultType.SuccessIncomplete)
             {
                 _tokBuffer.Clear();
                 if (DebugVerbosity >= DebugMessageLevel.Chatty)
@@ -208,16 +208,16 @@ namespace Logo.Interpretation
             Context.RegisterProcedure(new LogoDefinition(_definitionBuffer, _defTokBuffer));
         }
 
-        private InterpretationResult ExecuteTokenBuffer() 
+        private InterpretationResultType ExecuteTokenBuffer() 
         { 
             return ExecuteTokens(_tokBuffer, false);
         }
 
-        private InterpretationResult ExecuteTokens(List<Token> tokens, bool literalEvaluateUndefinedWords)
+        private InterpretationResultType ExecuteTokens(List<Token> tokens, bool literalEvaluateUndefinedWords)
         {
             if (!tokens.Any(t => !(t is LiteralToken)))
             {
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
 
             int firstTokenIdx = tokens.FindIndex(t => !(t is LiteralToken));
@@ -231,17 +231,17 @@ namespace Logo.Interpretation
             if (tokens[firstTokenIdx] is ListToken)
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareListError, tokens[firstTokenIdx].Text));
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             if (tokens[firstTokenIdx] is ExpressionToken)
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteTokenBufferCannotExecuteBareExpressionError, tokens[firstTokenIdx].Text));
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
-            InterpretationResult execResult = EvaluateWord(tokens, firstTokenIdx, literalEvaluateUndefinedWords);
-            return execResult == InterpretationResult.SuccessComplete ? ExecuteTokens(tokens, literalEvaluateUndefinedWords) : execResult;
+            InterpretationResultType execResult = EvaluateWord(tokens, firstTokenIdx, literalEvaluateUndefinedWords);
+            return execResult == InterpretationResultType.SuccessComplete ? ExecuteTokens(tokens, literalEvaluateUndefinedWords) : execResult;
         }
 
         /// <summary>
@@ -251,11 +251,11 @@ namespace Logo.Interpretation
         /// <param name="index">The index of the token to be evaluated</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
         /// <returns>A value indicating success, failure, or that more input is required.</returns>
-        public InterpretationResult EvaluateToken(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
+        public InterpretationResultType EvaluateToken(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
         {
             if (!tokens.Any())
             {
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
 
             if (tokens[index] is ProcedureToken)
@@ -265,25 +265,25 @@ namespace Logo.Interpretation
             if (tokens[index] is ListToken)
             {
                 tokens[index] = new LiteralToken(tokens[index].Text, new LogoValue(LogoValueType.List, tokens[index]));
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
             if (tokens[index] is OperatorToken)
             {
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
             if (tokens[index] is ExpressionToken)
             {
-                InterpretationResult result = EvaluateExpression(new ExpressionToken(((ExpressionToken)tokens[index]).Contents), literalEvaluateUndefinedWords, out LogoValue resultValue);
+                InterpretationResultType result = EvaluateExpression(new ExpressionToken(((ExpressionToken)tokens[index]).Contents), literalEvaluateUndefinedWords, out LogoValue resultValue);
                 tokens[index] = new LiteralToken(tokens[index].Text, resultValue);
                 return result;
             }
             if (tokens[index] is VariableToken vt)
             {
                 tokens[index] = new LiteralToken(vt.Text, Context.GetVariable(vt.VariableName));
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
 
-            return InterpretationResult.Failure;
+            return InterpretationResultType.Failure;
         }
 
         /// <summary>
@@ -293,29 +293,29 @@ namespace Logo.Interpretation
         /// <param name="index">The index of the token to be evaluated</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
         /// <returns>A value indicating success, failure, or that more input is required.</returns>
-        public InterpretationResult EvaluateWord(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
+        public InterpretationResultType EvaluateWord(IList<Token> tokens, int index, bool literalEvaluateUndefinedWords)
         {
             if (tokens[index].Text == "true")
             {
                 tokens[index] = new LiteralToken("true", new LogoValue(LogoValueType.Bool, true));
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
             if (tokens[index].Text == "false")
             {
                 tokens[index] = new LiteralToken("false", new LogoValue(LogoValueType.Bool, false));
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
 
             if (literalEvaluateUndefinedWords && !Context.ProcedureNames.ContainsKey(tokens[index].Text))
             {
                 tokens[index] = new LiteralToken(tokens[index].Text, new LogoValue(LogoValueType.Text, tokens[index].Text));
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
 
             if (!Context.ProcedureNames.ContainsKey(tokens[index].Text))
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorExecuteWordUndefinedProcedureError, tokens[index].Text));
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             int parmCount = Context.ProcedureNames[tokens[index].Text].First().ParameterCount;
@@ -324,18 +324,18 @@ namespace Logo.Interpretation
             {
                 if (tokens.Count <= index + i + 1)
                 {
-                    return InterpretationResult.SuccessIncomplete;
+                    return InterpretationResultType.SuccessIncomplete;
                 }
                 do
                 {
-                    InterpretationResult result = EvaluateToken(tokens, index + i + 1, true);
-                    if (result == InterpretationResult.SuccessIncomplete)
+                    InterpretationResultType result = EvaluateToken(tokens, index + i + 1, true);
+                    if (result == InterpretationResultType.SuccessIncomplete)
                     {
-                        return InterpretationResult.SuccessIncomplete;
+                        return InterpretationResultType.SuccessIncomplete;
                     }
                     if (tokens.Count <= index + i + 1)
                     {
-                        return InterpretationResult.SuccessIncomplete;
+                        return InterpretationResultType.SuccessIncomplete;
                     }
                 } while (!(tokens[index + i + 1] is LiteralToken));
             }
@@ -373,7 +373,7 @@ namespace Logo.Interpretation
                 tokens[index] = returnToken;
             }
 
-            return InterpretationResult.SuccessComplete;
+            return InterpretationResultType.SuccessComplete;
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Logo.Interpretation
         /// <param name="list">The list to be evaluated.</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
         /// <returns>A value indicating success or failure.</returns>
-        public InterpretationResult EvaluateListContents(ListToken list, bool literalEvaluateUndefinedWords)
+        public InterpretationResultType EvaluateListContents(ListToken list, bool literalEvaluateUndefinedWords)
         {
             return ExecuteTokens(list.Contents, literalEvaluateUndefinedWords);
         }
@@ -393,11 +393,11 @@ namespace Logo.Interpretation
         /// <param name="expr">The expression to be evaluated.</param>
         /// <param name="literalEvaluateUndefinedWords">If <c>true</c>, words which are currently undefined will be processed as if they were string literals.</param>
         /// <returns>A value indicating success or failure.</returns>
-        public InterpretationResult EvaluateExpression(ExpressionToken expr, bool literalEvaluateUndefinedWords, out LogoValue resultValue)
+        public InterpretationResultType EvaluateExpression(ExpressionToken expr, bool literalEvaluateUndefinedWords, out LogoValue resultValue)
         {
             DebugOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionDebugMessage, expr.Text));
-            InterpretationResult result = EvaluateExpressionContents(expr, literalEvaluateUndefinedWords);
-            if (result != InterpretationResult.SuccessComplete)
+            InterpretationResultType result = EvaluateExpressionContents(expr, literalEvaluateUndefinedWords);
+            if (result != InterpretationResultType.SuccessComplete)
             {
                 resultValue = new LogoValue();
                 return result;
@@ -408,7 +408,7 @@ namespace Logo.Interpretation
                 while (expr.Contents.Select(t => t as OperatorToken).Any(t => t != null && t.Operation == type))
                 {
                     result = EvaluateOperator(expr, expr.Contents.FindIndex(t => t is OperatorToken && ((OperatorToken)t).Operation == type));
-                    if (result != InterpretationResult.SuccessComplete)
+                    if (result != InterpretationResultType.SuccessComplete)
                     {
                         resultValue = new LogoValue();
                         return result;
@@ -420,25 +420,25 @@ namespace Logo.Interpretation
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionGeneralError, expr.Text));
                 resultValue = new LogoValue();
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             resultValue = (expr.Contents[0] as LiteralToken).Value;
-            return InterpretationResult.SuccessComplete;
+            return InterpretationResultType.SuccessComplete;
         }
 
-        private InterpretationResult EvaluateOperator(ExpressionToken expr, int idx)
+        private InterpretationResultType EvaluateOperator(ExpressionToken expr, int idx)
         {
             if (idx == 0)
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionStartsWithOperatorError, expr.Contents[idx].Text, expr.Text));
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             if (idx == expr.Contents.Count - 1)
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionEndsWithOperatorError, expr.Contents[idx].Text, expr.Text));
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             OperatorToken op = (OperatorToken)expr.Contents[idx];
@@ -464,37 +464,37 @@ namespace Logo.Interpretation
             }
 
             OperatorEvaluationResult opResult = op.Perform(firstArgValue, secondArgValue);
-            if (opResult.Result == InterpretationResult.Failure)
+            if (opResult.Result == InterpretationResultType.Failure)
             {
                 StandardOutputWriter.Write(opResult.Message);
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             expr.Contents[idx] = new LiteralToken(expr.Contents[idx].Text, opResult.Value);
             expr.Contents.RemoveAt(idx + 1);
             expr.Contents.RemoveAt(idx - 1);
             
-            return InterpretationResult.SuccessComplete;
+            return InterpretationResultType.SuccessComplete;
         }
 
-        private InterpretationResult EvaluateExpressionContents(ExpressionToken expr, bool literalEvaluateUndefinedWords)
+        private InterpretationResultType EvaluateExpressionContents(ExpressionToken expr, bool literalEvaluateUndefinedWords)
         {
             if (expr.Contents.Count == 0 || expr.Contents.All(t => t is OperatorToken || t is LiteralToken))
             {
-                return InterpretationResult.SuccessComplete;
+                return InterpretationResultType.SuccessComplete;
             }
 
             int firstNonEvaldWord = expr.Contents.FindIndex(t => !(t is OperatorToken || t is LiteralToken));
-            InterpretationResult result = EvaluateToken(expr.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
+            InterpretationResultType result = EvaluateToken(expr.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
 
-            if (result == InterpretationResult.SuccessIncomplete)
+            if (result == InterpretationResultType.SuccessIncomplete)
             {
                 StandardOutputWriter.WriteLine(string.Format(Strings.InterpretorEvaluateExpressionContentsIncompleteContentsError, expr.Text));
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
-            if (result == InterpretationResult.Failure)
+            if (result == InterpretationResultType.Failure)
             {
-                return InterpretationResult.Failure;
+                return InterpretationResultType.Failure;
             }
 
             return EvaluateExpressionContents(expr, literalEvaluateUndefinedWords);

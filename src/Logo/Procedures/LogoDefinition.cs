@@ -40,8 +40,8 @@ namespace Logo.Procedures
             }
             context.StackFrameCreate(parameters.Select((p, i) => new LiteralToken(Parameters[i], p)).ToArray());
             ListToken runList = new ListToken(TokenisedDefinition.Contents);
-            InterpretationResult result = context.Interpretor.EvaluateListContents(runList, true);
-            if (result != InterpretationResult.SuccessComplete || runList.Contents.Count == 0)
+            InterpretationResultType result = context.Interpretor.EvaluateListContents(runList, true);
+            if (result != InterpretationResultType.SuccessComplete || runList.Contents.Count == 0)
             {
                 return null;
             }
