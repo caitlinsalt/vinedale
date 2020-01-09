@@ -122,9 +122,9 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing the distance to move forwards.</param>
         /// <returns><c>null</c>.</returns>
-        public Token Forward(InterpretorContext context, params Token[] input)
+        public Token Forward(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandForwardWrongTypeError);
                 return null;
@@ -140,9 +140,9 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing the distance to move backwards.</param>
         /// <returns><c>null</c>.</returns>
-        public Token Backwards(InterpretorContext context, params Token[] input)
+        public Token Backwards(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandBackWrongTypeError);
                 return null;
@@ -158,9 +158,9 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing the angle to rotate to the right (in degrees).</param>
         /// <returns><c>null</c></returns>
-        public Token Right(InterpretorContext context, params Token[] input)
+        public Token Right(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandRightWrongTypeError);
                 return null;
@@ -176,9 +176,9 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token containing the angle to rotate to the left (in degrees).</param>
         /// <returns><c>null</c></returns>
-        public Token Left(InterpretorContext context, params Token[] input)
+        public Token Left(InterpretorContext context, params LogoValue[] input)
         {
-            if (input[0].TokenValue.Type != LogoValueType.Number)
+            if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandLeftWrongTypeError);
                 return null;
@@ -194,7 +194,7 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Ignored.</param>
         /// <returns><c>null</c>.</returns>
-        public Token PenUp(InterpretorContext context, params Token[] input)
+        public Token PenUp(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendDrawingInstruction(new PenStatusInstruction { Status = PenStatus.Up });
             return null;
@@ -206,13 +206,13 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Ignored.</param>
         /// <returns><c>null</c>.</returns>
-        public Token PenDown(InterpretorContext context, params Token[] input)
+        public Token PenDown(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendDrawingInstruction(new PenStatusInstruction { Status = PenStatus.Down });
             return null;
         }
 
-        public Token ShowTurtle(InterpretorContext context, params Token[] input)
+        public Token ShowTurtle(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendDrawingInstruction(new TurtleStatusInstruction { Status = TurtleStatus.Shown });
             return null;
@@ -224,7 +224,7 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Ignored.</param>
         /// <returns><c>null</c>.</returns>
-        public Token Clean(InterpretorContext context, params Token[] input)
+        public Token Clean(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendCleanInstruction(false);
             return null;
@@ -236,7 +236,7 @@ namespace Vinedale.Turtle
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Ignored.</param>
         /// <returns><c>null</c>.</returns>
-        public Token ClearGraphics(InterpretorContext context, params Token[] input)
+        public Token ClearGraphics(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendCleanInstruction(true);
             return null;
@@ -252,9 +252,9 @@ namespace Vinedale.Turtle
             _parentContext.PendDrawingInstruction(new RotateInstruction { Angle = angle });
         }
 
-        private double GetDouble(Token token)
+        private double GetDouble(LogoValue token)
         {
-            return Convert.ToDouble((decimal)token.TokenValue.Value);
+            return Convert.ToDouble((decimal)token.Value);
         }
     }
 }

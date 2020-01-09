@@ -15,7 +15,7 @@ namespace Logo.Tokens
         /// <summary>
         /// The default constructor for this class initialises the <c>InnerContents</c> property to be an empty list of tokens.
         /// </summary>
-        public ContainerToken()
+        public ContainerToken(string text) : base(text)
         {
             Contents = new List<Token>();
         }

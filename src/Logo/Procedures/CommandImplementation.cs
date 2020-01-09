@@ -11,5 +11,5 @@ namespace Logo.Procedures
     /// <param name="parameters">The parameters to the procedure.  The interpretor guarantees the number of elements in the array will match the specified number of parameters in the 
     /// procedure definition.</param>
     /// <returns>A <c>LogoToken</c> if the command returns a value, or <c>null</c> otherwise.</returns>
-    public delegate Token CommandImplementation(InterpretorContext interpretationContext, params Token[] parameters);
+    public delegate Token CommandImplementation(InterpretorContext interpretationContext, params LogoValue[] parameters);
 }
