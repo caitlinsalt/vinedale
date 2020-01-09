@@ -61,6 +61,114 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to abs.
+        /// </summary>
+        internal static string AbsCmd {
+            get {
+                return ResourceManager.GetString("AbsCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        internal static string AndCmd {
+            get {
+                return ResourceManager.GetString("AndCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to arctan.
+        /// </summary>
+        internal static string ArctanCmd {
+            get {
+                return ResourceManager.GetString("ArctanCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ascii.
+        /// </summary>
+        internal static string AsciiCmd {
+            get {
+                return ResourceManager.GetString("AsciiCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to butfirst.
+        /// </summary>
+        internal static string ButfirstCmd {
+            get {
+                return ResourceManager.GetString("ButfirstCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to butlast.
+        /// </summary>
+        internal static string ButlastCmd {
+            get {
+                return ResourceManager.GetString("ButlastCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to char.
+        /// </summary>
+        internal static string CharCmd {
+            get {
+                return ResourceManager.GetString("CharCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to clearname.
+        /// </summary>
+        internal static string ClearnameCmd {
+            get {
+                return ResourceManager.GetString("ClearnameCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to clearnames.
+        /// </summary>
+        internal static string ClearnamesCmd {
+            get {
+                return ResourceManager.GetString("ClearnamesCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cos.
+        /// </summary>
+        internal static string CosCmd {
+            get {
+                return ResourceManager.GetString("CosCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to count.
+        /// </summary>
+        internal static string CountCmd {
+            get {
+                return ResourceManager.GetString("CountCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to difference.
+        /// </summary>
+        internal static string DifferenceCmd {
+            get {
+                return ResourceManager.GetString("DifferenceCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [ ].
         /// </summary>
         internal static string EmptyList {
@@ -75,6 +183,105 @@ namespace Logo.Resources {
         internal static string False {
             get {
                 return ResourceManager.GetString("False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to help.
+        /// </summary>
+        internal static string HelpCmd {
+            get {
+                return ResourceManager.GetString("HelpCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to make.
+        /// </summary>
+        internal static string MakeCmd {
+            get {
+                return ResourceManager.GetString("MakeCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nodes.
+        /// </summary>
+        internal static string NodesCmd {
+            get {
+                return ResourceManager.GetString("NodesCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pi.
+        /// </summary>
+        internal static string PiCmd {
+            get {
+                return ResourceManager.GetString("PiCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pr.
+        /// </summary>
+        internal static string PrCmd {
+            get {
+                return ResourceManager.GetString("PrCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to print.
+        /// </summary>
+        internal static string PrintCmd {
+            get {
+                return ResourceManager.GetString("PrintCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to recycle.
+        /// </summary>
+        internal static string RecycleCmd {
+            get {
+                return ResourceManager.GetString("RecycleCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to repeat.
+        /// </summary>
+        internal static string RepeatCmd {
+            get {
+                return ResourceManager.GetString("RepeatCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sin.
+        /// </summary>
+        internal static string SinCmd {
+            get {
+                return ResourceManager.GetString("SinCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to space.
+        /// </summary>
+        internal static string SpaceCmd {
+            get {
+                return ResourceManager.GetString("SpaceCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tan.
+        /// </summary>
+        internal static string TanCmd {
+            get {
+                return ResourceManager.GetString("TanCmd", resourceCulture);
             }
         }
         
