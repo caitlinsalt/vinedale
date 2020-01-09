@@ -11,8 +11,8 @@ namespace Vinedale
     {
         private readonly StreamWriter _debugOutput;
         private readonly StreamWriter _standardOutput;
-        private Interpretor _interp;
-        private TurtleContext _turtle;
+        private readonly Interpretor _interp;
+        private readonly TurtleContext _turtle;
 
         public MainForm()
         {
@@ -32,9 +32,14 @@ namespace Vinedale
 
         private void InterpShell_CommandEntered(object sender, CommandEnteredEventArgs e)
         {
+            ProcessCommand(e.Command);
+        }
+
+        private void ProcessCommand(string command)
+        {
             if (_interp != null)
             {
-                InterpretationResultType result = _interp.Interpret(e.Command);
+                InterpretationResultType result = _interp.Interpret(command);
                 if (result == InterpretationResultType.SuccessIncomplete)
                 {
                     interpShell.Prompt = "> ";
