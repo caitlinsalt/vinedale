@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Text;
 
 namespace Logo.Os
 {
@@ -27,7 +26,7 @@ namespace Logo.Os
                 new LogoCommand
                 {
                     Name = "chdir",
-                    Aliases = new string[0],
+                    Aliases = Array.Empty<string>(),
                     Redefinability = RedefinabilityType.NonRedefinable,
                     ParameterCount = 1,
                     Implementation = ChangeWorkingDirectory,
@@ -37,7 +36,7 @@ namespace Logo.Os
                 new LogoCommand
                 {
                     Name = "currentdir",
-                    Aliases = new string[0],
+                    Aliases = Array.Empty<string>(),
                     Redefinability = RedefinabilityType.NonRedefinable,
                     ParameterCount = 0,
                     Implementation = GetWorkingDirectory,
@@ -47,7 +46,7 @@ namespace Logo.Os
                 new LogoCommand
                 {
                     Name = "directories",
-                    Aliases = new string[0],
+                    Aliases = Array.Empty<string>(),
                     Redefinability = RedefinabilityType.NonRedefinable,
                     ParameterCount = 0,
                     Implementation = GetSubdirectories,
@@ -57,7 +56,7 @@ namespace Logo.Os
                 new LogoCommand
                 {
                     Name = "files",
-                    Aliases = new string[0],
+                    Aliases = Array.Empty<string>(),
                     Redefinability = RedefinabilityType.NonRedefinable,
                     ParameterCount = 1,
                     Implementation = GetFiles,
@@ -73,9 +72,9 @@ namespace Logo.Os
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Not used.</param>
         /// <returns>A token whose value is the current working directory.</returns>
-        public Token GetWorkingDirectory(InterpretorContext context, params LogoValue[] input)
+        public static Token GetWorkingDirectory(InterpretorContext context, params LogoValue[] input)
         {
-            return new LiteralToken("currentdir", new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()));
+            return new LiteralToken(Syntax.CurrentDir, new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()));
         }
 
 
@@ -85,7 +84,7 @@ namespace Logo.Os
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Not used.</param>
         /// <returns>A token whose value is a list of strings which are the names of subdirectories of the current working directory.</returns>
-        public Token GetSubdirectories(InterpretorContext context, params LogoValue[] input)
+        public static Token GetSubdirectories(InterpretorContext context, params LogoValue[] input)
         {
             List<Token> tokenList = new List<Token>();
             tokenList.AddRange(Directory.GetDirectories(Directory.GetCurrentDirectory()).Select(d => new LiteralToken(d, new LogoValue(LogoValueType.Text, d))));
@@ -99,8 +98,13 @@ namespace Logo.Os
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">The first element of the array should be a string whose name is a file-matching pattern or an extension.</param>
         /// <returns>A token whose value is a list of strings which are the names of files in the current working directory.</returns>
-        public Token GetFiles(InterpretorContext context, params LogoValue[] input)
+        public static Token GetFiles(InterpretorContext context, params LogoValue[] input)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (input[0].Type != LogoValueType.Text)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandFilesWrongTypeError);
@@ -125,8 +129,13 @@ namespace Logo.Os
         /// <param name="context">The interpretor context.</param>
         /// <param name="input">Should contain one token, which is the path to the new CWD in OS format.</param>
         /// <returns><c>null</c></returns>
-        public Token ChangeWorkingDirectory(InterpretorContext context, params LogoValue[] input)
+        public static Token ChangeWorkingDirectory(InterpretorContext context, params LogoValue[] input)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (input[0].Type != LogoValueType.Text)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandChdirWrongTypeError);
