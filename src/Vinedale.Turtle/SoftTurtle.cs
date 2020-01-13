@@ -36,6 +36,9 @@ namespace Vinedale.Turtle
         /// </summary>
         public PenStatus PenDown { get; set; }
 
+        /// <summary>
+        /// Whether or not the turtle is displayed on screen.
+        /// </summary>
         public TurtleStatus TurtleShown { get; set; }
 
         /// <summary>
@@ -60,6 +63,10 @@ namespace Vinedale.Turtle
         /// <param name="windowSize">A <c>Rectangle</c> representing the size of the drawing window.</param>
         public void DrawTurtle(PaintEventArgs e, Rectangle windowSize)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
             if (TurtleShown == TurtleStatus.Hidden)
             {
                 return;
@@ -77,13 +84,11 @@ namespace Vinedale.Turtle
             PointF blPoint = new PointF(locPoint.X + (float)blPointXOffset, locPoint.Y - (float)blPointYOffset);
             PointF brPoint = new PointF(locPoint.X + (float)brPointXOffset, locPoint.Y - (float)brPointYOffset);
             PointF topPoint = new PointF(locPoint.X + (float)topPointXOffset, locPoint.Y - (float)topPointYOffset);
-            using (Pen pen = new Pen(Color.White))
-            {
-                e.Graphics.DrawLine(pen, locPoint, blPoint);
-                e.Graphics.DrawLine(pen, locPoint, brPoint);
-                e.Graphics.DrawLine(pen, topPoint, blPoint);
-                e.Graphics.DrawLine(pen, topPoint, brPoint);
-            }
+            using Pen pen = new Pen(Color.White);
+            e.Graphics.DrawLine(pen, locPoint, blPoint);
+            e.Graphics.DrawLine(pen, locPoint, brPoint);
+            e.Graphics.DrawLine(pen, topPoint, blPoint);
+            e.Graphics.DrawLine(pen, topPoint, brPoint);
         }
 
         /// <summary>
@@ -94,6 +99,11 @@ namespace Vinedale.Turtle
         /// <param name="windowSize">Size of the drawing area.</param>
         public void Move(double distance, PaintEventArgs e, Rectangle windowSize)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             PointF centrePoint = new PointF(windowSize.Width / 2f, windowSize.Height / 2f);
 
             double xMove = distance * Math.Sin(HeadingRadians);
@@ -101,10 +111,8 @@ namespace Vinedale.Turtle
 
             if (PenDown == PenStatus.Down)
             {
-                using (Pen pen = new Pen(Color.White))
-                {
-                    e.Graphics.DrawLine(pen, new PointF(centrePoint.X + (float)X, centrePoint.Y - (float)Y), new PointF(centrePoint.X + (float)(X + xMove), centrePoint.Y - (float)(Y + yMove)));
-                }
+                using Pen pen = new Pen(Color.White);
+                e.Graphics.DrawLine(pen, new PointF(centrePoint.X + (float)X, centrePoint.Y - (float)Y), new PointF(centrePoint.X + (float)(X + xMove), centrePoint.Y - (float)(Y + yMove)));
             }
 
             X += xMove;
