@@ -10,6 +10,7 @@ namespace Vinedale.Turtle.Tests.Unit.Drawing
     {
         private static readonly Random _rnd = RandomProvider.Default;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
         [TestMethod]
         public void JumpToInstructionClass_Constructor_SetsXPropertyToValueOfFirstParameter()
         {
@@ -31,5 +32,6 @@ namespace Vinedale.Turtle.Tests.Unit.Drawing
 
             Assert.AreEqual(testParam1, testOutput.Y);
         }
+#pragma warning restore CA1707 // Identifiers should not contain underscores
     }
 }
