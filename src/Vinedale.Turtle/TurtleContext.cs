@@ -53,7 +53,7 @@ namespace Vinedale.Turtle
             _instructionList.Clear();
             if (!resetPosition)
             {
-                _instructionList.Add(new JumpToInstruction { X = _turtle.X, Y = _turtle.Y });
+                _instructionList.Add(new JumpToInstruction(_turtle.X, _turtle.Y));
             }
             OnInstructionsChanged();
         }
