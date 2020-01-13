@@ -244,7 +244,7 @@ namespace Vinedale.Turtle
 
         private void PendTranslateInstruction(double length)
         {
-            _parentContext.PendDrawingInstruction(new LineInstruction { Length = length });
+            _parentContext.PendDrawingInstruction(new LineInstruction(length));
         }
 
         private void PendRotateInstruction(double angle)
