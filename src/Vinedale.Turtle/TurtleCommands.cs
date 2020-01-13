@@ -249,7 +249,7 @@ namespace Vinedale.Turtle
 
         private void PendRotateInstruction(double angle)
         {
-            _parentContext.PendDrawingInstruction(new RotateInstruction { Angle = angle });
+            _parentContext.PendDrawingInstruction(new RotateInstruction(angle));
         }
 
         private double GetDouble(LogoValue token)
