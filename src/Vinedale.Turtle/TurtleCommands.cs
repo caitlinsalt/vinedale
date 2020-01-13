@@ -214,7 +214,7 @@ namespace Vinedale.Turtle
 
         public Token ShowTurtle(InterpretorContext context, params LogoValue[] input)
         {
-            _parentContext.PendDrawingInstruction(new TurtleStatusInstruction { Status = TurtleStatus.Shown });
+            _parentContext.PendDrawingInstruction(new TurtleStatusInstruction(TurtleStatus.Shown));
             return null;
         }
 
