@@ -196,7 +196,7 @@ namespace Vinedale.Turtle
         /// <returns><c>null</c>.</returns>
         public Token PenUp(InterpretorContext context, params LogoValue[] input)
         {
-            _parentContext.PendDrawingInstruction(new PenStatusInstruction { Status = PenStatus.Up });
+            _parentContext.PendDrawingInstruction(new PenStatusInstruction(PenStatus.Up));
             return null;
         }
 
@@ -208,7 +208,7 @@ namespace Vinedale.Turtle
         /// <returns><c>null</c>.</returns>
         public Token PenDown(InterpretorContext context, params LogoValue[] input)
         {
-            _parentContext.PendDrawingInstruction(new PenStatusInstruction { Status = PenStatus.Down });
+            _parentContext.PendDrawingInstruction(new PenStatusInstruction(PenStatus.Down));
             return null;
         }
 
