@@ -8,6 +8,15 @@
         /// <summary>
         /// The new pen status.
         /// </summary>
-        public PenStatus Status { get; set; }
+        public PenStatus Status { get; private set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="status">The value of the <see cref="Status" /> property.</param>
+        public PenStatusInstruction(PenStatus status)
+        {
+            Status = status;
+        }
     }
 }
