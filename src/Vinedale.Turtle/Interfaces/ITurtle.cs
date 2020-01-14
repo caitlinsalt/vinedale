@@ -29,6 +29,9 @@ namespace Vinedale.Turtle.Interfaces
         /// </summary>
         PenStatus PenDown { get; set; }
 
+        /// <summary>
+        /// The current status of the turtle (shown or hidden).
+        /// </summary>
         TurtleStatus TurtleShown { get; set; }
 
         /// <summary>
