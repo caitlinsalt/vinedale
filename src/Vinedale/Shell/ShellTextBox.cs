@@ -3,10 +3,19 @@ using System.Windows.Forms;
 
 namespace Vinedale.Shell
 {
+    /// <summary>
+    /// The text box contained within a <see cref="ShellControl" />.
+    /// </summary>
     public partial class ShellTextBox : TextBox
     {
+        /// <summary>
+        /// The shell prompt string.
+        /// </summary>
         public string Prompt { get; set; }
 
+        /// <summary>
+        /// Whether or not this control is usable.  Hides <see cref="Control.Enabled" />.
+        /// </summary>
         public new bool Enabled
         {
             get
@@ -23,11 +32,18 @@ namespace Vinedale.Shell
             }
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ShellTextBox()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handle some special key codes.
+        /// </summary>
+        /// <param name="m">The message to handle.</param>
         protected override void WndProc(ref Message m)
         {
             switch (m.Msg)
@@ -152,6 +168,10 @@ namespace Vinedale.Shell
             return IsCaretAtCurrentLine() && GetCurrentCaretColumnPosition() >= Prompt.Length;
         }
 
+        /// <summary>
+        /// Add text to that already displayed.
+        /// </summary>
+        /// <param name="text">The text to display.</param>
         public void WriteText(string text)
         {
             AddText(text);
