@@ -165,4 +165,7 @@
   <data name="CommandRightWrongTypeError" xml:space="preserve">
     <value>You should tell me how far to turn as a number.</value>
   </data>
+  <data name="CommandShowTurtleHelpText" xml:space="preserve">
+    <value>Draw the turtle on the screen.</value>
+  </data>
 </root>
