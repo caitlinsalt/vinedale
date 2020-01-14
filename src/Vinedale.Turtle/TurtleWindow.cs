@@ -4,6 +4,9 @@ using Vinedale.Turtle.Interfaces;
 
 namespace Vinedale.Turtle
 {
+    /// <summary>
+    /// A control in which a turtle can draw.
+    /// </summary>
     public partial class TurtleWindow : UserControl
     {
         private ITurtleContext _turtleContext;
