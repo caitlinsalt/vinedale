@@ -7,6 +7,9 @@ using Vinedale.Turtle;
 
 namespace Vinedale
 {
+    /// <summary>
+    /// The main window of Vinedale.
+    /// </summary>
     public partial class MainForm : Form
     {
         private readonly StreamWriter _debugOutput;
@@ -14,6 +17,9 @@ namespace Vinedale
         private readonly Interpretor _interp;
         private readonly TurtleContext _turtle;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
