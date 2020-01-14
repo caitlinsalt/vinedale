@@ -106,13 +106,23 @@ namespace Vinedale.Turtle
                 new LogoCommand
                 {
                     Name = "clean",
-                    Aliases = new string[0],
+                    Aliases = Array.Empty<string>(),
                     Redefinability = RedefinabilityType.NonRedefinable,
                     ParameterCount = 0,
                     Implementation = Clean,
                     HelpText = Strings.CommandCleanHelpText,
                     ExampleText = string.Empty,
                 },
+                new LogoCommand
+                {
+                    Name = "showturtle",
+                    Aliases = new [] { "st" },
+                    Redefinability = RedefinabilityType.NonRedefinable,
+                    ParameterCount = 0,
+                    Implementation = ShowTurtle,
+                    HelpText = Strings.CommandShowTurtleHelpText,
+                    ExampleText = "",
+                }
             };
         }
 
@@ -124,6 +134,11 @@ namespace Vinedale.Turtle
         /// <returns><c>null</c>.</returns>
         public Token Forward(InterpretorContext context, params LogoValue[] input)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandForwardWrongTypeError);
@@ -142,6 +157,11 @@ namespace Vinedale.Turtle
         /// <returns><c>null</c>.</returns>
         public Token Backwards(InterpretorContext context, params LogoValue[] input)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandBackWrongTypeError);
@@ -160,6 +180,11 @@ namespace Vinedale.Turtle
         /// <returns><c>null</c></returns>
         public Token Right(InterpretorContext context, params LogoValue[] input)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandRightWrongTypeError);
@@ -178,6 +203,11 @@ namespace Vinedale.Turtle
         /// <returns><c>null</c></returns>
         public Token Left(InterpretorContext context, params LogoValue[] input)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (input[0].Type != LogoValueType.Number)
             {
                 context.Interpretor.WriteOutputLine(Strings.CommandLeftWrongTypeError);
@@ -212,6 +242,12 @@ namespace Vinedale.Turtle
             return null;
         }
 
+        /// <summary>
+        /// Make the turtle visible.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns><c>null</c>.</returns>
         public Token ShowTurtle(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendDrawingInstruction(new TurtleStatusInstruction { Status = TurtleStatus.Shown });
@@ -252,7 +288,7 @@ namespace Vinedale.Turtle
             _parentContext.PendDrawingInstruction(new RotateInstruction(angle));
         }
 
-        private double GetDouble(LogoValue token)
+        private static double GetDouble(LogoValue token)
         {
             return Convert.ToDouble((decimal)token.Value);
         }

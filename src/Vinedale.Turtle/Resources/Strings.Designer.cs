@@ -203,5 +203,14 @@ namespace Vinedale.Turtle.Resources {
                 return ResourceManager.GetString("CommandRightWrongTypeError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw the turtle on the screen..
+        /// </summary>
+        internal static string CommandShowTurtleHelpText {
+            get {
+                return ResourceManager.GetString("CommandShowTurtleHelpText", resourceCulture);
+            }
+        }
     }
 }
