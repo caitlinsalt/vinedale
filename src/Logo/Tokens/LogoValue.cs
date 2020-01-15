@@ -114,9 +114,7 @@ namespace Logo.Tokens
                 case LogoValueType.Bool:
                     return new LogoValue { Type = LogoValueType.Bool, Value = false };
                 case LogoValueType.List:
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
                     return new LogoValue { Type = LogoValueType.List, Value = ListToken.Empty() };
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
                 case LogoValueType.Number:
                     return new LogoValue { Type = LogoValueType.Number, Value = 0m };
                 case LogoValueType.Parcel:

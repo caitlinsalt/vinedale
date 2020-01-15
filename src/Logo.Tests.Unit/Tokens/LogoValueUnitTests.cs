@@ -90,6 +90,26 @@ namespace Logo.Tests.Unit.Tokens
         }
 
         [TestMethod]
+        public void LogoValueStruct_Constructor_SetsValuePropertyToSecondParameterOfConstructor_IfFirstParameterIsWordAndSecondParameterIsAProcedureToken()
+        {
+            ProcedureToken testParam1 = _rnd.NextProcedureToken();
+
+            LogoValue testOutput = new LogoValue(LogoValueType.Word, testParam1);
+
+            Assert.AreSame(testParam1, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_Constructor_SetsValuePropertyToSecondValueOfConstructor_IfFirstParameterIsListAndSecondParameterIsAListToken()
+        {
+            ListToken testParam1 = _rnd.NextListToken();
+
+            LogoValue testOutput = new LogoValue(LogoValueType.List, testParam1);
+
+            Assert.AreSame(testParam1, testOutput.Value);
+        }
+
+        [TestMethod]
         public void LogoValueStruct_EqualsMethodWithObjectParameter_ReturnsTrueIfParameterHasSameProperties()
         {
             LogoValue testValue = _rnd.NextLogoValue();
