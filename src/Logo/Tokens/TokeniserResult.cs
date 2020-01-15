@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Logo.Tokens
 {
@@ -39,7 +37,7 @@ namespace Logo.Tokens
         /// <param name="errorMessage">Any error message resulting from tokenisation.  Defaults to null.</param>
         public TokeniserResult(TokeniserResultType resultType, IEnumerable<Token> tokenisedData, string nonConsumedInput = null, string errorMessage = null)
         {
-            TokenisedData = tokenisedData.ToArray();
+            TokenisedData = tokenisedData?.ToArray();
             ResultType = resultType;
             NonConsumedInput = nonConsumedInput;
             ErrorMessage = errorMessage;
