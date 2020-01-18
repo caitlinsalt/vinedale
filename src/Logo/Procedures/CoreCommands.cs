@@ -22,226 +22,28 @@ namespace Logo.Procedures
         {
             return new LogoProcedure[]
             {
-                new LogoCommand
-                {
-                    Name = Syntax.PrintCmd,
-                    Aliases = new[] { Syntax.PrCmd },
-                    Redefinability = RedefinabilityType.DefineAlongside,
-                    ParameterCount = 1,
-                    Implementation = Print,
-                    HelpText = Strings.CommandPrintHelpText,
-                    ExampleText = Strings.CommandPrintExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.NodesCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.DefineAlongside,
-                    ParameterCount = 0,
-                    Implementation = Nodes,
-                    HelpText = Strings.CommandNodesHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.RecycleCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = Recycle,
-                    HelpText = Strings.CommandRecycleHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.RepeatCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 2,
-                    Implementation = Repeat,
-                    HelpText = Strings.CommandRepeatHelpText,
-                    ExampleText = Strings.CommandRepeatExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.SpaceCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = SpaceUsed,
-                    HelpText = Strings.CommandSpaceHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.AbsCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = MathAbs,
-                    HelpText = Strings.CommandAbsHelpText,
-                    ExampleText = Strings.CommandAbsExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.AndCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = BoolAnd,
-                    HelpText = Strings.CommandAndHelpText,
-                    ExampleText = Strings.CommandAndExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.ArctanCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = MathAtan,
-                    HelpText = Strings.CommandArctanHelpText,
-                    ExampleText = Strings.CommandArctanExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.CosCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = MathCos,
-                    HelpText = Strings.CommandCosHelpText,
-                    ExampleText = Strings.CommandCosExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.SinCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = MathSin,
-                    HelpText = Strings.CommandSinHelpText,
-                    ExampleText = Strings.CommandSinExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.TanCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = MathTan,
-                    HelpText = Strings.CommandTanHelpText,
-                    ExampleText = Strings.CommandTanExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.MakeCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 2,
-                    Implementation = MakeVariable,
-                    HelpText = Strings.CommandMakeHelpText,
-                    ExampleText = Strings.CommandMakeExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.ClearnameCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = ClearVariable,
-                    HelpText = Strings.CommandClearnameHelpText,
-                    ExampleText = Strings.CommandClearnameExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.ClearnamesCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = ClearGlobalVariables,
-                    HelpText = Strings.CommandClearnamesHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.HelpCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.DefineAlongside,
-                    ParameterCount = 1,
-                    Implementation = OutputHelpText,
-                    HelpText = Strings.CommandHelpHelpText,
-                    ExampleText = Strings.CommandHelpExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.PiCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = ReturnPi,
-                    HelpText = Strings.CommandPiHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.ButfirstCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = ListButFirst,
-                    HelpText = Strings.CommandButfirstHelpText,
-                    ExampleText = Strings.CommandButfirstExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.ButlastCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = ListButLast,
-                    HelpText = Strings.CommandButlastHelpText,
-                    ExampleText = Strings.CommandButlastExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.AsciiCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = AsciiValue,
-                    HelpText = Strings.CommandAsciiHelpText,
-                    ExampleText = Strings.CommandAsciiExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.CharCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = AsciiToChar,
-                    HelpText = Strings.CommandCharHelpText,
-                    ExampleText = Strings.CommandCharExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.CountCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = Count,
-                    HelpText = Strings.CommandCountHelpText,
-                    ExampleText = Strings.CommandCountExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = Syntax.DifferenceCmd,
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 2,
-                    Implementation = Difference,
-                    HelpText = Strings.CommandDifferenceHelpText,
-                    ExampleText = Strings.CommandDifferenceExampleText,
-                },
+                new LogoCommand(Syntax.PrintCmd, Syntax.PrCmd, 1, RedefinabilityType.DefineAlongside, Print, Strings.CommandPrintHelpText, Strings.CommandPrintExampleText),
+                new LogoCommand(Syntax.NodesCmd, 0, RedefinabilityType.DefineAlongside, Nodes, Strings.CommandNodesHelpText, ""),
+                new LogoCommand(Syntax.RecycleCmd, 0, RedefinabilityType.NonRedefinable, Recycle, Strings.CommandRecycleHelpText, ""),
+                new LogoCommand(Syntax.RepeatCmd, 2, RedefinabilityType.NonRedefinable, Repeat, Strings.CommandRepeatHelpText, Strings.CommandRepeatExampleText),
+                new LogoCommand(Syntax.SpaceCmd, 0, RedefinabilityType.NonRedefinable, SpaceUsed, Strings.CommandSpaceHelpText, ""),
+                new LogoCommand(Syntax.AbsCmd, 1, RedefinabilityType.NonRedefinable, MathAbs, Strings.CommandAbsHelpText, Strings.CommandAbsExampleText),
+                new LogoCommand(Syntax.AndCmd, 1, RedefinabilityType.NonRedefinable, BoolAnd, Strings.CommandAndHelpText, Strings.CommandAndExampleText),
+                new LogoCommand(Syntax.ArctanCmd, 1, RedefinabilityType.NonRedefinable, MathAtan, Strings.CommandArctanHelpText, Strings.CommandArctanExampleText),
+                new LogoCommand(Syntax.CosCmd, 1, RedefinabilityType.NonRedefinable, MathCos, Strings.CommandCosHelpText, Strings.CommandCosExampleText),
+                new LogoCommand(Syntax.SinCmd, 1, RedefinabilityType.NonRedefinable, MathSin, Strings.CommandSinHelpText, Strings.CommandSinExampleText),
+                new LogoCommand(Syntax.TanCmd, 1, RedefinabilityType.NonRedefinable, MathTan, Strings.CommandTanHelpText, Strings.CommandTanExampleText),
+                new LogoCommand(Syntax.MakeCmd, 2, RedefinabilityType.NonRedefinable, MakeVariable, Strings.CommandMakeHelpText, Strings.CommandMakeExampleText),
+                new LogoCommand(Syntax.ClearnameCmd, 1, RedefinabilityType.NonRedefinable, ClearVariable, Strings.CommandClearnameHelpText, Strings.CommandClearnameExampleText),
+                new LogoCommand(Syntax.ClearnamesCmd, 0, RedefinabilityType.NonRedefinable, ClearGlobalVariables, Strings.CommandClearnamesHelpText, ""),
+                new LogoCommand(Syntax.HelpCmd, 1, RedefinabilityType.DefineAlongside, OutputHelpText, Strings.CommandHelpHelpText, Strings.CommandHelpExampleText),
+                new LogoCommand(Syntax.PiCmd, 0, RedefinabilityType.NonRedefinable, ReturnPi, Strings.CommandPiHelpText, ""),
+                new LogoCommand(Syntax.ButfirstCmd, 1, RedefinabilityType.NonRedefinable, ListButFirst, Strings.CommandButfirstHelpText, Strings.CommandButfirstExampleText),
+                new LogoCommand(Syntax.ButlastCmd, 1, RedefinabilityType.NonRedefinable, ListButLast, Strings.CommandButlastHelpText, Strings.CommandButlastExampleText),
+                new LogoCommand(Syntax.AsciiCmd, 1, RedefinabilityType.NonRedefinable, AsciiValue, Strings.CommandAsciiHelpText, Strings.CommandAsciiExampleText),
+                new LogoCommand(Syntax.CharCmd, 1, RedefinabilityType.NonRedefinable, AsciiToChar, Strings.CommandCharHelpText, Strings.CommandCharExampleText),
+                new LogoCommand(Syntax.CountCmd, 1, RedefinabilityType.NonRedefinable, Count, Strings.CommandCountHelpText, Strings.CommandCountExampleText),
+                new LogoCommand(Syntax.DifferenceCmd, 2, RedefinabilityType.NonRedefinable, Difference, Strings.CommandDifferenceHelpText, Strings.CommandDifferenceExampleText),
             };
         }
 
