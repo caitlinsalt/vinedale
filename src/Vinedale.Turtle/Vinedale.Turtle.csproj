@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UsewindowsForms>true</UsewindowsForms>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <Authors>Will Salt</Authors>
+    <Company>Will Salt</Company>
+    <Product>Vinedale</Product>
+    <Copyright>© 2020 Will Salt</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
