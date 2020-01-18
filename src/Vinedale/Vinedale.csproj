@@ -5,6 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <Authors>Will Salt</Authors>
+    <Copyright>© 2020 Will Salt</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

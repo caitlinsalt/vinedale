@@ -6,6 +6,12 @@
     <IsPackable>false</IsPackable>
 
     <NeutralLanguage>en-GB</NeutralLanguage>
+
+    <Authors>Will Salt</Authors>
+
+    <Product>Vinedale</Product>
+
+    <Copyright>© 2020 Will Salt</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
