@@ -20,16 +20,7 @@ namespace Vinedale.Shell
         {
             return new LogoProcedure[]
             {
-                new LogoCommand
-                {
-                    Name = "bye",
-                    Aliases = new[] { "quit" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = SysExit,
-                    HelpText = Strings.CommandByeHelpText,
-                    ExampleText = string.Empty,
-                }
+                new LogoCommand("bye", "quit", 0, RedefinabilityType.NonRedefinable, SysExit, Strings.CommandByeHelpText, ""),
             };
         }
 

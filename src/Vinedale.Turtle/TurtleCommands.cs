@@ -33,96 +33,15 @@ namespace Vinedale.Turtle
         {
             return new List<LogoProcedure>
             {
-                new LogoCommand
-                {
-                    Name = "forward",
-                    Aliases = new [] { "fd" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = Forward,
-                    HelpText = Strings.CommandForwardHelpText,
-                    ExampleText = Strings.CommandForwardExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = "back",
-                    Aliases = new [] { "bk", "backward", "backwards" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = Backwards,
-                    HelpText = Strings.CommandBackHelpText,
-                    ExampleText = Strings.CommandBackExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = "right",
-                    Aliases = new [] { "rt" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = Right,
-                    HelpText = Strings.CommandRightHelpText,
-                    ExampleText = Strings.CommandRightExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = "left",
-                    Aliases = new [] { "lt" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 1,
-                    Implementation = Left,
-                    HelpText = Strings.CommandLeftHelpText,
-                    ExampleText = Strings.CommandLeftExampleText,
-                },
-                new LogoCommand
-                {
-                    Name = "penup",
-                    Aliases = new [] { "pu" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = PenUp,
-                    HelpText = Strings.CommandPenUpHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = "pendown",
-                    Aliases = new [] { "pd" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = PenDown,
-                    HelpText = Strings.CommandPenDownHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = "cleargraphics",
-                    Aliases = new [] { "cg", "cleangraphics" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = ClearGraphics,
-                    HelpText = Strings.CommandClearGraphicsHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = "clean",
-                    Aliases = Array.Empty<string>(),
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = Clean,
-                    HelpText = Strings.CommandCleanHelpText,
-                    ExampleText = string.Empty,
-                },
-                new LogoCommand
-                {
-                    Name = "showturtle",
-                    Aliases = new [] { "st" },
-                    Redefinability = RedefinabilityType.NonRedefinable,
-                    ParameterCount = 0,
-                    Implementation = ShowTurtle,
-                    HelpText = Strings.CommandShowTurtleHelpText,
-                    ExampleText = "",
-                }
+                new LogoCommand("forward", "fd", 1, RedefinabilityType.NonRedefinable, Forward, Strings.CommandForwardHelpText, Strings.CommandForwardExampleText),
+                new LogoCommand("back", new [] { "bk", "backward", "backwards" }, 1, RedefinabilityType.NonRedefinable, Backwards, Strings.CommandBackHelpText, Strings.CommandBackExampleText),
+                new LogoCommand("right", "rt", 1, RedefinabilityType.NonRedefinable, Right, Strings.CommandRightHelpText, Strings.CommandRightExampleText),
+                new LogoCommand("left", "lt", 1, RedefinabilityType.NonRedefinable, Left, Strings.CommandLeftHelpText, Strings.CommandLeftExampleText),
+                new LogoCommand("penup", "pu", 0, RedefinabilityType.NonRedefinable, PenUp, Strings.CommandPenUpHelpText, ""),
+                new LogoCommand("pendown", "pd", 0, RedefinabilityType.NonRedefinable, PenDown, Strings.CommandPenDownHelpText, ""),
+                new LogoCommand("cleargraphics", new [] { "cg", "cleangraphics" }, 0, RedefinabilityType.NonRedefinable, ClearGraphics, Strings.CommandClearGraphicsHelpText, ""),
+                new LogoCommand("clean", 0, RedefinabilityType.NonRedefinable, Clean, Strings.CommandCleanHelpText, ""),
+                new LogoCommand("showturtle", "st", 0, RedefinabilityType.NonRedefinable, ShowTurtle, Strings.CommandShowTurtleHelpText, ""),
             };
         }
 
