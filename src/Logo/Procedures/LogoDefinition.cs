@@ -57,17 +57,14 @@ namespace Logo.Procedures
         /// </remarks>
         /// <param name="rawCode">The original input text, saved so that it can be edited later.</param>
         /// <param name="tokens">The tokenised code of the procedure.</param>
-        public LogoDefinition(string rawCode, List<Token> tokens)
+        public LogoDefinition(string rawCode, List<Token> tokens) : base(tokens?[1]?.Text, RedefinabilityType.Replace)
         {
             if (tokens is null)
             {
                 tokens = new List<Token>();
             }
 
-            Aliases = Array.Empty<string>();
             RawDefinition = rawCode;
-            Name = tokens[1].Text;
-            Redefinability = RedefinabilityType.Replace;
             Parameters = new List<string>();
 
             int paramIdx = 2;
