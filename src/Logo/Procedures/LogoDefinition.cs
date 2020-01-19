@@ -38,7 +38,7 @@ namespace Logo.Procedures
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            context.StackFrameCreate(parameters.Select((p, i) => new LiteralToken(Parameters[i], p)).ToArray());
+            context.StackFrameCreate(parameters.Select((p, i) => new ValueToken(Parameters[i], p)).ToArray());
             ListToken runList = new ListToken(TokenisedDefinition.Contents);
             InterpretationResultType result = context.Interpretor.EvaluateListContents(runList, true);
             if (result != InterpretationResultType.SuccessComplete || runList.Contents.Count == 0)

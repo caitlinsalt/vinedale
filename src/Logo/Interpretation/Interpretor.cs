@@ -220,12 +220,12 @@ namespace Logo.Interpretation
 
         private InterpretationResultType ExecuteTokens(List<Token> tokens, bool literalEvaluateUndefinedWords)
         {
-            if (!tokens.Any(t => !(t is LiteralToken)))
+            if (!tokens.Any(t => !(t is ValueToken)))
             {
                 return InterpretationResultType.SuccessComplete;
             }
 
-            int firstTokenIdx = tokens.FindIndex(t => !(t is LiteralToken));
+            int firstTokenIdx = tokens.FindIndex(t => !(t is ValueToken));
 
             if (tokens[firstTokenIdx] is CommentToken)
             {
@@ -274,7 +274,7 @@ namespace Logo.Interpretation
             }
             if (tokens[index] is ListToken)
             {
-                tokens[index] = new LiteralToken(tokens[index].Text, new LogoValue(LogoValueType.List, tokens[index]));
+                tokens[index] = new ValueToken(tokens[index].Text, new LogoValue(LogoValueType.List, tokens[index]));
                 return InterpretationResultType.SuccessComplete;
             }
             if (tokens[index] is OperatorToken)
@@ -284,12 +284,12 @@ namespace Logo.Interpretation
             if (tokens[index] is ExpressionToken)
             {
                 InterpretationResultType result = EvaluateExpression(new ExpressionToken(((ExpressionToken)tokens[index]).Contents), literalEvaluateUndefinedWords, out LogoValue resultValue);
-                tokens[index] = new LiteralToken(tokens[index].Text, resultValue);
+                tokens[index] = new ValueToken(tokens[index].Text, resultValue);
                 return result;
             }
             if (tokens[index] is VariableToken vt)
             {
-                tokens[index] = new LiteralToken(vt.Text, Context.GetVariable(vt.VariableName));
+                tokens[index] = new ValueToken(vt.Text, Context.GetVariable(vt.VariableName));
                 return InterpretationResultType.SuccessComplete;
             }
 
@@ -312,18 +312,18 @@ namespace Logo.Interpretation
 
             if (tokens[index].Text == Syntax.True)
             {
-                tokens[index] = new LiteralToken(Syntax.True, new LogoValue(LogoValueType.Bool, true));
+                tokens[index] = new ValueToken(Syntax.True, new LogoValue(LogoValueType.Bool, true));
                 return InterpretationResultType.SuccessComplete;
             }
             if (tokens[index].Text == Syntax.False)
             {
-                tokens[index] = new LiteralToken(Syntax.False, new LogoValue(LogoValueType.Bool, false));
+                tokens[index] = new ValueToken(Syntax.False, new LogoValue(LogoValueType.Bool, false));
                 return InterpretationResultType.SuccessComplete;
             }
 
             if (literalEvaluateUndefinedWords && !Context.ProcedureNames.ContainsKey(tokens[index].Text))
             {
-                tokens[index] = new LiteralToken(tokens[index].Text, new LogoValue(LogoValueType.Text, tokens[index].Text));
+                tokens[index] = new ValueToken(tokens[index].Text, new LogoValue(LogoValueType.Text, tokens[index].Text));
                 return InterpretationResultType.SuccessComplete;
             }
 
@@ -352,13 +352,13 @@ namespace Logo.Interpretation
                     {
                         return InterpretationResultType.SuccessIncomplete;
                     }
-                } while (!(tokens[index + i + 1] is LiteralToken));
+                } while (!(tokens[index + i + 1] is ValueToken));
             }
 
             LogoValue[] parmBuffer = new LogoValue[parmCount];
             for (int i = 0; i < parmCount; ++i)
             {
-                parmBuffer[i] = (tokens[index + 1] as LiteralToken).Value;
+                parmBuffer[i] = (tokens[index + 1] as ValueToken).Value;
                 tokens.RemoveAt(index + 1);
             }
 
@@ -447,7 +447,7 @@ namespace Logo.Interpretation
                 return InterpretationResultType.Failure;
             }
 
-            resultValue = (expr.Contents[0] as LiteralToken).Value;
+            resultValue = (expr.Contents[0] as ValueToken).Value;
             return InterpretationResultType.SuccessComplete;
         }
 
@@ -466,8 +466,8 @@ namespace Logo.Interpretation
             }
 
             OperatorToken op = (OperatorToken)expr.Contents[idx];
-            LiteralToken firstArg = expr.Contents[idx - 1] as LiteralToken;
-            LiteralToken secondArg = expr.Contents[idx + 1] as LiteralToken;
+            ValueToken firstArg = expr.Contents[idx - 1] as ValueToken;
+            ValueToken secondArg = expr.Contents[idx + 1] as ValueToken;
             LogoValue firstArgValue;
             LogoValue secondArgValue;
             if (firstArg.Value.Type == LogoValueType.Unknown)
@@ -494,7 +494,7 @@ namespace Logo.Interpretation
                 return InterpretationResultType.Failure;
             }
 
-            expr.Contents[idx] = new LiteralToken(expr.Contents[idx].Text, opResult.Value);
+            expr.Contents[idx] = new ValueToken(expr.Contents[idx].Text, opResult.Value);
             expr.Contents.RemoveAt(idx + 1);
             expr.Contents.RemoveAt(idx - 1);
             
@@ -503,12 +503,12 @@ namespace Logo.Interpretation
 
         private InterpretationResultType EvaluateExpressionContents(ExpressionToken expr, bool literalEvaluateUndefinedWords)
         {
-            if (expr.Contents.Count == 0 || expr.Contents.All(t => t is OperatorToken || t is LiteralToken))
+            if (expr.Contents.Count == 0 || expr.Contents.All(t => t is OperatorToken || t is ValueToken))
             {
                 return InterpretationResultType.SuccessComplete;
             }
 
-            int firstNonEvaldWord = expr.Contents.FindIndex(t => !(t is OperatorToken || t is LiteralToken));
+            int firstNonEvaldWord = expr.Contents.FindIndex(t => !(t is OperatorToken || t is ValueToken));
             InterpretationResultType result = EvaluateToken(expr.Contents, firstNonEvaldWord, literalEvaluateUndefinedWords);
 
             if (result == InterpretationResultType.SuccessIncomplete)

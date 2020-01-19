@@ -132,24 +132,24 @@ namespace Logo.Tests.Unit.TestHelpers
             return new CommentToken(rnd.NextString(rnd.Next(256)));
         }
 
-        public static LiteralToken NextLiteralToken(this Random rnd)
+        public static ValueToken NextLiteralToken(this Random rnd)
         {
             if (rnd is null)
             {
                 throw new NullReferenceException();
             }
 
-            return new LiteralToken(rnd.NextString(rnd.Next(1, 24)), rnd.NextLogoValue());
+            return new ValueToken(rnd.NextString(rnd.Next(1, 24)), rnd.NextLogoValue());
         }
 
-        public static LiteralToken NextNumericToken(this Random rnd)
+        public static ValueToken NextNumericToken(this Random rnd)
         {
             if (rnd is null)
             {
                 throw new NullReferenceException();
             }
 
-            return new LiteralToken(rnd.NextString(rnd.Next(1, 24)), rnd.NextNumericLogoValue());
+            return new ValueToken(rnd.NextString(rnd.Next(1, 24)), rnd.NextNumericLogoValue());
         }
 
         public static OperatorToken NextOperatorToken(this Random rnd)
