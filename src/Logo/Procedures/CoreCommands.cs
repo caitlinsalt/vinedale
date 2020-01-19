@@ -65,7 +65,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandCharWrongTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.CharCmd, new LogoValue(LogoValueType.Text, Encoding.ASCII.GetString(new[] { Convert.ToByte(input[0].Value, CultureInfo.CurrentCulture) })));
+            return new ValueToken(Syntax.CharCmd, new LogoValue(LogoValueType.Text, Encoding.ASCII.GetString(new[] { Convert.ToByte(input[0].Value, CultureInfo.CurrentCulture) })));
         }
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace Logo.Procedures
             }
             if (string.IsNullOrEmpty((string)input[0].Value))
             {
-                return new LiteralToken(Syntax.AsciiCmd, new LogoValue(LogoValueType.Number, 0));
+                return new ValueToken(Syntax.AsciiCmd, new LogoValue(LogoValueType.Number, 0));
             }
-            return new LiteralToken(Syntax.AsciiCmd, new LogoValue(LogoValueType.Number, Encoding.ASCII.GetBytes((string)input[0].Value)[0]));
+            return new ValueToken(Syntax.AsciiCmd, new LogoValue(LogoValueType.Number, Encoding.ASCII.GetBytes((string)input[0].Value)[0]));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Logo.Procedures
         public static Token ListButFirst(InterpretorContext context, params LogoValue[] input)
         {
             ListToken outList = new ListToken((input[0].Value as ListToken).Contents.Skip(1).ToArray());
-            return new LiteralToken(outList.Text, new LogoValue(LogoValueType.List, outList));
+            return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Logo.Procedures
         {
             List<Token> inContents = (input[0].Value as ListToken).Contents;
             ListToken outList = new ListToken(inContents.Take(inContents.Count - 1).ToArray());
-            return new LiteralToken(outList.Text, new LogoValue(LogoValueType.List, outList));
+            return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandCosWrongTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.CosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].Value)))));
+            return new ValueToken(Syntax.CosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandArctanWrongTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.ArctanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].Value)))));
+            return new ValueToken(Syntax.ArctanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandSinWrongTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.SinCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].Value)))));
+            return new ValueToken(Syntax.SinCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandTanWrongTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.TanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].Value)))));
+            return new ValueToken(Syntax.TanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
         /// <summary>
@@ -279,8 +279,8 @@ namespace Logo.Procedures
 
             ListToken inputList = new ListToken(((ListToken)input[0].Value).Contents);
             context.Interpretor.EvaluateListContents(inputList, false);
-            return new LiteralToken(Syntax.AndCmd, new LogoValue(LogoValueType.Bool,
-                (inputList.Contents.Count > 0) && inputList.Contents.All(t => t is LiteralToken tl && tl.Value.Type == LogoValueType.Bool && (bool)tl.Value.Value)));
+            return new ValueToken(Syntax.AndCmd, new LogoValue(LogoValueType.Bool,
+                (inputList.Contents.Count > 0) && inputList.Contents.All(t => t is ValueToken tl && tl.Value.Type == LogoValueType.Bool && (bool)tl.Value.Value)));
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandAbsWrongTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.AbsCmd, new LogoValue(LogoValueType.Number, Math.Abs((decimal)input[0].Value)));
+            return new ValueToken(Syntax.AbsCmd, new LogoValue(LogoValueType.Number, Math.Abs((decimal)input[0].Value)));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the number π.</returns>
         public static Token ReturnPi(InterpretorContext context, params LogoValue[] dummy)
         {
-            return new LiteralToken(Math.PI.ToString(CultureInfo.InvariantCulture), new LogoValue(LogoValueType.Number, (decimal)Math.PI));
+            return new ValueToken(Math.PI.ToString(CultureInfo.InvariantCulture), new LogoValue(LogoValueType.Number, (decimal)Math.PI));
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Logo.Procedures
         public static Token SpaceUsed(InterpretorContext context, params LogoValue[] input)
         {
             LogoValue val = new LogoValue(LogoValueType.Number, (decimal)GC.GetTotalMemory(false));
-            return new LiteralToken(Syntax.SpaceCmd, val);
+            return new ValueToken(Syntax.SpaceCmd, val);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Logo.Procedures
                 ListToken copiedList = new ListToken(((ListToken)output[0].Value).Contents);
                 if (context.Interpretor.EvaluateListContents(copiedList, true) == InterpretationResultType.SuccessComplete)
                 {
-                    context.Interpretor.WriteOutputLine(string.Join(" ", copiedList.Contents.Select(t => (t as LiteralToken).Value.Value.ToString())));
+                    context.Interpretor.WriteOutputLine(string.Join(" ", copiedList.Contents.Select(t => (t as ValueToken).Value.Value.ToString())));
                 }
             }
             else
@@ -470,13 +470,13 @@ namespace Logo.Procedures
         {
             if (parameters[0].Type == LogoValueType.Text)
             {
-                return new LiteralToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as string).Length));
+                return new ValueToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as string).Length));
             }
             else if (parameters[0].Type == LogoValueType.List)
             {
-                return new LiteralToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as ListToken).Contents.Count));
+                return new ValueToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as ListToken).Contents.Count));
             }
-            return new LiteralToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, 1m));
+            return new ValueToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, 1m));
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(Strings.CommandDifferenceTypeError);
                 return null;
             }
-            return new LiteralToken(Syntax.DifferenceCmd, new LogoValue(LogoValueType.Number, ((decimal)parameters[0].Value) - ((decimal)parameters[1].Value)));
+            return new ValueToken(Syntax.DifferenceCmd, new LogoValue(LogoValueType.Number, ((decimal)parameters[0].Value) - ((decimal)parameters[1].Value)));
         }
     }
 }

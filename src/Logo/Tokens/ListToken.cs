@@ -54,7 +54,7 @@ namespace Logo.Tokens
 
         private static string CreateText(IList<Token> fromTokens)
         {
-            return "[" + string.Join(" ", fromTokens.Select(t => t is LiteralToken literal ? literal.Value.ToString() : t.Text)) + "]";
+            return "[" + string.Join(" ", fromTokens.Select(t => t is ValueToken literal ? literal.Value.ToString() : t.Text)) + "]";
         }
     }
 }
