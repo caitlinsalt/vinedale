@@ -179,7 +179,7 @@ namespace Logo.Tokens
                     {
                         if (char.IsWhiteSpace(input[idx]))
                         {
-                            tokensProduced.Add(new LiteralToken(input.Substring(startPos, idx - startPos), new LogoValue(LogoValueType.Text, input.Substring(startPos + 1, idx - (startPos + 1)))));
+                            tokensProduced.Add(new ValueToken(input.Substring(startPos, idx - startPos), new LogoValue(LogoValueType.Text, input.Substring(startPos + 1, idx - (startPos + 1)))));
                             mode = TokenMode.WhiteSpace;
                         }
                     }
@@ -188,7 +188,7 @@ namespace Logo.Tokens
                         if ((!char.IsDigit(input[idx])) && input[idx] != decimalPoint)
                         {
                             string tokenText = input.Substring(startPos, idx - startPos);
-                            tokensProduced.Add(new LiteralToken(tokenText, new LogoValue(LogoValueType.Number, decimal.Parse(tokenText, CultureInfo.InvariantCulture))));
+                            tokensProduced.Add(new ValueToken(tokenText, new LogoValue(LogoValueType.Number, decimal.Parse(tokenText, CultureInfo.InvariantCulture))));
                             if (input[idx] == listStartMarker)
                             {
                                 ++listNest;
