@@ -11,7 +11,7 @@ namespace Logo.Tokens
         /// <summary>
         /// The kind of operation which this token represents.
         /// </summary>
-        public OperatorType Operation { get; set; }
+        public OperatorType Operation { get; private set; }
 
         /// <summary>
         /// Constructs a token from an input string.
