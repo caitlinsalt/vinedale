@@ -266,6 +266,19 @@ namespace Logo.Tokens
                 {
                     tokensProduced.Add(new ProcedureToken(input.Substring(startPos)));
                 }
+                else if (mode == TokenMode.LiteralNumber)
+                {
+                    string tokenText = input.Substring(startPos, idx - startPos);
+                    tokensProduced.Add(new ValueToken(tokenText, new LogoValue(LogoValueType.Number, decimal.Parse(tokenText, CultureInfo.InvariantCulture))));
+                }
+                else if (mode == TokenMode.LiteralString)
+                {
+                    tokensProduced.Add(new ValueToken(input.Substring(startPos, idx - startPos), new LogoValue(LogoValueType.Text, input.Substring(startPos + 1, idx - (startPos + 1)))));
+                }
+                else if (mode == TokenMode.Variable)
+                {
+                    tokensProduced.Add(new VariableToken(input.Substring(startPos, idx - startPos), input.Substring(startPos + 1, idx - (startPos + 1))));
+                }
                 else if (listNest == 0 && exprNest == 0 && mode == TokenMode.Comment)
                 {
                     tokensProduced.Add(new CommentToken(input.Substring(startPos)));
