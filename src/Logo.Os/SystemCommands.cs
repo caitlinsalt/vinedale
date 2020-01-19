@@ -38,7 +38,7 @@ namespace Logo.Os
         /// <returns>A token whose value is the current working directory.</returns>
         public static Token GetWorkingDirectory(InterpretorContext context, params LogoValue[] input)
         {
-            return new LiteralToken(Syntax.CurrentDir, new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()));
+            return new ValueToken(Syntax.CurrentDir, new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()));
         }
 
 
@@ -51,7 +51,7 @@ namespace Logo.Os
         public static Token GetSubdirectories(InterpretorContext context, params LogoValue[] input)
         {
             List<Token> tokenList = new List<Token>();
-            tokenList.AddRange(Directory.GetDirectories(Directory.GetCurrentDirectory()).Select(d => new LiteralToken(d, new LogoValue(LogoValueType.Text, d))));
+            tokenList.AddRange(Directory.GetDirectories(Directory.GetCurrentDirectory()).Select(d => new ValueToken(d, new LogoValue(LogoValueType.Text, d))));
             return new ListToken(tokenList);
         }
 
@@ -82,7 +82,7 @@ namespace Logo.Os
             }
 
             ListToken list = new ListToken(Directory.GetFiles(Directory.GetCurrentDirectory(), pattern)
-                .Select(f => new LiteralToken(Path.GetFileName(f), new LogoValue(LogoValueType.Text, Path.GetFileName(f)))).ToArray());
+                .Select(f => new ValueToken(Path.GetFileName(f), new LogoValue(LogoValueType.Text, Path.GetFileName(f)))).ToArray());
             return list;
         }
 

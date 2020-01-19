@@ -76,7 +76,7 @@ namespace Logo.Tokens
                     return Value.ToString();
                 case LogoValueType.Word:
                     Token token = Value as Token;
-                    return token is LiteralToken literal ? literal.Value.ToString() : token.Text;
+                    return token is ValueToken literal ? literal.Value.ToString() : token.Text;
             }
         }
 

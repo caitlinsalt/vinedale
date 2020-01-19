@@ -163,7 +163,7 @@ namespace Logo.Interpretation
         /// Create a new variable namespace on the local namespace stack, set it as the current local namespace, and set the supplied list of evaluated tokens as variables in the namespace.
         /// </summary>
         /// <param name="paramList">An array of tokens to set as variables in the new local namespace.</param>
-        public void StackFrameCreate(LiteralToken[] paramList)
+        public void StackFrameCreate(ValueToken[] paramList)
         {
             Locals.Push(paramList.ToDictionary(p => p.Text, p => p.Value));
         }
