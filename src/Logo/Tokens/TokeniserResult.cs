@@ -39,7 +39,7 @@ namespace Logo.Tokens
         {
             TokenisedData = tokenisedData?.ToArray();
             ResultType = resultType;
-            NonConsumedInput = nonConsumedInput;
+            NonConsumedInput = nonConsumedInput ?? "";
             ErrorMessage = errorMessage;
         }
     }
