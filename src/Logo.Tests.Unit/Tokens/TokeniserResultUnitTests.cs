@@ -80,18 +80,18 @@ namespace Logo.Tests.Unit.Tokens
         }
 
         [TestMethod]
-        public void TokeniserResultClass_Constructor_SetsNonConsumedInputPropertyToNull_IfThirdParameterIsNotSupplied()
+        public void TokeniserResultClass_Constructor_SetsNonConsumedInputPropertyToEmptyString_IfThirdParameterIsNotSupplied()
         {
             TokeniserResultType testParam0 = _rnd.NextTokeniserResultType();
             IList<Token> testParam1 = GetTokens().ToArray();
 
             TokeniserResult testOutput = new TokeniserResult(testParam0, testParam1);
 
-            Assert.IsNull(testOutput.NonConsumedInput);
+            Assert.AreEqual("", testOutput.NonConsumedInput);
         }
 
         [TestMethod]
-        public void TokeniserResultClass_Constructor_SetsNonConsumedInputPropertyToNull_IfThirdParameterIsNull()
+        public void TokeniserResultClass_Constructor_SetsNonConsumedInputPropertyToEmptyString_IfThirdParameterIsNull()
         {
             TokeniserResultType testParam0 = _rnd.NextTokeniserResultType();
             IList<Token> testParam1 = GetTokens().ToArray();
@@ -100,7 +100,7 @@ namespace Logo.Tests.Unit.Tokens
 
             TokeniserResult testOutput = new TokeniserResult(testParam0, testParam1, testParam2, testParam3);
 
-            Assert.IsNull(testOutput.NonConsumedInput);
+            Assert.AreEqual("", testOutput.NonConsumedInput);
         }
 
         [TestMethod]
