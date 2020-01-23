@@ -107,7 +107,7 @@ namespace Logo.Tokens
         /// </summary>
         /// <param name="type">The type of value to return a default for.</param>
         /// <returns>A <see cref="LogoValue" /> object of the given <see cref="LogoValueType" />.</returns>
-        public static LogoValue GetDefaultValue(ValueType type)
+        public static LogoValue GetDefaultValue(LogoValueType type)
         {
             switch (type)
             {
