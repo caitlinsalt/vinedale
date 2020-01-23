@@ -184,6 +184,260 @@ namespace Logo.Tests.Unit.Tokens
 
             Assert.IsFalse(testOutput);
         }
+
+        [TestMethod]
+        public void LogoValueStruct_GetHashCodeMethod_ReturnsSameValueWhenCalledTwice()
+        {
+            LogoValue testValue = _rnd.NextLogoValue();
+
+            int testOutput0 = testValue.GetHashCode();
+            int testOutput1 = testValue.GetHashCode();
+
+            Assert.AreEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetHashCodeMethod_ReturnsDifferentValueWhenCalledOnDifferentValues()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1;
+            do
+            {
+                testValue1 = _rnd.NextLogoValue();
+            } while (testValue0 == testValue1);
+
+            int testOutput0 = testValue0.GetHashCode();
+            int testOutput1 = testValue1.GetHashCode();
+
+            Assert.AreNotEqual(testOutput0, testOutput1);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_ToStringMethod_ReturnsValue_IfTypeIsText()
+        {
+            LogoValue testValue = _rnd.NextLogoValue(LogoValueType.Text);
+
+            string testOutput = testValue.ToString();
+
+            Assert.AreEqual(testValue.Value, testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_ToStringMethod_ReturnsSameValueAsToStringMethodOfValueProperty_IfTypeIsNumeric()
+        {
+            LogoValue testValue = _rnd.NextLogoValue(LogoValueType.Number);
+
+            string testOutput = testValue.ToString();
+
+            Assert.AreEqual(testValue.Value.ToString(), testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_ToStringMethod_ReturnsSameValueAsToStringMethodOfValuePropertyOfValueProperty_IfTypeIsWordAndValueTypeIsValueToken()
+        {
+            LogoValue testValue;
+            do
+            {
+                testValue = _rnd.NextLogoValue(LogoValueType.Word);
+            } while (!(testValue.Value is ValueToken));
+
+            string testOutput = testValue.ToString();
+
+            ValueToken vt = testValue.Value as ValueToken;
+            Assert.AreEqual(vt.Value.ToString(), testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_ToStringMethod_ReturnsSameValueAsTextPropertyOfValueProperty_IfTypeIsWordAndValueTypeIsNotValueToken()
+        {
+            LogoValue testValue;
+            do
+            {
+                testValue = _rnd.NextLogoValue(LogoValueType.Word);
+            } while (testValue.Value is ValueToken);
+
+            string testOutput = testValue.ToString();
+
+            Token token = testValue.Value as Token;
+            Assert.AreEqual(token.Text, testOutput);
+        }
+
+#pragma warning disable CS1718 // Comparison made to same variable
+        [TestMethod]
+        public void LogoValueStruct_EqualityOperator_ReturnsTrueIfBothParametersAreSame()
+        {
+            LogoValue testValue = _rnd.NextLogoValue();
+
+            bool testOutput = testValue == testValue;
+
+            Assert.IsTrue(testOutput);
+        }
+#pragma warning restore CS1718 // Comparison made to same variable
+
+        [TestMethod]
+        public void LogoValueStruct_EqualityOperator_ReturnsTrueIfBothParametersHaveSameProperties()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1 = new LogoValue(testValue0.Type, testValue0.Value);
+
+            bool testOutput = testValue0 == testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_EqualityOperator_ReturnsFalseIfParametersAreDifferentType()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1;
+            do
+            {
+                testValue1 = _rnd.NextLogoValue();
+            } while (testValue0.Type == testValue1.Type);
+
+            bool testOutput = testValue0 == testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_EqualityOperator_ReturnsFalseIfParametersAreOfSameTypeButDifferentValue()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1;
+            do
+            {
+                testValue1 = _rnd.NextLogoValue(testValue0.Type);
+            } while (testValue0.Value == testValue1.Value);
+
+            bool testOutput = testValue0 == testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+#pragma warning disable CS1718 // Comparison made to same variable
+        [TestMethod]
+        public void LogoValueStruct_InequalityOperator_ReturnsFalseIfBothParametersAreSame()
+        {
+            LogoValue testValue = _rnd.NextLogoValue();
+
+            bool testOutput = testValue != testValue;
+
+            Assert.IsFalse(testOutput);
+        }
+#pragma warning restore CS1718 // Comparison made to same variable
+
+        [TestMethod]
+        public void LogoValueStruct_InequalityOperator_ReturnsFalseIfBothParametersHaveSameProperties()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1 = new LogoValue(testValue0.Type, testValue0.Value);
+
+            bool testOutput = testValue0 != testValue1;
+
+            Assert.IsFalse(testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_InequalityOperator_ReturnsTrueIfParametersAreDifferentType()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1;
+            do
+            {
+                testValue1 = _rnd.NextLogoValue();
+            } while (testValue0.Type == testValue1.Type);
+
+            bool testOutput = testValue0 != testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_InequalityOperator_ReturnsTrueIfParametersAreOfSameTypeButDifferentValue()
+        {
+            LogoValue testValue0 = _rnd.NextLogoValue();
+            LogoValue testValue1;
+            if (testValue0.Type == LogoValueType.Bool)
+            {
+                testValue1 = new LogoValue(LogoValueType.Bool, !((bool)testValue0.Value));
+            }
+            else
+            {
+                do
+                {
+                    testValue1 = _rnd.NextLogoValue(testValue0.Type);
+                } while (testValue0.Value == testValue1.Value);
+            }
+
+            bool testOutput = testValue0 != testValue1;
+
+            Assert.IsTrue(testOutput);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeBoolAndValueFalse_IfParameterIsBool()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.Bool);
+
+            Assert.AreEqual(LogoValueType.Bool, testOutput.Type);
+            Assert.AreEqual(false, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeListAndValueEqualToEmptyList_IfParameterIsList()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.List);
+
+            ListToken listOutput = testOutput.Value as ListToken;
+            Assert.AreEqual(LogoValueType.List, testOutput.Type);
+            Assert.AreEqual(0, listOutput.Contents.Count);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeNumberAndValueEqualToZero_IfParameterIsNumber()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.Number);
+
+            Assert.AreEqual(LogoValueType.Number, testOutput.Type);
+            Assert.AreEqual(0m, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeParcelAndValueEqualToNull_IfParameterIsParcel()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.Parcel);
+
+            Assert.AreEqual(LogoValueType.Parcel, testOutput.Type);
+            Assert.AreEqual(null, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeTextAndValueEqualToEmptyString_IfParameterIsText()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.Text);
+
+            Assert.AreEqual(LogoValueType.Text, testOutput.Type);
+            Assert.AreEqual("", testOutput.Value);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeUnknownAndValueEqualToNull_IfParameterIsUnknown()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.Unknown);
+
+            Assert.AreEqual(LogoValueType.Unknown, testOutput.Type);
+            Assert.AreEqual(null, testOutput.Value);
+        }
+
+        [TestMethod]
+        public void LogoValueStruct_GetDefaultValueMethod_ReturnsValueWithTypeWordAndValueEqualToNull_IfParameterIsWord()
+        {
+            LogoValue testOutput = LogoValue.GetDefaultValue(LogoValueType.Word);
+
+            Assert.AreEqual(LogoValueType.Word, testOutput.Type);
+            Assert.AreEqual(null, testOutput.Value);
+        }
     }
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 }

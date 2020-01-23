@@ -23,7 +23,9 @@ namespace Logo.Tests.Unit.TestHelpers
         {
             LogoValueType.Bool,
             LogoValueType.Text,
-            LogoValueType.Number
+            LogoValueType.Number,
+            LogoValueType.Word,
+            LogoValueType.List,
         };
 
         private static readonly TokeniserResultType[] _validTokeniserResultTypes =
@@ -51,8 +53,22 @@ namespace Logo.Tests.Unit.TestHelpers
             }
 
             LogoValueType selectedType = _limitedLogoValueTypes[rnd.Next(_limitedLogoValueTypes.Length)];
+            return NextLogoValue(rnd, selectedType);
+        }
+
+        public static LogoValue NextLogoValue(this Random rnd, LogoValueType valueType)
+        {
+            if (rnd is null)
+            {
+                throw new NullReferenceException();
+            }
+            if (valueType == LogoValueType.Unknown || valueType == LogoValueType.Parcel)
+            {
+                return new LogoValue(valueType, null);
+            }
+
             object val;
-            switch (selectedType)
+            switch (valueType)
             {
                 case LogoValueType.Bool:
                 default:
@@ -70,27 +86,15 @@ namespace Logo.Tests.Unit.TestHelpers
                         _ => rnd.Next(),
                     };
                     break;
+                case LogoValueType.List:
+                    val = rnd.NextListToken();
+                    break;
+                case LogoValueType.Word:
+                    val = rnd.NextToken();
+                    break;
             }
 
-            return new LogoValue(selectedType, val);
-        }
-
-        public static LogoValue NextNumericLogoValue(this Random rnd)
-        {
-            if (rnd is null)
-            {
-                throw new NullReferenceException();
-            }
-
-            object val;
-            int chooseValue = rnd.Next(3);
-            val = chooseValue switch
-            {
-                1 => rnd.NextDouble(),
-                2 => (decimal)rnd.NextDouble(),
-                _ => rnd.Next(),
-            };
-            return new LogoValue(LogoValueType.Number, val);
+            return new LogoValue(valueType, val);
         }
 
         public static TokeniserResultType NextTokeniserResultType(this Random rnd)
@@ -149,7 +153,7 @@ namespace Logo.Tests.Unit.TestHelpers
                 throw new NullReferenceException();
             }
 
-            return new ValueToken(rnd.NextString(rnd.Next(1, 24)), rnd.NextNumericLogoValue());
+            return new ValueToken(rnd.NextString(rnd.Next(1, 24)), rnd.NextLogoValue(LogoValueType.Number));
         }
 
         public static OperatorToken NextOperatorToken(this Random rnd)
