@@ -368,7 +368,6 @@ namespace Logo.Interpretation
                 if (cmdToExec.GetType() == typeof(LogoCommand))
                 {
                     LogoCommand cmd = (LogoCommand)cmdToExec;
-                    Context.StackFrameCreate();
                     returnTokens.Add(cmd.Implementation(Context, parmBuffer));
                 }
                 else
@@ -376,7 +375,6 @@ namespace Logo.Interpretation
                     LogoDefinition def = (LogoDefinition)cmdToExec;
                     returnTokens.Add(def.Execute(Context, parmBuffer));
                 }
-                Context.StackFrameDestroy();
             }
             if (returnTokens.All(t => t == null))
             {
