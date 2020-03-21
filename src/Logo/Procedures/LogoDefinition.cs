@@ -45,6 +45,7 @@ namespace Logo.Procedures
             {
                 return null;
             }
+            context.StackFrameDestroy();
             return runList.Contents.Last();
         }
 
