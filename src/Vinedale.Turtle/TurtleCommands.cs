@@ -43,6 +43,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("clean", 0, RedefinabilityType.NonRedefinable, Clean, Strings.CommandCleanHelpText, ""),
                 new LogoCommand("showturtle", "st", 0, RedefinabilityType.NonRedefinable, ShowTurtle, Strings.CommandShowTurtleHelpText, ""),
                 new LogoCommand("home", 0, RedefinabilityType.NonRedefinable, Home, Strings.CommandHomeHelpText, ""),
+                new LogoCommand("setx", 1, RedefinabilityType.NonRedefinable, SetX, Strings.CommandSetXHelpText, Strings.CommandSetXExampleText),
             };
         }
 
@@ -195,6 +196,27 @@ namespace Vinedale.Turtle
         public Token Home(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendDrawingInstruction(new JumpToInstruction(0, 0, 0));
+            return null;
+        }
+
+        /// <summary>
+        /// Move the turtle by setting its absolute X coordinate.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token consisting of the new X coordinate value.</param>
+        /// <returns></returns>
+        public Token SetX(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (input[0].Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandSetXWrongTypeError);
+                return null;
+            }
+            _parentContext.PendDrawingInstruction(new JumpToInstruction(GetDouble(input[0]), null, null));
             return null;
         }
 
