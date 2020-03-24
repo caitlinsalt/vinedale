@@ -44,6 +44,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("showturtle", "st", 0, RedefinabilityType.NonRedefinable, ShowTurtle, Strings.CommandShowTurtleHelpText, ""),
                 new LogoCommand("home", 0, RedefinabilityType.NonRedefinable, Home, Strings.CommandHomeHelpText, ""),
                 new LogoCommand("setx", 1, RedefinabilityType.NonRedefinable, SetX, Strings.CommandSetXHelpText, Strings.CommandSetXExampleText),
+                new LogoCommand("sety", 1, RedefinabilityType.NonRedefinable, SetY, Strings.CommandSetYHelpText, Strings.CommandSetYExampleText),
             };
         }
 
@@ -207,18 +208,39 @@ namespace Vinedale.Turtle
         /// <returns></returns>
         public Token SetX(InterpretorContext context, params LogoValue[] input)
         {
+            SetXY(context, input, Strings.CommandSetXWrongTypeError, BuildSetXInstruction);
+            return null;
+        }
+
+        /// <summary>
+        /// Move the turtle by setting its absolute Y coordinate.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token consisting of the new Y coordinate value.</param>
+        /// <returns></returns>
+        public Token SetY(InterpretorContext context, params LogoValue[] input)
+        {
+            SetXY(context, input, Strings.CommandSetYWrongTypeError, BuildSetYInstruction);
+            return null;
+        }
+
+        private void SetXY(InterpretorContext context, LogoValue[] input, string wrongTypeError, Func<LogoValue[], JumpToInstruction> instructionBuilder)
+        {
             if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
             if (input[0].Type != LogoValueType.Number)
             {
-                context.Interpretor.WriteOutputLine(Strings.CommandSetXWrongTypeError);
-                return null;
+                context.Interpretor.WriteOutputLine(wrongTypeError);
+                return;
             }
-            _parentContext.PendDrawingInstruction(new JumpToInstruction(GetDouble(input[0]), null, null));
-            return null;
+            _parentContext.PendDrawingInstruction(instructionBuilder(input));
         }
+
+        private JumpToInstruction BuildSetXInstruction(LogoValue[] t) => new JumpToInstruction(GetDouble(t[0]), null, null);
+
+        private JumpToInstruction BuildSetYInstruction(LogoValue[] t) => new JumpToInstruction(null, GetDouble(t[0]), null);
 
         /// <summary>
         /// Clean the screen and return the turtle to its starting position.
