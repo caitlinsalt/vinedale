@@ -133,6 +133,15 @@ namespace Vinedale.Turtle.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Put the turtle back in its starting place..
+        /// </summary>
+        internal static string CommandHomeHelpText {
+            get {
+                return ResourceManager.GetString("CommandHomeHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
         internal static string CommandLeftExampleText {
