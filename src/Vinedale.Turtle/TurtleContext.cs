@@ -53,7 +53,7 @@ namespace Vinedale.Turtle
             _instructionList.Clear();
             if (!resetPosition)
             {
-                _instructionList.Add(new JumpToInstruction(_turtle.X, _turtle.Y));
+                _instructionList.Add(new JumpToInstruction(_turtle.X, _turtle.Y, _turtle.Heading));
             }
             OnInstructionsChanged();
         }
@@ -89,8 +89,18 @@ namespace Vinedale.Turtle
                 }
                 if (baseInstruction is JumpToInstruction jumpInstruction)
                 {
-                    _turtle.X = jumpInstruction.X;
-                    _turtle.Y = jumpInstruction.Y;
+                    if (jumpInstruction.X.HasValue)
+                    {
+                        _turtle.X = jumpInstruction.X.Value;
+                    }
+                    if (jumpInstruction.Y.HasValue)
+                    {
+                        _turtle.Y = jumpInstruction.Y.Value;
+                    }
+                    if (jumpInstruction.Heading.HasValue)
+                    {
+                        _turtle.Heading = jumpInstruction.Heading.Value;
+                    }
                     continue;
                 }
             }

@@ -141,6 +141,9 @@
   <data name="CommandForwardWrongTypeError" xml:space="preserve">
     <value>You should tell me how far to go forwards as a number.</value>
   </data>
+  <data name="CommandHomeHelpText" xml:space="preserve">
+    <value>Put the turtle back in its starting place.</value>
+  </data>
   <data name="CommandLeftExampleText" xml:space="preserve">
     <value>X</value>
   </data>
