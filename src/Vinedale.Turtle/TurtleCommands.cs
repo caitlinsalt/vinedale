@@ -42,6 +42,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("cleargraphics", new [] { "cg", "cleangraphics" }, 0, RedefinabilityType.NonRedefinable, ClearGraphics, Strings.CommandClearGraphicsHelpText, ""),
                 new LogoCommand("clean", 0, RedefinabilityType.NonRedefinable, Clean, Strings.CommandCleanHelpText, ""),
                 new LogoCommand("showturtle", "st", 0, RedefinabilityType.NonRedefinable, ShowTurtle, Strings.CommandShowTurtleHelpText, ""),
+                new LogoCommand("home", 0, RedefinabilityType.NonRedefinable, Home, Strings.CommandHomeHelpText, ""),
             };
         }
 
@@ -182,6 +183,18 @@ namespace Vinedale.Turtle
         public Token Clean(InterpretorContext context, params LogoValue[] input)
         {
             _parentContext.PendCleanInstruction(false);
+            return null;
+        }
+
+        /// <summary>
+        /// Move the turtle back to its home position.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns></returns>
+        public Token Home(InterpretorContext context, params LogoValue[] input)
+        {
+            _parentContext.PendDrawingInstruction(new JumpToInstruction(0, 0, 0));
             return null;
         }
 
