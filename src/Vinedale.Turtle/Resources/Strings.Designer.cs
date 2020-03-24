@@ -241,6 +241,33 @@ namespace Vinedale.Turtle.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Y.
+        /// </summary>
+        internal static string CommandSetYExampleText {
+            get {
+                return ResourceManager.GetString("CommandSetYExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tells the turtle to change its Y-coordinate..
+        /// </summary>
+        internal static string CommandSetYHelpText {
+            get {
+                return ResourceManager.GetString("CommandSetYHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should tell me where to move to as a number..
+        /// </summary>
+        internal static string CommandSetYWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandSetYWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Draw the turtle on the screen..
         /// </summary>
         internal static string CommandShowTurtleHelpText {
