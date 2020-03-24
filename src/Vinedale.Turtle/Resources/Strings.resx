@@ -177,6 +177,15 @@
   <data name="CommandSetXWrongTypeError" xml:space="preserve">
     <value>You should tell me where to move to as a number.</value>
   </data>
+  <data name="CommandSetYExampleText" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="CommandSetYHelpText" xml:space="preserve">
+    <value>Tells the turtle to change its Y-coordinate.</value>
+  </data>
+  <data name="CommandSetYWrongTypeError" xml:space="preserve">
+    <value>You should tell me where to move to as a number.</value>
+  </data>
   <data name="CommandShowTurtleHelpText" xml:space="preserve">
     <value>Draw the turtle on the screen.</value>
   </data>
