@@ -45,6 +45,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("home", 0, RedefinabilityType.NonRedefinable, Home, Strings.CommandHomeHelpText, ""),
                 new LogoCommand("setx", 1, RedefinabilityType.NonRedefinable, SetX, Strings.CommandSetXHelpText, Strings.CommandSetXExampleText),
                 new LogoCommand("sety", 1, RedefinabilityType.NonRedefinable, SetY, Strings.CommandSetYHelpText, Strings.CommandSetYExampleText),
+                new LogoCommand("seth", 1, RedefinabilityType.NonRedefinable, SetHeading, Strings.CommandSetHHelpText, Strings.CommandSetHExampleText),
             };
         }
 
@@ -224,6 +225,18 @@ namespace Vinedale.Turtle
             return null;
         }
 
+        /// <summary>
+        /// Change the turtle's heading to an absolute value.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token consisting of the new heading value.</param>
+        /// <returns></returns>
+        public Token SetHeading(InterpretorContext context, params LogoValue[] input)
+        {
+            SetXY(context, input, Strings.CommandSetHWrongTypeError, BuildSetHeadingInstruction);
+            return null;
+        }
+
         private void SetXY(InterpretorContext context, LogoValue[] input, string wrongTypeError, Func<LogoValue[], JumpToInstruction> instructionBuilder)
         {
             if (context is null)
@@ -241,6 +254,8 @@ namespace Vinedale.Turtle
         private JumpToInstruction BuildSetXInstruction(LogoValue[] t) => new JumpToInstruction(GetDouble(t[0]), null, null);
 
         private JumpToInstruction BuildSetYInstruction(LogoValue[] t) => new JumpToInstruction(null, GetDouble(t[0]), null);
+
+        private JumpToInstruction BuildSetHeadingInstruction(LogoValue[] t) => new JumpToInstruction(null, null, GetDouble(t[0]) % 360d);
 
         /// <summary>
         /// Clean the screen and return the turtle to its starting position.
