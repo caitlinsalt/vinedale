@@ -216,6 +216,33 @@ namespace Vinedale.Turtle.Resources {
         /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
+        internal static string CommandSetHExampleText {
+            get {
+                return ResourceManager.GetString("CommandSetHExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tells the turtle to change its heading..
+        /// </summary>
+        internal static string CommandSetHHelpText {
+            get {
+                return ResourceManager.GetString("CommandSetHHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should tell me my heading as a number..
+        /// </summary>
+        internal static string CommandSetHWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandSetHWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
         internal static string CommandSetXExampleText {
             get {
                 return ResourceManager.GetString("CommandSetXExampleText", resourceCulture);
