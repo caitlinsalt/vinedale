@@ -329,5 +329,14 @@ namespace Vinedale.Turtle.Resources {
                 return ResourceManager.GetString("CommandXcorHelpText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reports the turtle&apos;s Y-coordinate..
+        /// </summary>
+        internal static string CommandYcorHelpText {
+            get {
+                return ResourceManager.GetString("CommandYcorHelpText", resourceCulture);
+            }
+        }
     }
 }

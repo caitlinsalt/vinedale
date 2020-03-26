@@ -49,6 +49,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("heading", 0, RedefinabilityType.NonRedefinable, GetHeading, Strings.CommandHeadingHelpText),
                 new LogoCommand("pos", 0, RedefinabilityType.NonRedefinable, GetPosition, Strings.CommandPosHelpText),
                 new LogoCommand("xcor", 0, RedefinabilityType.NonRedefinable, GetXCoordinate, Strings.CommandXcorHelpText),
+                new LogoCommand("ycor", 0, RedefinabilityType.NonRedefinable, GetYCoordinate, Strings.CommandYcorHelpText),
             };
         }
 
@@ -294,9 +295,25 @@ namespace Vinedale.Turtle
             return new ValueToken(Syntax.XCorCmd, GetXCoordinateValue());
         }
 
+        /// <summary>
+        /// Get the current Y-coordinate of the turtle.
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns></returns>
+        public Token GetYCoordinate(InterpretorContext context, params LogoValue[] input)
+        {
+            return new ValueToken(Syntax.YCorCmd, GetYCoordinateValue());
+        }
+
         private LogoValue GetXCoordinateValue()
         {
-            return new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.X));
+            return GetValue(_parentContext.CurrentTurtle.X);
+        }
+
+        private LogoValue GetYCoordinateValue()
+        {
+            return GetValue(_parentContext.CurrentTurtle.Y);
         }
 
         /// <summary>
@@ -324,6 +341,11 @@ namespace Vinedale.Turtle
         private static double GetDouble(LogoValue token)
         {
             return Convert.ToDouble((decimal)token.Value);
+        }
+
+        private static LogoValue GetValue(double value)
+        {
+            return new LogoValue(LogoValueType.Number, Convert.ToDecimal(value));
         }
     }
 }
