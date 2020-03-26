@@ -213,6 +213,12 @@
   <data name="CommandDifferenceTypeError" xml:space="preserve">
     <value>I don't know how to take that kind of thing from that.</value>
   </data>
+  <data name="CommandFputExampleText" xml:space="preserve">
+    <value>X [list]</value>
+  </data>
+  <data name="CommandFputHelpText" xml:space="preserve">
+    <value>Add something to the start of a list.</value>
+  </data>
   <data name="CommandHelpActionCountOutput" xml:space="preserve">
     <value>{0} does {1} things.</value>
   </data>

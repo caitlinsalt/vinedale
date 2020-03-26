@@ -159,6 +159,9 @@
   <data name="False" xml:space="preserve">
     <value>false</value>
   </data>
+  <data name="FputCmd" xml:space="preserve">
+    <value>fput</value>
+  </data>
   <data name="HelpCmd" xml:space="preserve">
     <value>help</value>
   </data>
