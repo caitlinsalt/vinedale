@@ -43,6 +43,14 @@ namespace Logo.Tokens
         }
 
         /// <summary>
+        /// Construct a <see cref="ListToken" /> from parameters.
+        /// </summary>
+        /// <param name="contents">The tokens that will become the contents of the list token.</param>
+        public ListToken(params Token[] contents) : this((IList<Token>)contents)
+        {
+        }
+
+        /// <summary>
         /// Get a token that represents an empty list.
         /// </summary>
         /// <returns></returns>
