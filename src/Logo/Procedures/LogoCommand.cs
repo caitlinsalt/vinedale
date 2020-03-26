@@ -22,7 +22,7 @@ namespace Logo.Procedures
         /// <param name="implementation">Command implementation routine.</param>
         /// <param name="helpText">Command help text.</param>
         /// <param name="exampleText">Command example text.</param>
-        public LogoCommand(string name, IEnumerable<string> aliases, int paramCount, RedefinabilityType redefinability, CommandImplementation implementation, string helpText, string exampleText)
+        public LogoCommand(string name, IEnumerable<string> aliases, int paramCount, RedefinabilityType redefinability, CommandImplementation implementation, string helpText, string exampleText = "")
             : base(name, aliases, paramCount, redefinability, helpText, exampleText)
         {
             Implementation = implementation;
@@ -38,7 +38,7 @@ namespace Logo.Procedures
         /// <param name="implementation">Command implementation routine.</param>
         /// <param name="helpText">Command help text.</param>
         /// <param name="exampleText">Command example text.</param>
-        public LogoCommand(string name, string alias, int paramCount, RedefinabilityType redefinability, CommandImplementation implementation, string helpText, string exampleText)
+        public LogoCommand(string name, string alias, int paramCount, RedefinabilityType redefinability, CommandImplementation implementation, string helpText, string exampleText = "")
             : base(name, alias, paramCount, redefinability, helpText, exampleText)
         {
             Implementation = implementation;
@@ -53,7 +53,7 @@ namespace Logo.Procedures
         /// <param name="implementation">Command implementation routine.</param>
         /// <param name="helpText">Command help text.</param>
         /// <param name="exampleText">Command example text.</param>
-        public LogoCommand(string name, int paramCount, RedefinabilityType redefinability, CommandImplementation implementation, string helpText, string exampleText)
+        public LogoCommand(string name, int paramCount, RedefinabilityType redefinability, CommandImplementation implementation, string helpText, string exampleText = "")
             : base(name, paramCount, redefinability, helpText, exampleText)
         {
             Implementation = implementation;

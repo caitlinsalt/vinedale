@@ -133,6 +133,15 @@ namespace Vinedale.Turtle.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reports what way the turtle is facing..
+        /// </summary>
+        internal static string CommandHeadingHelpText {
+            get {
+                return ResourceManager.GetString("CommandHeadingHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Put the turtle back in its starting place..
         /// </summary>
         internal static string CommandHomeHelpText {
