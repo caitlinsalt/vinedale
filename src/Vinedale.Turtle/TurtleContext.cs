@@ -12,8 +12,7 @@ namespace Vinedale.Turtle
     /// </summary>
     public class TurtleContext : ITurtleContext
     {
-        private ITurtle _turtle;
-        private List<Instruction> _instructionList;
+        private readonly List<Instruction> _instructionList;
 
         /// <summary>
         /// Event fired when the instruction list has changed.
@@ -23,14 +22,14 @@ namespace Vinedale.Turtle
         /// <summary>
         /// The current active turtle.
         /// </summary>
-        public ITurtle CurrentTurtle { get { return _turtle; } }
+        public ITurtle CurrentTurtle { get; }
 
         /// <summary>
         /// The default constructor.
         /// </summary>
         public TurtleContext()
         {
-            _turtle = new SoftTurtle();
+            CurrentTurtle = new SoftTurtle();
             _instructionList = new List<Instruction>();
         }
 
@@ -53,7 +52,7 @@ namespace Vinedale.Turtle
             _instructionList.Clear();
             if (!resetPosition)
             {
-                _instructionList.Add(new JumpToInstruction(_turtle.X, _turtle.Y, _turtle.Heading));
+                _instructionList.Add(new JumpToInstruction(CurrentTurtle.X, CurrentTurtle.Y, CurrentTurtle.Heading));
             }
             OnInstructionsChanged();
         }
@@ -65,7 +64,7 @@ namespace Vinedale.Turtle
         /// <param name="size">The size of the drawing area.</param>
         public void ExecuteDrawingInstructions(PaintEventArgs e, Rectangle size)
         {
-            _turtle.Reset();
+            CurrentTurtle.Reset();
             foreach (Instruction baseInstruction in _instructionList)
             {
                 if (baseInstruction is RotateInstruction rotateInstruction)
@@ -78,28 +77,33 @@ namespace Vinedale.Turtle
                     HandleTranslate(lineInstruction, e, size);
                     continue;
                 }
-                if (baseInstruction is PenStatusInstruction penInstruction)
+                if (baseInstruction is PenStatusInstruction penStatusInstruction)
                 {
-                    _turtle.PenDown = penInstruction.Status;
+                    CurrentTurtle.PenDown = penStatusInstruction.Status;
+                    continue;
+                }
+                if (baseInstruction is PenWidthInstruction penWidthInstruction)
+                {
+                    CurrentTurtle.PenSize = penWidthInstruction.Width;
                     continue;
                 }
                 if (baseInstruction is TurtleStatusInstruction tsInstruction)
                 {
-                    _turtle.TurtleShown = tsInstruction.Status;
+                    CurrentTurtle.TurtleShown = tsInstruction.Status;
                 }
                 if (baseInstruction is JumpToInstruction jumpInstruction)
                 {
                     if (jumpInstruction.X.HasValue)
                     {
-                        _turtle.X = jumpInstruction.X.Value;
+                        CurrentTurtle.X = jumpInstruction.X.Value;
                     }
                     if (jumpInstruction.Y.HasValue)
                     {
-                        _turtle.Y = jumpInstruction.Y.Value;
+                        CurrentTurtle.Y = jumpInstruction.Y.Value;
                     }
                     if (jumpInstruction.Heading.HasValue)
                     {
-                        _turtle.Heading = jumpInstruction.Heading.Value;
+                        CurrentTurtle.Heading = jumpInstruction.Heading.Value;
                     }
                     continue;
                 }
@@ -116,12 +120,12 @@ namespace Vinedale.Turtle
 
         private void HandleRotate(RotateInstruction rotation)
         {
-            _turtle.Heading += rotation.Angle;
+            CurrentTurtle.Heading += rotation.Angle;
         }
 
         private void HandleTranslate(LineInstruction instr, PaintEventArgs e, Rectangle size)
         {
-            _turtle.Move(instr.Length, e, size);
+            CurrentTurtle.Move(instr.Length, e, size);
         }
     }
 }
