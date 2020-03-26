@@ -3,7 +3,7 @@
     /// <summary>
     /// A class representing a drawing instruction.
     /// </summary>
-    public class Instruction
+    public abstract class Instruction
     {
     }
 }
