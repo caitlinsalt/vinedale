@@ -37,15 +37,16 @@ namespace Vinedale.Turtle
                 new LogoCommand("back", new [] { "bk", "backward", "backwards" }, 1, RedefinabilityType.NonRedefinable, Backwards, Strings.CommandBackHelpText, Strings.CommandBackExampleText),
                 new LogoCommand("right", "rt", 1, RedefinabilityType.NonRedefinable, Right, Strings.CommandRightHelpText, Strings.CommandRightExampleText),
                 new LogoCommand("left", "lt", 1, RedefinabilityType.NonRedefinable, Left, Strings.CommandLeftHelpText, Strings.CommandLeftExampleText),
-                new LogoCommand("penup", "pu", 0, RedefinabilityType.NonRedefinable, PenUp, Strings.CommandPenUpHelpText, ""),
-                new LogoCommand("pendown", "pd", 0, RedefinabilityType.NonRedefinable, PenDown, Strings.CommandPenDownHelpText, ""),
-                new LogoCommand("cleargraphics", new [] { "cg", "cleangraphics" }, 0, RedefinabilityType.NonRedefinable, ClearGraphics, Strings.CommandClearGraphicsHelpText, ""),
-                new LogoCommand("clean", 0, RedefinabilityType.NonRedefinable, Clean, Strings.CommandCleanHelpText, ""),
-                new LogoCommand("showturtle", "st", 0, RedefinabilityType.NonRedefinable, ShowTurtle, Strings.CommandShowTurtleHelpText, ""),
-                new LogoCommand("home", 0, RedefinabilityType.NonRedefinable, Home, Strings.CommandHomeHelpText, ""),
+                new LogoCommand("penup", "pu", 0, RedefinabilityType.NonRedefinable, PenUp, Strings.CommandPenUpHelpText),
+                new LogoCommand("pendown", "pd", 0, RedefinabilityType.NonRedefinable, PenDown, Strings.CommandPenDownHelpText),
+                new LogoCommand("cleargraphics", new [] { "cg", "cleangraphics" }, 0, RedefinabilityType.NonRedefinable, ClearGraphics, Strings.CommandClearGraphicsHelpText),
+                new LogoCommand("clean", 0, RedefinabilityType.NonRedefinable, Clean, Strings.CommandCleanHelpText),
+                new LogoCommand("showturtle", "st", 0, RedefinabilityType.NonRedefinable, ShowTurtle, Strings.CommandShowTurtleHelpText),
+                new LogoCommand("home", 0, RedefinabilityType.NonRedefinable, Home, Strings.CommandHomeHelpText),
                 new LogoCommand("setx", 1, RedefinabilityType.NonRedefinable, SetX, Strings.CommandSetXHelpText, Strings.CommandSetXExampleText),
                 new LogoCommand("sety", 1, RedefinabilityType.NonRedefinable, SetY, Strings.CommandSetYHelpText, Strings.CommandSetYExampleText),
                 new LogoCommand("seth", 1, RedefinabilityType.NonRedefinable, SetHeading, Strings.CommandSetHHelpText, Strings.CommandSetHExampleText),
+                new LogoCommand("heading", 0, RedefinabilityType.NonRedefinable, GetHeading, Strings.CommandHeadingHelpText),
             };
         }
 
@@ -267,6 +268,17 @@ namespace Vinedale.Turtle
         {
             _parentContext.PendCleanInstruction(true);
             return null;
+        }
+
+        /// <summary>
+        /// Get the current heading of the turtle.
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns>A number token containing the turtle's heading.</returns>
+        public Token GetHeading(InterpretorContext context, params LogoValue[] input)
+        {
+            return new ValueToken(Syntax.HeadingCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.Heading)));
         }
 
         private void PendTranslateInstruction(double length)
