@@ -68,5 +68,14 @@ namespace Vinedale.Turtle.Resources {
                 return ResourceManager.GetString("HeadingCmd", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pos.
+        /// </summary>
+        internal static string PosCmd {
+            get {
+                return ResourceManager.GetString("PosCmd", resourceCulture);
+            }
+        }
     }
 }
