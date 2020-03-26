@@ -349,6 +349,24 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X [list].
+        /// </summary>
+        internal static string CommandFputExampleText {
+            get {
+                return ResourceManager.GetString("CommandFputExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add something to the start of a list..
+        /// </summary>
+        internal static string CommandFputHelpText {
+            get {
+                return ResourceManager.GetString("CommandFputHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} does {1} things..
         /// </summary>
         internal static string CommandHelpActionCountOutput {
