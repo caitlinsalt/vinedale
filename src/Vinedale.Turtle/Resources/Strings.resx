@@ -204,4 +204,7 @@
   <data name="CommandShowTurtleHelpText" xml:space="preserve">
     <value>Draw the turtle on the screen.</value>
   </data>
+  <data name="CommandXcorHelpText" xml:space="preserve">
+    <value>Reports the turtle's X-coordinate.</value>
+  </data>
 </root>

@@ -48,6 +48,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("seth", 1, RedefinabilityType.NonRedefinable, SetHeading, Strings.CommandSetHHelpText, Strings.CommandSetHExampleText),
                 new LogoCommand("heading", 0, RedefinabilityType.NonRedefinable, GetHeading, Strings.CommandHeadingHelpText),
                 new LogoCommand("pos", 0, RedefinabilityType.NonRedefinable, GetPosition, Strings.CommandPosHelpText),
+                new LogoCommand("xcor", 0, RedefinabilityType.NonRedefinable, GetXCoordinate, Strings.CommandXcorHelpText),
             };
         }
 
@@ -283,6 +284,22 @@ namespace Vinedale.Turtle
         }
 
         /// <summary>
+        /// Get the current X-coordinate of the turtle
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns></returns>
+        public Token GetXCoordinate(InterpretorContext context, params LogoValue[] input)
+        {
+            return new ValueToken(Syntax.XCorCmd, GetXCoordinateValue());
+        }
+
+        private LogoValue GetXCoordinateValue()
+        {
+            return new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.X));
+        }
+
+        /// <summary>
         /// Gets the current position of the turtle.
         /// </summary>
         /// <param name="context">Ignored.</param>
@@ -290,7 +307,7 @@ namespace Vinedale.Turtle
         /// <returns>A list token containing two elements, the first being the turtle's X coordinate and the second the Y coordinate.</returns>
         public Token GetPosition(InterpretorContext context, params LogoValue[] input)
         {
-            return new ListToken(new ValueToken(Syntax.PosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.X))),
+            return new ListToken(new ValueToken(Syntax.PosCmd, GetXCoordinateValue()),
                 new ValueToken(Syntax.PosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.Y))));
         }
 

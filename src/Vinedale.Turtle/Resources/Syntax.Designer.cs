@@ -77,5 +77,14 @@ namespace Vinedale.Turtle.Resources {
                 return ResourceManager.GetString("PosCmd", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to xcor.
+        /// </summary>
+        internal static string XCorCmd {
+            get {
+                return ResourceManager.GetString("XCorCmd", resourceCulture);
+            }
+        }
     }
 }
