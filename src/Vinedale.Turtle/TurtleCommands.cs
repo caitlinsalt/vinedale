@@ -51,6 +51,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("xcor", 0, RedefinabilityType.NonRedefinable, GetXCoordinate, Strings.CommandXcorHelpText),
                 new LogoCommand("ycor", 0, RedefinabilityType.NonRedefinable, GetYCoordinate, Strings.CommandYcorHelpText),
                 new LogoCommand("setpensize", 1, RedefinabilityType.NonRedefinable, SetPenSize, Strings.CommandSetPenSizeHelpText, Strings.CommandSetPenSizeExampleText),
+                new LogoCommand("pensize", 0, RedefinabilityType.NonRedefinable, GetPenSize, Strings.CommandPenSizeHelpText),
             };
         }
 
@@ -348,6 +349,17 @@ namespace Vinedale.Turtle
             }
             _parentContext.PendDrawingInstruction(new PenWidthInstruction(GetDouble(input[0])));
             return null;
+        }
+
+        /// <summary>
+        /// Return the current pen size.
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns></returns>
+        public Token GetPenSize(InterpretorContext context, params LogoValue[] input)
+        {
+            return new ValueToken(Syntax.PenSizeCmd, GetValue(_parentContext.CurrentTurtle.PenSize));
         }
 
         private void PendTranslateInstruction(double length)

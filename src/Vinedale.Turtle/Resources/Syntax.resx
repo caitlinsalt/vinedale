@@ -120,6 +120,9 @@
   <data name="HeadingCmd" xml:space="preserve">
     <value>heading</value>
   </data>
+  <data name="PenSizeCmd" xml:space="preserve">
+    <value>pensize</value>
+  </data>
   <data name="PosCmd" xml:space="preserve">
     <value>pos</value>
   </data>
