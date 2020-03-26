@@ -159,6 +159,9 @@
   <data name="CommandPenDownHelpText" xml:space="preserve">
     <value>Lowers the pen, so the turtle starts drawing.</value>
   </data>
+  <data name="CommandPenSizeHelpText" xml:space="preserve">
+    <value>Reports the width of the turtle's pen.</value>
+  </data>
   <data name="CommandPenUpHelpText" xml:space="preserve">
     <value>Lifts the pen, so the turtle stops drawing.</value>
   </data>
