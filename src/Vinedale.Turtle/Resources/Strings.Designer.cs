@@ -261,6 +261,33 @@ namespace Vinedale.Turtle.Resources {
         /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
+        internal static string CommandSetPenSizeExampleText {
+            get {
+                return ResourceManager.GetString("CommandSetPenSizeExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes the width of the turtle&apos;s pen..
+        /// </summary>
+        internal static string CommandSetPenSizeHelpText {
+            get {
+                return ResourceManager.GetString("CommandSetPenSizeHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The pen size must be a number..
+        /// </summary>
+        internal static string CommandSetPenSizeWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandSetPenSizeWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
         internal static string CommandSetXExampleText {
             get {
                 return ResourceManager.GetString("CommandSetXExampleText", resourceCulture);
