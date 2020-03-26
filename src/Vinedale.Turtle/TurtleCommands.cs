@@ -47,6 +47,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("sety", 1, RedefinabilityType.NonRedefinable, SetY, Strings.CommandSetYHelpText, Strings.CommandSetYExampleText),
                 new LogoCommand("seth", 1, RedefinabilityType.NonRedefinable, SetHeading, Strings.CommandSetHHelpText, Strings.CommandSetHExampleText),
                 new LogoCommand("heading", 0, RedefinabilityType.NonRedefinable, GetHeading, Strings.CommandHeadingHelpText),
+                new LogoCommand("pos", 0, RedefinabilityType.NonRedefinable, GetPosition, Strings.CommandPosHelpText),
             };
         }
 
@@ -279,6 +280,18 @@ namespace Vinedale.Turtle
         public Token GetHeading(InterpretorContext context, params LogoValue[] input)
         {
             return new ValueToken(Syntax.HeadingCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.Heading)));
+        }
+
+        /// <summary>
+        /// Gets the current position of the turtle.
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Ignored.</param>
+        /// <returns>A list token containing two elements, the first being the turtle's X coordinate and the second the Y coordinate.</returns>
+        public Token GetPosition(InterpretorContext context, params LogoValue[] input)
+        {
+            return new ListToken(new ValueToken(Syntax.PosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.X))),
+                new ValueToken(Syntax.PosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.Y))));
         }
 
         private void PendTranslateInstruction(double length)

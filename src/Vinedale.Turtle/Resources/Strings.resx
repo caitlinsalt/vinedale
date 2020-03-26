@@ -162,6 +162,9 @@
   <data name="CommandPenUpHelpText" xml:space="preserve">
     <value>Lifts the pen, so the turtle stops drawing.</value>
   </data>
+  <data name="CommandPosHelpText" xml:space="preserve">
+    <value>Reports the turtle's position</value>
+  </data>
   <data name="CommandRightExampleText" xml:space="preserve">
     <value>X</value>
   </data>
