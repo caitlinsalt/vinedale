@@ -207,4 +207,7 @@
   <data name="CommandXcorHelpText" xml:space="preserve">
     <value>Reports the turtle's X-coordinate.</value>
   </data>
+  <data name="CommandYcorHelpText" xml:space="preserve">
+    <value>Reports the turtle's Y-coordinate.</value>
+  </data>
 </root>

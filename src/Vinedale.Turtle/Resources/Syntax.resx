@@ -126,4 +126,7 @@
   <data name="XCorCmd" xml:space="preserve">
     <value>xcor</value>
   </data>
+  <data name="YCorCmd" xml:space="preserve">
+    <value>ycor</value>
+  </data>
 </root>

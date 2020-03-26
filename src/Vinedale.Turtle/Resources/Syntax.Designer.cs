@@ -86,5 +86,14 @@ namespace Vinedale.Turtle.Resources {
                 return ResourceManager.GetString("XCorCmd", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ycor.
+        /// </summary>
+        internal static string YCorCmd {
+            get {
+                return ResourceManager.GetString("YCorCmd", resourceCulture);
+            }
+        }
     }
 }
