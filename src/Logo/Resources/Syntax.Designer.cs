@@ -187,6 +187,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to fput.
+        /// </summary>
+        internal static string FputCmd {
+            get {
+                return ResourceManager.GetString("FputCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to help.
         /// </summary>
         internal static string HelpCmd {
