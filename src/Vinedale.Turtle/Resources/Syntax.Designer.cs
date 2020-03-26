@@ -70,6 +70,15 @@ namespace Vinedale.Turtle.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pensize.
+        /// </summary>
+        internal static string PenSizeCmd {
+            get {
+                return ResourceManager.GetString("PenSizeCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pos.
         /// </summary>
         internal static string PosCmd {
