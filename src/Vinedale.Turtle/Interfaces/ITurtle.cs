@@ -35,6 +35,11 @@ namespace Vinedale.Turtle.Interfaces
         TurtleStatus TurtleShown { get; set; }
 
         /// <summary>
+        /// The current width of the turtle's pen.
+        /// </summary>
+        double PenSize { get; set; }
+
+        /// <summary>
         /// Move the turtle a set distance.
         /// </summary>
         /// <param name="distance">The distance to move (positive is forward, negative is backward)</param>

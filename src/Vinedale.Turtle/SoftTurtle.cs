@@ -42,6 +42,11 @@ namespace Vinedale.Turtle
         public TurtleStatus TurtleShown { get; set; }
 
         /// <summary>
+        /// The width of the lines drawn by this turtle.
+        /// </summary>
+        public double PenSize { get; set; } = 1d;
+
+        /// <summary>
         /// The direction in which the turtle is facing, expressed in radians.
         /// </summary>
         public double HeadingRadians
@@ -111,7 +116,7 @@ namespace Vinedale.Turtle
 
             if (PenDown == PenStatus.Down)
             {
-                using Pen pen = new Pen(Color.White);
+                using Pen pen = new Pen(Color.White, (float)PenSize);
                 e.Graphics.DrawLine(pen, new PointF(centrePoint.X + (float)X, centrePoint.Y - (float)Y), new PointF(centrePoint.X + (float)(X + xMove), centrePoint.Y - (float)(Y + yMove)));
             }
 
@@ -126,6 +131,7 @@ namespace Vinedale.Turtle
         {
             TurtleShown = TurtleStatus.Shown;
             PenDown = PenStatus.Down;
+            PenSize = 1;
             Heading = 0;
             X = 0;
             Y = 0;

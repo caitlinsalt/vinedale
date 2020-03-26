@@ -183,6 +183,15 @@
   <data name="CommandSetHWrongTypeError" xml:space="preserve">
     <value>You should tell me my heading as a number.</value>
   </data>
+  <data name="CommandSetPenSizeExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandSetPenSizeHelpText" xml:space="preserve">
+    <value>Changes the width of the turtle's pen.</value>
+  </data>
+  <data name="CommandSetPenSizeWrongTypeError" xml:space="preserve">
+    <value>The pen size must be a number.</value>
+  </data>
   <data name="CommandSetXExampleText" xml:space="preserve">
     <value>X</value>
   </data>

@@ -50,6 +50,7 @@ namespace Vinedale.Turtle
                 new LogoCommand("pos", 0, RedefinabilityType.NonRedefinable, GetPosition, Strings.CommandPosHelpText),
                 new LogoCommand("xcor", 0, RedefinabilityType.NonRedefinable, GetXCoordinate, Strings.CommandXcorHelpText),
                 new LogoCommand("ycor", 0, RedefinabilityType.NonRedefinable, GetYCoordinate, Strings.CommandYcorHelpText),
+                new LogoCommand("setpensize", 1, RedefinabilityType.NonRedefinable, SetPenSize, Strings.CommandSetPenSizeHelpText, Strings.CommandSetPenSizeExampleText),
             };
         }
 
@@ -326,6 +327,27 @@ namespace Vinedale.Turtle
         {
             return new ListToken(new ValueToken(Syntax.PosCmd, GetXCoordinateValue()),
                 new ValueToken(Syntax.PosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(_parentContext.CurrentTurtle.Y))));
+        }
+
+        /// <summary>
+        /// Sets the pen width.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token, which is a number.</param>
+        /// <returns></returns>
+        public Token SetPenSize(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (input[0].Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandSetPenSizeWrongTypeError);
+                return null;
+            }
+            _parentContext.PendDrawingInstruction(new PenWidthInstruction(GetDouble(input[0])));
+            return null;
         }
 
         private void PendTranslateInstruction(double length)
