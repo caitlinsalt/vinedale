@@ -187,6 +187,15 @@ namespace Vinedale.Turtle.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reports the width of the turtle&apos;s pen..
+        /// </summary>
+        internal static string CommandPenSizeHelpText {
+            get {
+                return ResourceManager.GetString("CommandPenSizeHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lifts the pen, so the turtle stops drawing..
         /// </summary>
         internal static string CommandPenUpHelpText {
