@@ -196,6 +196,15 @@ namespace Vinedale.Turtle.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reports the turtle&apos;s position.
+        /// </summary>
+        internal static string CommandPosHelpText {
+            get {
+                return ResourceManager.GetString("CommandPosHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
         internal static string CommandRightExampleText {
