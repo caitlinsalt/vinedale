@@ -44,6 +44,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.CharCmd, 1, RedefinabilityType.NonRedefinable, AsciiToChar, Strings.CommandCharHelpText, Strings.CommandCharExampleText),
                 new LogoCommand(Syntax.CountCmd, 1, RedefinabilityType.NonRedefinable, Count, Strings.CommandCountHelpText, Strings.CommandCountExampleText),
                 new LogoCommand(Syntax.DifferenceCmd, 2, RedefinabilityType.NonRedefinable, Difference, Strings.CommandDifferenceHelpText, Strings.CommandDifferenceExampleText),
+                new LogoCommand(Syntax.FputCmd, 2, RedefinabilityType.NonRedefinable, ListPrepend, Strings.CommandFputHelpText, Strings.CommandFputExampleText),
             };
         }
 
@@ -115,6 +116,18 @@ namespace Logo.Procedures
         {
             List<Token> inContents = (input[0].Value as ListToken).Contents;
             ListToken outList = new ListToken(inContents.Take(inContents.Count - 1).ToArray());
+            return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
+        }
+
+        /// <summary>
+        /// Prepends an element to the start of a list.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain two tokens, the second of which is a list.</param>
+        /// <returns>A token that is a list whose first element is the first input token and whose remaining elements are those of the second input token.</returns>
+        public static Token ListPrepend(InterpretorContext context, params LogoValue[] input)
+        {
+            ListToken outList = new ListToken((input[1].Value as ListToken).Contents.Prepend(new ValueToken(Syntax.FputCmd, input[0])).ToArray());
             return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 
