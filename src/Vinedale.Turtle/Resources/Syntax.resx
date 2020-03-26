@@ -123,4 +123,7 @@
   <data name="PosCmd" xml:space="preserve">
     <value>pos</value>
   </data>
+  <data name="XCorCmd" xml:space="preserve">
+    <value>xcor</value>
+  </data>
 </root>
