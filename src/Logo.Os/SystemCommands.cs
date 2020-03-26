@@ -24,8 +24,8 @@ namespace Logo.Os
             return new LogoProcedure[]
             {
                 new LogoCommand("chdir", 1, RedefinabilityType.NonRedefinable, ChangeWorkingDirectory, Strings.CommandChdirHelpText, Strings.CommandChdirExampleText),
-                new LogoCommand("currentdir", 0, RedefinabilityType.NonRedefinable, GetWorkingDirectory, Strings.CommandCurrentdirHelpText, ""),
-                new LogoCommand("directories", 0, RedefinabilityType.NonRedefinable, GetSubdirectories, Strings.CommandDirectoriesHelpText, ""),
+                new LogoCommand("currentdir", 0, RedefinabilityType.NonRedefinable, GetWorkingDirectory, Strings.CommandCurrentdirHelpText),
+                new LogoCommand("directories", 0, RedefinabilityType.NonRedefinable, GetSubdirectories, Strings.CommandDirectoriesHelpText),
                 new LogoCommand("files", 1, RedefinabilityType.NonRedefinable, GetFiles, Strings.CommandFilesHelpText, Strings.CommandFilesExampleText),
             };
         }
