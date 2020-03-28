@@ -168,6 +168,9 @@
   <data name="IntCmd" xml:space="preserve">
     <value>int</value>
   </data>
+  <data name="LputCmd" xml:space="preserve">
+    <value>lput</value>
+  </data>
   <data name="MakeCmd" xml:space="preserve">
     <value>make</value>
   </data>

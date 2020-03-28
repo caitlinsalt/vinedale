@@ -214,6 +214,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to lput.
+        /// </summary>
+        internal static string LputCmd {
+            get {
+                return ResourceManager.GetString("LputCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to make.
         /// </summary>
         internal static string MakeCmd {
