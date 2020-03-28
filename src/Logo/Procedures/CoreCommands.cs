@@ -123,7 +123,16 @@ namespace Logo.Procedures
         /// <returns>A token containing a list.</returns>
         public static Token ListButLast(InterpretorContext context, params LogoValue[] input)
         {
-            List<Token> inContents = (input[0].Value as ListToken).Contents;
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (!(input[0].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandButlastWrongTypeError);
+                return null;
+            }
+            List<Token> inContents = inputList.Contents;
             ListToken outList = new ListToken(inContents.Take(inContents.Count - 1).ToArray());
             return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
