@@ -421,6 +421,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandIntExampleText {
+            get {
+                return ResourceManager.GetString("CommandIntExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reduces the number X to the nearest smaller whole number..
+        /// </summary>
+        internal static string CommandIntHelpText {
+            get {
+                return ResourceManager.GetString("CommandIntHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use int on a number..
+        /// </summary>
+        internal static string CommandIntWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandIntWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ...{0} to {1}.
         /// </summary>
         internal static string CommandMakeEndDebugMessage {
