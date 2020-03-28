@@ -45,6 +45,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.CountCmd, 1, RedefinabilityType.NonRedefinable, Count, Strings.CommandCountHelpText, Strings.CommandCountExampleText),
                 new LogoCommand(Syntax.DifferenceCmd, 2, RedefinabilityType.NonRedefinable, Difference, Strings.CommandDifferenceHelpText, Strings.CommandDifferenceExampleText),
                 new LogoCommand(Syntax.FputCmd, 2, RedefinabilityType.NonRedefinable, ListPrepend, Strings.CommandFputHelpText, Strings.CommandFputExampleText),
+                new LogoCommand(Syntax.IntCmd, 1, RedefinabilityType.NonRedefinable, MathFloor, Strings.CommandIntHelpText, Strings.CommandIntExampleText),
             };
         }
 
@@ -353,6 +354,27 @@ namespace Logo.Procedures
         public static Token ReturnPi(InterpretorContext context, params LogoValue[] dummy)
         {
             return new ValueToken(Math.PI.ToString(CultureInfo.InvariantCulture), new LogoValue(LogoValueType.Number, (decimal)Math.PI));
+        }
+
+        /// <summary>
+        /// Carries out the floor operation, returning the nearest smaller integer.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single token which is a number.</param>
+        /// <returns>A token containing an integer number.</returns>
+        public static Token MathFloor(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (input[0].Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandIntWrongTypeError);
+                return null;
+            }
+            return new ValueToken(Syntax.IntCmd, new LogoValue(LogoValueType.Number, Math.Floor((decimal)input[0].Value)));
         }
 
         /// <summary>
