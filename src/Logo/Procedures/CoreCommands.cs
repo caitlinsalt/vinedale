@@ -45,6 +45,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.CountCmd, 1, RedefinabilityType.NonRedefinable, Count, Strings.CommandCountHelpText, Strings.CommandCountExampleText),
                 new LogoCommand(Syntax.DifferenceCmd, 2, RedefinabilityType.NonRedefinable, Difference, Strings.CommandDifferenceHelpText, Strings.CommandDifferenceExampleText),
                 new LogoCommand(Syntax.FputCmd, 2, RedefinabilityType.NonRedefinable, ListPrepend, Strings.CommandFputHelpText, Strings.CommandFputExampleText),
+                new LogoCommand(Syntax.LputCmd, 2, RedefinabilityType.NonRedefinable, ListAppend, Strings.CommandLputHelpText, Strings.CommandLputExampleText),
                 new LogoCommand(Syntax.IntCmd, 1, RedefinabilityType.NonRedefinable, MathFloor, Strings.CommandIntHelpText, Strings.CommandIntExampleText),
             };
         }
@@ -156,6 +157,27 @@ namespace Logo.Procedures
                 return null;
             }
             ListToken outList = new ListToken(inputList.Contents.Prepend(new ValueToken(Syntax.FputCmd, input[0])).ToArray());
+            return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
+        }
+
+        /// <summary>
+        /// Appends an element to the start of a list.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain two tokens, the second of which is a list.</param>
+        /// <returns>A token that is a list whose first element is the first input token and whose remaining elements are those of the second input token.</returns>
+        public static Token ListAppend(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (!(input[1].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandLputWrongTypeError);
+                return null;
+            }
+            ListToken outList = new ListToken(inputList.Contents.Append(new ValueToken(Syntax.FputCmd, input[0])).ToArray());
             return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 

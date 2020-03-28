@@ -448,6 +448,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X [list].
+        /// </summary>
+        internal static string CommandLputExampleText {
+            get {
+                return ResourceManager.GetString("CommandLputExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add something to the end of a list..
+        /// </summary>
+        internal static string CommandLputHelpText {
+            get {
+                return ResourceManager.GetString("CommandLputHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only lput something into a list..
+        /// </summary>
+        internal static string CommandLputWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandLputWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ...{0} to {1}.
         /// </summary>
         internal static string CommandMakeEndDebugMessage {
