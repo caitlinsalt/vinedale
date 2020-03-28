@@ -16,10 +16,26 @@ namespace Vinedale.Turtle
         private const double BottomLeftPointAngle = 225 * Math.PI / 180;
         private const double BottomRightPointAngle = 135 * Math.PI / 180;
 
+        private double _heading;
+
         /// <summary>
         /// The direction in which the turtle is facing, expressed in degrees.
         /// </summary>
-        public double Heading { get; set; }
+        public double Heading
+        {
+            get
+            {
+                return _heading;
+            }
+            set
+            {
+                _heading = ((value + 540d) % 360d) - 180d;
+                if (_heading == -180d)
+                {
+                    _heading = 180d;
+                }
+            }
+        }
 
         /// <summary>
         /// The turtle's X location.
