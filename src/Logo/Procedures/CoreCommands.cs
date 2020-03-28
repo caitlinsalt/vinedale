@@ -102,7 +102,16 @@ namespace Logo.Procedures
         /// <returns>A token containing a list.</returns>
         public static Token ListButFirst(InterpretorContext context, params LogoValue[] input)
         {
-            ListToken outList = new ListToken((input[0].Value as ListToken).Contents.Skip(1).ToArray());
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (!(input[0].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandButfirstWrongTypeError);
+                return null;
+            }
+            ListToken outList = new ListToken(inputList.Contents.Skip(1).ToArray());
             return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 
