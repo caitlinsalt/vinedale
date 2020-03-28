@@ -219,6 +219,9 @@
   <data name="CommandFputHelpText" xml:space="preserve">
     <value>Add something to the start of a list.</value>
   </data>
+  <data name="CommandFputWrongTypeError" xml:space="preserve">
+    <value>I can only fput something into a list.</value>
+  </data>
   <data name="CommandHelpActionCountOutput" xml:space="preserve">
     <value>{0} does {1} things.</value>
   </data>

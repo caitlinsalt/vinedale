@@ -127,7 +127,16 @@ namespace Logo.Procedures
         /// <returns>A token that is a list whose first element is the first input token and whose remaining elements are those of the second input token.</returns>
         public static Token ListPrepend(InterpretorContext context, params LogoValue[] input)
         {
-            ListToken outList = new ListToken((input[1].Value as ListToken).Contents.Prepend(new ValueToken(Syntax.FputCmd, input[0])).ToArray());
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (!(input[1].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandFputWrongTypeError);
+                return null;
+            }
+            ListToken outList = new ListToken(inputList.Contents.Prepend(new ValueToken(Syntax.FputCmd, input[0])).ToArray());
             return new ValueToken(outList.Text, new LogoValue(LogoValueType.List, outList));
         }
 

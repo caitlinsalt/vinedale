@@ -367,6 +367,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can only fput something into a list..
+        /// </summary>
+        internal static string CommandFputWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandFputWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} does {1} things..
         /// </summary>
         internal static string CommandHelpActionCountOutput {
