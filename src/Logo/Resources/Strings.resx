@@ -246,6 +246,15 @@
   <data name="CommandIntWrongTypeError" xml:space="preserve">
     <value>I can only use int on a number.</value>
   </data>
+  <data name="CommandLputExampleText" xml:space="preserve">
+    <value>X [list]</value>
+  </data>
+  <data name="CommandLputHelpText" xml:space="preserve">
+    <value>Add something to the end of a list.</value>
+  </data>
+  <data name="CommandLputWrongTypeError" xml:space="preserve">
+    <value>I can only lput something into a list.</value>
+  </data>
   <data name="CommandMakeEndDebugMessage" xml:space="preserve">
     <value>...{0} to {1}</value>
   </data>
