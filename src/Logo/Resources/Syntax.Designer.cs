@@ -205,6 +205,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to int.
+        /// </summary>
+        internal static string IntCmd {
+            get {
+                return ResourceManager.GetString("IntCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to make.
         /// </summary>
         internal static string MakeCmd {
