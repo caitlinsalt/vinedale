@@ -120,7 +120,7 @@ namespace Vinedale.Turtle
 
         private void HandleRotate(RotateInstruction rotation)
         {
-            CurrentTurtle.Heading += rotation.Angle;
+            CurrentTurtle.Heading += (rotation.Angle % 360d);
         }
 
         private void HandleTranslate(LineInstruction instr, PaintEventArgs e, Rectangle size)
