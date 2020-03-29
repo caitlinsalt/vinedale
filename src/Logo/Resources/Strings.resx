@@ -297,6 +297,15 @@
   <data name="CommandLastWrongTypeError" xml:space="preserve">
     <value>I can only use last on lists.</value>
   </data>
+  <data name="CommandLnExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandLnHelpText" xml:space="preserve">
+    <value>Returns the natural logarithm of a number.</value>
+  </data>
+  <data name="CommandLnWrongTypeError" xml:space="preserve">
+    <value>I can only use ln on numbers.</value>
+  </data>
   <data name="CommandLputExampleText" xml:space="preserve">
     <value>X [list]</value>
   </data>
