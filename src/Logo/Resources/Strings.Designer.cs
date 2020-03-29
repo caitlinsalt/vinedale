@@ -484,6 +484,60 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X [list].
+        /// </summary>
+        internal static string CommandItemExampleText {
+            get {
+                return ResourceManager.GetString("CommandItemExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the Xth item in a list..
+        /// </summary>
+        internal static string CommandItemHelpText {
+            get {
+                return ResourceManager.GetString("CommandItemHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There aren&apos;t enough things in this list for me to give you that item..
+        /// </summary>
+        internal static string CommandItemIndexOutOfBoundsError {
+            get {
+                return ResourceManager.GetString("CommandItemIndexOutOfBoundsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I number the items in a list starting with 1 and going up..
+        /// </summary>
+        internal static string CommandItemNegativeIndexError {
+            get {
+                return ResourceManager.GetString("CommandItemNegativeIndexError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only get an item from a list using its number..
+        /// </summary>
+        internal static string CommandItemWrongTypeErrorFirstArgument {
+            get {
+                return ResourceManager.GetString("CommandItemWrongTypeErrorFirstArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use item on lists..
+        /// </summary>
+        internal static string CommandItemWrongTypeErrorSecondArgument {
+            get {
+                return ResourceManager.GetString("CommandItemWrongTypeErrorSecondArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I can&apos;t use last on an empty list..
         /// </summary>
         internal static string CommandLastEmptyListError {

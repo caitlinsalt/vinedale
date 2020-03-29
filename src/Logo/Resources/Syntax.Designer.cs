@@ -223,6 +223,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to item.
+        /// </summary>
+        internal static string ItemCmd {
+            get {
+                return ResourceManager.GetString("ItemCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to last.
         /// </summary>
         internal static string LastCmd {
