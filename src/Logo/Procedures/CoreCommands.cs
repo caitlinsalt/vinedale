@@ -332,17 +332,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the cosine of the input.</returns>
         public static Token MathCos(InterpretorContext context, params LogoValue[] input)
         {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (input[0].Type != LogoValueType.Number)
-            {
-                context.Interpretor.WriteOutputLine(Strings.CommandCosWrongTypeError);
-                return null;
-            }
-            return new ValueToken(Syntax.CosCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Cos(Convert.ToDouble((decimal)input[0].Value)))));
+            return MathsImpl(context, input[0], Strings.CommandCosWrongTypeError, Math.Cos);
         }
 
         /// <summary>
@@ -354,17 +344,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the arctangent of the input.</returns>
         public static Token MathAtan(InterpretorContext context, params LogoValue[] input)
         {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (input[0].Type != LogoValueType.Number)
-            {
-                context.Interpretor.WriteOutputLine(Strings.CommandArctanWrongTypeError);
-                return null;
-            }
-            return new ValueToken(Syntax.ArctanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Atan(Convert.ToDouble((decimal)input[0].Value)))));
+            return MathsImpl(context, input[0], Strings.CommandArctanWrongTypeError, Math.Atan);
         }
 
         /// <summary>
@@ -376,17 +356,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the sine of the input.</returns>
         public static Token MathSin(InterpretorContext context, params LogoValue[] input)
         {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (input[0].Type != LogoValueType.Number)
-            {
-                context.Interpretor.WriteOutputLine(Strings.CommandSinWrongTypeError);
-                return null;
-            }
-            return new ValueToken(Syntax.SinCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Sin(Convert.ToDouble((decimal)input[0].Value)))));
+            return MathsImpl(context, input[0], Strings.CommandSinWrongTypeError, Math.Sin);
         }
 
         /// <summary>
@@ -398,17 +368,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the tangent of the input.</returns>
         public static Token MathTan(InterpretorContext context, params LogoValue[] input)
         {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (input[0].Type != LogoValueType.Number)
-            {
-                context.Interpretor.WriteOutputLine(Strings.CommandTanWrongTypeError);
-                return null;
-            }
-            return new ValueToken(Syntax.TanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].Value)))));
+            return MathsImpl(context, input[0], Strings.CommandTanWrongTypeError, Math.Tan);
         }
 
         /// <summary>
@@ -419,17 +379,77 @@ namespace Logo.Procedures
         /// <returns>A token of the value e^x (where x is the value of the input token)</returns>
         public static Token MathExp(InterpretorContext context, params LogoValue[] input)
         {
+            return MathsImpl(context, input[0], Strings.CommandExpWrongTypeError, Math.Exp);
+        }
+
+        /// <summary>
+        /// Returns the absolute value of a number.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token containing a number.</param>
+        /// <returns>The absolute value of the input.</returns>
+        public static Token MathAbs(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandAbsWrongTypeError, (Func<decimal, decimal>)Math.Abs);
+        }
+
+        /// <summary>
+        /// Carries out the floor operation, returning the nearest smaller integer.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single token which is a number.</param>
+        /// <returns>A token containing an integer number.</returns>
+        public static Token MathFloor(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandIntWrongTypeError, (Func<decimal, decimal>)Math.Floor);
+        }
+
+        /// <summary>
+        /// Carry out a single-argument maths function where the underlying implementation uses double parameters.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">The input value.</param>
+        /// <param name="wrongTypeErrorMsg">The error to output if the input is not a number.</param>
+        /// <param name="implFunc">The underlying function to use to generate the output.</param>
+        /// <returns>A token containing the output value of the function.</returns>
+        private static Token MathsImpl(InterpretorContext context, LogoValue input, string wrongTypeErrorMsg, Func<double, double> implFunc)
+        {
             if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
 
-            if (input[0].Type != LogoValueType.Number)
+            if (input.Type != LogoValueType.Number)
             {
-                context.Interpretor.WriteOutputLine(Strings.CommandExpWrongTypeError);
+                context.Interpretor.WriteOutputLine(wrongTypeErrorMsg);
                 return null;
             }
-            return new ValueToken(Syntax.ExpCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Exp(Convert.ToDouble((decimal)input[0].Value)))));
+            decimal output = Convert.ToDecimal(implFunc(Convert.ToDouble((decimal)input.Value)));
+            return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Number, output));
+        }
+
+        /// <summary>
+        /// Carry out a single-argument maths function where the underlying implementation uses double parameters.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">The input value.</param>
+        /// <param name="wrongTypeErrorMsg">The error to output if the input is not a number.</param>
+        /// <param name="implFunc">The underlying function to use to generate the output.</param>
+        /// <returns>A token containing the output value of the function.</returns>
+        private static Token MathsImpl(InterpretorContext context, LogoValue input, string wrongTypeErrorMsg, Func<decimal, decimal> implFunc)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (input.Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(wrongTypeErrorMsg);
+                return null;
+            }
+            decimal output = implFunc((decimal)input.Value);
+            return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Number, output));
         }
 
         /// <summary>
@@ -458,27 +478,6 @@ namespace Logo.Procedures
         }
 
         /// <summary>
-        /// Returns the absolute value of a number.
-        /// </summary>
-        /// <param name="context">The interpretor context.</param>
-        /// <param name="input">Should contain one token containing a number.</param>
-        /// <returns>The absolute value of the input.</returns>
-        public static Token MathAbs(InterpretorContext context, params LogoValue[] input)
-        {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (input[0].Type != LogoValueType.Number)
-            {
-                context.Interpretor.WriteOutputLine(Strings.CommandAbsWrongTypeError);
-                return null;
-            }
-            return new ValueToken(Syntax.AbsCmd, new LogoValue(LogoValueType.Number, Math.Abs((decimal)input[0].Value)));
-        }
-
-        /// <summary>
         /// Returns π.
         /// </summary>
         /// <param name="context">The interpretor context.</param>
@@ -487,27 +486,6 @@ namespace Logo.Procedures
         public static Token ReturnPi(InterpretorContext context, params LogoValue[] dummy)
         {
             return new ValueToken(Math.PI.ToString(CultureInfo.InvariantCulture), new LogoValue(LogoValueType.Number, (decimal)Math.PI));
-        }
-
-        /// <summary>
-        /// Carries out the floor operation, returning the nearest smaller integer.
-        /// </summary>
-        /// <param name="context">The interpretor context.</param>
-        /// <param name="input">Should consist of a single token which is a number.</param>
-        /// <returns>A token containing an integer number.</returns>
-        public static Token MathFloor(InterpretorContext context, params LogoValue[] input)
-        {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (input[0].Type != LogoValueType.Number)
-            {
-                context.Interpretor.WriteOutputLine(Strings.CommandIntWrongTypeError);
-                return null;
-            }
-            return new ValueToken(Syntax.IntCmd, new LogoValue(LogoValueType.Number, Math.Floor((decimal)input[0].Value)));
         }
 
         /// <summary>
