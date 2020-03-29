@@ -49,6 +49,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.IntCmd, 1, RedefinabilityType.NonRedefinable, MathFloor, Strings.CommandIntHelpText, Strings.CommandIntExampleText),
                 new LogoCommand(Syntax.FirstCmd, 1, RedefinabilityType.NonRedefinable, ListFirst, Strings.CommandFirstHelpText, Strings.CommandFirstExampleText),
                 new LogoCommand(Syntax.LastCmd, 1, RedefinabilityType.NonRedefinable, ListLast, Strings.CommandLastHelpText, Strings.CommandLastExampleText),
+                new LogoCommand(Syntax.ItemCmd, 2, RedefinabilityType.NonRedefinable, ListIndex, Strings.CommandItemHelpText, Strings.CommandItemExampleText),
             };
         }
 
@@ -231,6 +232,42 @@ namespace Logo.Procedures
                 return null;
             }
             return inputList.Contents.Last();
+        }
+
+        /// <summary>
+        /// Returns the item in a list with the given index.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should be two tokens, the first a number, the second a list.</param>
+        /// <returns>The item in the list given by the supplied index.</returns>
+        public static Token ListIndex(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (input[0].Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandItemWrongTypeErrorFirstArgument);
+                return null;
+            }
+            if (!(input[1].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandItemWrongTypeErrorSecondArgument);
+                return null;
+            }
+            int idx = Convert.ToInt32((decimal)input[0].Value);
+            if (idx <= 0)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandItemNegativeIndexError);
+                return null;
+            }
+            if (idx > inputList.Contents.Count)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandItemIndexOutOfBoundsError);
+                return null;
+            }
+            return inputList.Contents[idx - 1];
         }
 
         /// <summary>
