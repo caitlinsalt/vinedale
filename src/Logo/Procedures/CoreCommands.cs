@@ -48,6 +48,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.LputCmd, 2, RedefinabilityType.NonRedefinable, ListAppend, Strings.CommandLputHelpText, Strings.CommandLputExampleText),
                 new LogoCommand(Syntax.IntCmd, 1, RedefinabilityType.NonRedefinable, MathFloor, Strings.CommandIntHelpText, Strings.CommandIntExampleText),
                 new LogoCommand(Syntax.FirstCmd, 1, RedefinabilityType.NonRedefinable, ListFirst, Strings.CommandFirstHelpText, Strings.CommandFirstExampleText),
+                new LogoCommand(Syntax.LastCmd, 1, RedefinabilityType.NonRedefinable, ListLast, Strings.CommandLastHelpText, Strings.CommandLastExampleText),
             };
         }
 
@@ -205,6 +206,31 @@ namespace Logo.Procedures
                 return null;
             }
             return inputList.Contents.First();
+        }
+
+        /// <summary>
+        /// Returns the last element of a list.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single list token.</param>
+        /// <returns>The last element of the list.</returns>
+        public static Token ListLast(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (!(input[0].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandLastWrongTypeError);
+                return null;
+            }
+            if (!inputList.Contents.Any())
+            {
+                context.Interpretor.WriteOutput(Strings.CommandLastEmptyListError);
+                return null;
+            }
+            return inputList.Contents.Last();
         }
 
         /// <summary>
