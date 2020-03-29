@@ -258,6 +258,18 @@
   <data name="CommandIntWrongTypeError" xml:space="preserve">
     <value>I can only use int on a number.</value>
   </data>
+  <data name="CommandLastEmptyListError" xml:space="preserve">
+    <value>I can't use last on an empty list.</value>
+  </data>
+  <data name="CommandLastExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandLastHelpText" xml:space="preserve">
+    <value>Returns the last thing in a list.</value>
+  </data>
+  <data name="CommandLastWrongTypeError" xml:space="preserve">
+    <value>I can only use last on lists.</value>
+  </data>
   <data name="CommandLputExampleText" xml:space="preserve">
     <value>X [list]</value>
   </data>

@@ -484,6 +484,42 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t use last on an empty list..
+        /// </summary>
+        internal static string CommandLastEmptyListError {
+            get {
+                return ResourceManager.GetString("CommandLastEmptyListError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [list].
+        /// </summary>
+        internal static string CommandLastExampleText {
+            get {
+                return ResourceManager.GetString("CommandLastExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the last thing in a list..
+        /// </summary>
+        internal static string CommandLastHelpText {
+            get {
+                return ResourceManager.GetString("CommandLastHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use last on lists..
+        /// </summary>
+        internal static string CommandLastWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandLastWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X [list].
         /// </summary>
         internal static string CommandLputExampleText {

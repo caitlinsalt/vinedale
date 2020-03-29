@@ -171,6 +171,9 @@
   <data name="IntCmd" xml:space="preserve">
     <value>int</value>
   </data>
+  <data name="LastCmd" xml:space="preserve">
+    <value>last</value>
+  </data>
   <data name="LputCmd" xml:space="preserve">
     <value>lput</value>
   </data>
