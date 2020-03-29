@@ -213,6 +213,18 @@
   <data name="CommandDifferenceTypeError" xml:space="preserve">
     <value>I don't know how to take that kind of thing from that.</value>
   </data>
+  <data name="CommandFirstEmptyListError" xml:space="preserve">
+    <value>I can't use first on an empty list.</value>
+  </data>
+  <data name="CommandFirstExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandFirstHelpText" xml:space="preserve">
+    <value>Returns the first thing in a list.</value>
+  </data>
+  <data name="CommandFirstWrongTypeError" xml:space="preserve">
+    <value>I can only use first on lists.</value>
+  </data>
   <data name="CommandFputExampleText" xml:space="preserve">
     <value>X [list]</value>
   </data>
