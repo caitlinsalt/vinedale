@@ -51,6 +51,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.LastCmd, 1, RedefinabilityType.NonRedefinable, ListLast, Strings.CommandLastHelpText, Strings.CommandLastExampleText),
                 new LogoCommand(Syntax.ItemCmd, 2, RedefinabilityType.NonRedefinable, ListIndex, Strings.CommandItemHelpText, Strings.CommandItemExampleText),
                 new LogoCommand(Syntax.ExpCmd, 1, RedefinabilityType.NonRedefinable, MathExp, Strings.CommandExpHelpText, Strings.CommandExpExampleText),
+                new LogoCommand(Syntax.LnCmd, 1, RedefinabilityType.NonRedefinable, MathLn, Strings.CommandLnHelpText, Strings.CommandLnExampleText),
             };
         }
 
@@ -402,6 +403,17 @@ namespace Logo.Procedures
         public static Token MathFloor(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], Strings.CommandIntWrongTypeError, (Func<decimal, decimal>)Math.Floor);
+        }
+
+        /// <summary>
+        /// Returns the natural logarithm of a number.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single number token.</param>
+        /// <returns>A token containing the natural logarithm of the input.</returns>
+        public static Token MathLn(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandLnWrongTypeError, Math.Log);
         }
 
         /// <summary>

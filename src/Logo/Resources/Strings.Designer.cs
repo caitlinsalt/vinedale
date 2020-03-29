@@ -601,6 +601,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandLnExampleText {
+            get {
+                return ResourceManager.GetString("CommandLnExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the natural logarithm of a number..
+        /// </summary>
+        internal static string CommandLnHelpText {
+            get {
+                return ResourceManager.GetString("CommandLnHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use ln on numbers..
+        /// </summary>
+        internal static string CommandLnWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandLnWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X [list].
         /// </summary>
         internal static string CommandLputExampleText {

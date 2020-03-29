@@ -180,6 +180,9 @@
   <data name="LastCmd" xml:space="preserve">
     <value>last</value>
   </data>
+  <data name="LnCmd" xml:space="preserve">
+    <value>ln</value>
+  </data>
   <data name="LputCmd" xml:space="preserve">
     <value>lput</value>
   </data>
