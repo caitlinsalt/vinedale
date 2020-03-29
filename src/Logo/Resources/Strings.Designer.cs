@@ -349,6 +349,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandExpExampleText {
+            get {
+                return ResourceManager.GetString("CommandExpExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns e to the power of a number..
+        /// </summary>
+        internal static string CommandExpHelpText {
+            get {
+                return ResourceManager.GetString("CommandExpHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use exp on numbers..
+        /// </summary>
+        internal static string CommandExpWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandExpWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I can&apos;t use first on an empty list..
         /// </summary>
         internal static string CommandFirstEmptyListError {
