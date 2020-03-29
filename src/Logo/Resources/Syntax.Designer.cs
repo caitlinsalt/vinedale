@@ -187,6 +187,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to first.
+        /// </summary>
+        internal static string FirstCmd {
+            get {
+                return ResourceManager.GetString("FirstCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to fput.
         /// </summary>
         internal static string FputCmd {

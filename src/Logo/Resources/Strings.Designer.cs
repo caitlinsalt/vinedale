@@ -349,6 +349,42 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t use first on an empty list..
+        /// </summary>
+        internal static string CommandFirstEmptyListError {
+            get {
+                return ResourceManager.GetString("CommandFirstEmptyListError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [list].
+        /// </summary>
+        internal static string CommandFirstExampleText {
+            get {
+                return ResourceManager.GetString("CommandFirstExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the first thing in a list..
+        /// </summary>
+        internal static string CommandFirstHelpText {
+            get {
+                return ResourceManager.GetString("CommandFirstHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use first on lists..
+        /// </summary>
+        internal static string CommandFirstWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandFirstWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X [list].
         /// </summary>
         internal static string CommandFputExampleText {
