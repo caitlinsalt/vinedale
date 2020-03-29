@@ -178,6 +178,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to exp.
+        /// </summary>
+        internal static string ExpCmd {
+            get {
+                return ResourceManager.GetString("ExpCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to false.
         /// </summary>
         internal static string False {

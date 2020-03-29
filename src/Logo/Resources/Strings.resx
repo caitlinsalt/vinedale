@@ -213,6 +213,15 @@
   <data name="CommandDifferenceTypeError" xml:space="preserve">
     <value>I don't know how to take that kind of thing from that.</value>
   </data>
+  <data name="CommandExpExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandExpHelpText" xml:space="preserve">
+    <value>Returns e to the power of a number.</value>
+  </data>
+  <data name="CommandExpWrongTypeError" xml:space="preserve">
+    <value>I can only use exp on numbers.</value>
+  </data>
   <data name="CommandFirstEmptyListError" xml:space="preserve">
     <value>I can't use first on an empty list.</value>
   </data>
