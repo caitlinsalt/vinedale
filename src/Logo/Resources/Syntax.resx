@@ -156,6 +156,9 @@
   <data name="EmptyList" xml:space="preserve">
     <value>[ ]</value>
   </data>
+  <data name="ExpCmd" xml:space="preserve">
+    <value>exp</value>
+  </data>
   <data name="False" xml:space="preserve">
     <value>false</value>
   </data>

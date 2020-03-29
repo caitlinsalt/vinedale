@@ -50,6 +50,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.FirstCmd, 1, RedefinabilityType.NonRedefinable, ListFirst, Strings.CommandFirstHelpText, Strings.CommandFirstExampleText),
                 new LogoCommand(Syntax.LastCmd, 1, RedefinabilityType.NonRedefinable, ListLast, Strings.CommandLastHelpText, Strings.CommandLastExampleText),
                 new LogoCommand(Syntax.ItemCmd, 2, RedefinabilityType.NonRedefinable, ListIndex, Strings.CommandItemHelpText, Strings.CommandItemExampleText),
+                new LogoCommand(Syntax.ExpCmd, 1, RedefinabilityType.NonRedefinable, MathExp, Strings.CommandExpHelpText, Strings.CommandExpExampleText),
             };
         }
 
@@ -408,6 +409,27 @@ namespace Logo.Procedures
                 return null;
             }
             return new ValueToken(Syntax.TanCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Tan(Convert.ToDouble((decimal)input[0].Value)))));
+        }
+
+        /// <summary>
+        /// Exponentiation command.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain a single number token.</param>
+        /// <returns>A token of the value e^x (where x is the value of the input token)</returns>
+        public static Token MathExp(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (input[0].Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandExpWrongTypeError);
+                return null;
+            }
+            return new ValueToken(Syntax.ExpCmd, new LogoValue(LogoValueType.Number, Convert.ToDecimal(Math.Exp(Convert.ToDouble((decimal)input[0].Value)))));
         }
 
         /// <summary>
