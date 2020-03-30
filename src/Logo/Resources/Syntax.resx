@@ -183,6 +183,9 @@
   <data name="LnCmd" xml:space="preserve">
     <value>ln</value>
   </data>
+  <data name="LogCmd" xml:space="preserve">
+    <value>log</value>
+  </data>
   <data name="LputCmd" xml:space="preserve">
     <value>lput</value>
   </data>

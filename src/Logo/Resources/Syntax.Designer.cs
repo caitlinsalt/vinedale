@@ -259,6 +259,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to log.
+        /// </summary>
+        internal static string LogCmd {
+            get {
+                return ResourceManager.GetString("LogCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to lput.
         /// </summary>
         internal static string LputCmd {

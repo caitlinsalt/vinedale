@@ -306,6 +306,15 @@
   <data name="CommandLnWrongTypeError" xml:space="preserve">
     <value>I can only use ln on numbers.</value>
   </data>
+  <data name="CommandLogExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandLogHelpText" xml:space="preserve">
+    <value>Returns the base-10 logarithm of a number.</value>
+  </data>
+  <data name="CommandLogWrongTypeError" xml:space="preserve">
+    <value>I can only use log on numbers.</value>
+  </data>
   <data name="CommandLputExampleText" xml:space="preserve">
     <value>X [list]</value>
   </data>

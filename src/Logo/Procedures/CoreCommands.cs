@@ -52,6 +52,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.ItemCmd, 2, RedefinabilityType.NonRedefinable, ListIndex, Strings.CommandItemHelpText, Strings.CommandItemExampleText),
                 new LogoCommand(Syntax.ExpCmd, 1, RedefinabilityType.NonRedefinable, MathExp, Strings.CommandExpHelpText, Strings.CommandExpExampleText),
                 new LogoCommand(Syntax.LnCmd, 1, RedefinabilityType.NonRedefinable, MathLn, Strings.CommandLnHelpText, Strings.CommandLnExampleText),
+                new LogoCommand(Syntax.LogCmd, 1, RedefinabilityType.NonRedefinable, MathLog, Strings.CommandLogHelpText, Strings.CommandLogExampleText),
             };
         }
 
@@ -414,6 +415,17 @@ namespace Logo.Procedures
         public static Token MathLn(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], Strings.CommandLnWrongTypeError, Math.Log);
+        }
+
+        /// <summary>
+        /// Returns the base-10 logarithm of a number.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single number token.</param>
+        /// <returns>A token containing the base-10 logarithm of the input.</returns>
+        public static Token MathLog(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandLogWrongTypeError, Math.Log10);
         }
 
         /// <summary>
