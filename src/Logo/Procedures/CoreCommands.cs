@@ -54,6 +54,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.LnCmd, 1, RedefinabilityType.NonRedefinable, MathLn, Strings.CommandLnHelpText, Strings.CommandLnExampleText),
                 new LogoCommand(Syntax.LogCmd, 1, RedefinabilityType.NonRedefinable, MathLog, Strings.CommandLogHelpText, Strings.CommandLogExampleText),
                 new LogoCommand(Syntax.RoundCmd, 1, RedefinabilityType.NonRedefinable, MathRound, Strings.CommandRoundHelpText, Strings.CommandRoundExampleText),
+                new LogoCommand(Syntax.SqrtCmd, 1, RedefinabilityType.NonRedefinable, MathSqrt, Strings.CommandSqrtHelpText, Strings.CommandSqrtExampleText),
             };
         }
 
@@ -438,6 +439,17 @@ namespace Logo.Procedures
         public static Token MathRound(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], Strings.CommandRoundWrongTypeError, (Func<decimal, decimal>)Math.Round);
+        }
+
+        /// <summary>
+        /// Returns the square root of a number.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single number.</param>
+        /// <returns>A token containing the square root of the input.</returns>
+        public static Token MathSqrt(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandSqrtWrongTypeError, Math.Sqrt);
         }
 
         /// <summary>

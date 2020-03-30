@@ -871,6 +871,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandSqrtExampleText {
+            get {
+                return ResourceManager.GetString("CommandSqrtExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the square root of a number..
+        /// </summary>
+        internal static string CommandSqrtHelpText {
+            get {
+                return ResourceManager.GetString("CommandSqrtHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use sqrt on numbers..
+        /// </summary>
+        internal static string CommandSqrtWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandSqrtWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to number.
         /// </summary>
         internal static string CommandTanExampleText {

@@ -219,6 +219,9 @@
   <data name="SpaceCmd" xml:space="preserve">
     <value>space</value>
   </data>
+  <data name="SqrtCmd" xml:space="preserve">
+    <value>sqrt</value>
+  </data>
   <data name="TanCmd" xml:space="preserve">
     <value>tan</value>
   </data>

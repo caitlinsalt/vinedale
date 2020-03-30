@@ -367,6 +367,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sqrt.
+        /// </summary>
+        internal static string SqrtCmd {
+            get {
+                return ResourceManager.GetString("SqrtCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tan.
         /// </summary>
         internal static string TanCmd {
