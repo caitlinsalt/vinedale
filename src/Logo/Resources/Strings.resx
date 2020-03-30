@@ -336,6 +336,15 @@
   <data name="CommandMakeStartDebugMessage" xml:space="preserve">
     <value>Setting variable...</value>
   </data>
+  <data name="CommandMinusExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandMinusHelpText" xml:space="preserve">
+    <value>Returns the negative of a number.</value>
+  </data>
+  <data name="CommandMinusWrongTypeError" xml:space="preserve">
+    <value>I can only use minus on numbers.</value>
+  </data>
   <data name="CommandNodesHelpText" xml:space="preserve">
     <value>Prints out how many things I can do.</value>
   </data>
