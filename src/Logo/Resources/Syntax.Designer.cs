@@ -286,6 +286,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to minus.
+        /// </summary>
+        internal static string MinusCmd {
+            get {
+                return ResourceManager.GetString("MinusCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to nodes.
         /// </summary>
         internal static string NodesCmd {
