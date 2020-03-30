@@ -192,6 +192,9 @@
   <data name="MakeCmd" xml:space="preserve">
     <value>make</value>
   </data>
+  <data name="MinusCmd" xml:space="preserve">
+    <value>minus</value>
+  </data>
   <data name="NodesCmd" xml:space="preserve">
     <value>nodes</value>
   </data>

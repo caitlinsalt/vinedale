@@ -718,6 +718,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandMinusExampleText {
+            get {
+                return ResourceManager.GetString("CommandMinusExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the negative of a number..
+        /// </summary>
+        internal static string CommandMinusHelpText {
+            get {
+                return ResourceManager.GetString("CommandMinusHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use minus on numbers..
+        /// </summary>
+        internal static string CommandMinusWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandMinusWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prints out how many things I can do..
         /// </summary>
         internal static string CommandNodesHelpText {

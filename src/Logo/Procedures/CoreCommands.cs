@@ -56,6 +56,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.LogCmd, 1, RedefinabilityType.NonRedefinable, MathLog, Strings.CommandLogHelpText, Strings.CommandLogExampleText),
                 new LogoCommand(Syntax.RoundCmd, 1, RedefinabilityType.NonRedefinable, MathRound, Strings.CommandRoundHelpText, Strings.CommandRoundExampleText),
                 new LogoCommand(Syntax.SqrtCmd, 1, RedefinabilityType.NonRedefinable, MathSqrt, Strings.CommandSqrtHelpText, Strings.CommandSqrtExampleText),
+                new LogoCommand(Syntax.MinusCmd, 1, RedefinabilityType.NonRedefinable, MathMinus, Strings.CommandMinusHelpText, Strings.CommandMinusExampleText),
             };
         }
 
@@ -451,6 +452,17 @@ namespace Logo.Procedures
         public static Token MathSqrt(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], Strings.CommandSqrtWrongTypeError, Math.Sqrt);
+        }
+
+        /// <summary>
+        /// Returns the negative of a number.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single number token.</param>
+        /// <returns>A token containing the negative of the input.</returns>
+        public static Token MathMinus(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandMinusWrongTypeError, (Func<decimal, decimal>)(x => -x));
         }
 
         /// <summary>
