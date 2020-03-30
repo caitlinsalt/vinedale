@@ -808,6 +808,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandRoundExampleText {
+            get {
+                return ResourceManager.GetString("CommandRoundExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rounds a number to the nearest whole number..
+        /// </summary>
+        internal static string CommandRoundHelpText {
+            get {
+                return ResourceManager.GetString("CommandRoundHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use round on numbers..
+        /// </summary>
+        internal static string CommandRoundWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandRoundWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to number.
         /// </summary>
         internal static string CommandSinExampleText {
