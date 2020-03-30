@@ -295,6 +295,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to or.
+        /// </summary>
+        internal static string OrCmd {
+            get {
+                return ResourceManager.GetString("OrCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pi.
         /// </summary>
         internal static string PiCmd {

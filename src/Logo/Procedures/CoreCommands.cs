@@ -29,6 +29,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.SpaceCmd, 0, RedefinabilityType.NonRedefinable, SpaceUsed, Strings.CommandSpaceHelpText),
                 new LogoCommand(Syntax.AbsCmd, 1, RedefinabilityType.NonRedefinable, MathAbs, Strings.CommandAbsHelpText, Strings.CommandAbsExampleText),
                 new LogoCommand(Syntax.AndCmd, 1, RedefinabilityType.NonRedefinable, BoolAnd, Strings.CommandAndHelpText, Strings.CommandAndExampleText),
+                new LogoCommand(Syntax.OrCmd, 1, RedefinabilityType.NonRedefinable, BoolOr, Strings.CommandOrHelpText, Strings.CommandOrExampleText),
                 new LogoCommand(Syntax.ArctanCmd, 1, RedefinabilityType.NonRedefinable, MathAtan, Strings.CommandArctanHelpText, Strings.CommandArctanExampleText),
                 new LogoCommand(Syntax.CosCmd, 1, RedefinabilityType.NonRedefinable, MathCos, Strings.CommandCosHelpText, Strings.CommandCosExampleText),
                 new LogoCommand(Syntax.SinCmd, 1, RedefinabilityType.NonRedefinable, MathSin, Strings.CommandSinHelpText, Strings.CommandSinExampleText),
@@ -523,6 +524,31 @@ namespace Logo.Procedures
             context.Interpretor.EvaluateListContents(inputList, false);
             return new ValueToken(Syntax.AndCmd, new LogoValue(LogoValueType.Bool,
                 (inputList.Contents.Count > 0) && inputList.Contents.All(t => t is ValueToken tl && tl.Value.Type == LogoValueType.Bool && (bool)tl.Value.Value)));
+        }
+
+        /// <summary>
+        /// Performs a boolean OR operation on the elements of a list.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token containing a list.</param>
+        /// <returns><c>true</c> if any elements in the list evaluate to <c>true</c>, <c>false</c> otherwise.</returns>
+        public static Token BoolOr(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (input[0].Type != LogoValueType.List)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandOrWrongTypeError);
+                return null;
+            }
+
+            ListToken inputList = new ListToken((input[0].Value as ListToken).Contents);
+            context.Interpretor.EvaluateListContents(inputList, false);
+            return new ValueToken(Syntax.OrCmd, new LogoValue(LogoValueType.Bool,
+                (inputList.Contents.Count > 0) && inputList.Contents.Any(t => t is ValueToken t1 && t1.Value.Type == LogoValueType.Bool && (bool)t1.Value.Value)));
         }
 
         /// <summary>
