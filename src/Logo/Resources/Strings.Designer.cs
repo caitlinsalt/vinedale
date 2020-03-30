@@ -736,6 +736,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [list].
+        /// </summary>
+        internal static string CommandOrExampleText {
+            get {
+                return ResourceManager.GetString("CommandOrExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns &apos;true&apos; if anything in the list is true..
+        /// </summary>
+        internal static string CommandOrHelpText {
+            get {
+                return ResourceManager.GetString("CommandOrHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use or on lists..
+        /// </summary>
+        internal static string CommandOrWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandOrWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the number Pi (3.14159...)..
         /// </summary>
         internal static string CommandPiHelpText {

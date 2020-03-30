@@ -342,6 +342,15 @@
   <data name="CommandNodesOutput" xml:space="preserve">
     <value>There are {0} procedures and {1} procedure names.</value>
   </data>
+  <data name="CommandOrExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandOrHelpText" xml:space="preserve">
+    <value>Returns 'true' if anything in the list is true.</value>
+  </data>
+  <data name="CommandOrWrongTypeError" xml:space="preserve">
+    <value>I can only use or on lists.</value>
+  </data>
   <data name="CommandPiHelpText" xml:space="preserve">
     <value>Returns the number Pi (3.14159...).</value>
   </data>

@@ -195,6 +195,9 @@
   <data name="NodesCmd" xml:space="preserve">
     <value>nodes</value>
   </data>
+  <data name="OrCmd" xml:space="preserve">
+    <value>or</value>
+  </data>
   <data name="PiCmd" xml:space="preserve">
     <value>pi</value>
   </data>
