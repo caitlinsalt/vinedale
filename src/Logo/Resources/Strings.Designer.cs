@@ -628,6 +628,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string CommandLogExampleText {
+            get {
+                return ResourceManager.GetString("CommandLogExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the base-10 logarithm of a number..
+        /// </summary>
+        internal static string CommandLogHelpText {
+            get {
+                return ResourceManager.GetString("CommandLogHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use log on numbers..
+        /// </summary>
+        internal static string CommandLogWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandLogWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X [list].
         /// </summary>
         internal static string CommandLputExampleText {
