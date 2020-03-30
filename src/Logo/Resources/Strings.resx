@@ -387,6 +387,15 @@
   <data name="CommandSpaceHelpText" xml:space="preserve">
     <value>Returns the amount of space I am using.</value>
   </data>
+  <data name="CommandSqrtExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandSqrtHelpText" xml:space="preserve">
+    <value>Returns the square root of a number.</value>
+  </data>
+  <data name="CommandSqrtWrongTypeError" xml:space="preserve">
+    <value>I can only use sqrt on numbers.</value>
+  </data>
   <data name="CommandTanExampleText" xml:space="preserve">
     <value>number</value>
   </data>
