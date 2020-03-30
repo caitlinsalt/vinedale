@@ -366,6 +366,15 @@
   <data name="CommandRepeatWrongRepeatTypeError" xml:space="preserve">
     <value>I need to know how many times to repeat something.</value>
   </data>
+  <data name="CommandRoundExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandRoundHelpText" xml:space="preserve">
+    <value>Rounds a number to the nearest whole number.</value>
+  </data>
+  <data name="CommandRoundWrongTypeError" xml:space="preserve">
+    <value>I can only use round on numbers.</value>
+  </data>
   <data name="CommandSinExampleText" xml:space="preserve">
     <value>number</value>
   </data>

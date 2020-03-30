@@ -53,6 +53,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.ExpCmd, 1, RedefinabilityType.NonRedefinable, MathExp, Strings.CommandExpHelpText, Strings.CommandExpExampleText),
                 new LogoCommand(Syntax.LnCmd, 1, RedefinabilityType.NonRedefinable, MathLn, Strings.CommandLnHelpText, Strings.CommandLnExampleText),
                 new LogoCommand(Syntax.LogCmd, 1, RedefinabilityType.NonRedefinable, MathLog, Strings.CommandLogHelpText, Strings.CommandLogExampleText),
+                new LogoCommand(Syntax.RoundCmd, 1, RedefinabilityType.NonRedefinable, MathRound, Strings.CommandRoundHelpText, Strings.CommandRoundExampleText),
             };
         }
 
@@ -426,6 +427,17 @@ namespace Logo.Procedures
         public static Token MathLog(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], Strings.CommandLogWrongTypeError, Math.Log10);
+        }
+
+        /// <summary>
+        /// Rounds a number to the nearest whole number.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of a single number token.</param>
+        /// <returns>A token containing the rounded input.</returns>
+        public static Token MathRound(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], Strings.CommandRoundWrongTypeError, (Func<decimal, decimal>)Math.Round);
         }
 
         /// <summary>

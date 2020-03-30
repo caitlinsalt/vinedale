@@ -340,6 +340,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to round.
+        /// </summary>
+        internal static string RoundCmd {
+            get {
+                return ResourceManager.GetString("RoundCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sin.
         /// </summary>
         internal static string SinCmd {
