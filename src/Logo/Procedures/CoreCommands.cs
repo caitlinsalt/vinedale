@@ -58,6 +58,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.SqrtCmd, 1, RedefinabilityType.NonRedefinable, MathSqrt, Strings.CommandSqrtHelpText, Strings.CommandSqrtExampleText),
                 new LogoCommand(Syntax.MinusCmd, 1, RedefinabilityType.NonRedefinable, MathMinus, Strings.CommandMinusHelpText, Strings.CommandMinusExampleText),
                 new LogoCommand(Syntax.PickCmd, 1, RedefinabilityType.NonRedefinable, ListPick, Strings.CommandPickHelpText, Strings.CommandPickExampleText),
+                new LogoCommand(Syntax.PowerCmd, 2, RedefinabilityType.NonRedefinable, MathPower, Strings.CommandPowerHelpText, Strings.CommandPowerExampleText),
             };
         }
 
@@ -498,6 +499,17 @@ namespace Logo.Procedures
         }
 
         /// <summary>
+        /// Returns one number raised to the power of another.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of two number tokens.</param>
+        /// <returns>A token consisting of the first input token to the power of the second.</returns>
+        public static Token MathPower(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], input[1], Strings.CommandPowerWrongTypeError, Math.Pow);
+        }
+
+        /// <summary>
         /// Carry out a single-argument maths function where the underlying implementation uses double parameters.
         /// </summary>
         /// <param name="context">The interpretor context.</param>
@@ -542,6 +554,31 @@ namespace Logo.Procedures
                 return null;
             }
             decimal output = implFunc((decimal)input.Value);
+            return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Number, output));
+        }
+
+        /// <summary>
+        /// Carry out a twp-argument maths function where the underlying implementation uses double parameters.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input0">The first input value.</param>
+        /// <param name="input1">The second input value.</param>
+        /// <param name="wrongTypeErrorMsg">The error to output if the input is not a number.</param>
+        /// <param name="implFunc">The underlying function to use to generate the output.</param>
+        /// <returns>A token containing the output value of the function.</returns>
+        private static Token MathsImpl(InterpretorContext context, LogoValue input0, LogoValue input1, string wrongTypeErrorMsg, Func<double, double, double> implFunc)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (input0.Type != LogoValueType.Number || input1.Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(wrongTypeErrorMsg);
+                return null;
+            }
+            decimal output = Convert.ToDecimal(implFunc(Convert.ToDouble((decimal)input0.Value), Convert.ToDouble((decimal)input1.Value)));
             return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Number, output));
         }
 
