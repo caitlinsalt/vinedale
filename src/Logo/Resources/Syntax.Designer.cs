@@ -331,6 +331,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to power.
+        /// </summary>
+        internal static string PowerCmd {
+            get {
+                return ResourceManager.GetString("PowerCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pr.
         /// </summary>
         internal static string PrCmd {

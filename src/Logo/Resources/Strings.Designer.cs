@@ -835,6 +835,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandPowerExampleText {
+            get {
+                return ResourceManager.GetString("CommandPowerExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns X to the power Y..
+        /// </summary>
+        internal static string CommandPowerHelpText {
+            get {
+                return ResourceManager.GetString("CommandPowerHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use power on numbers..
+        /// </summary>
+        internal static string CommandPowerWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandPowerWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [list].
         /// </summary>
         internal static string CommandPrintExampleText {
