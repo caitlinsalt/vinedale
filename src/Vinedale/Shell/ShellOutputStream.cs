@@ -40,6 +40,7 @@ namespace Vinedale.Shell
         /// </summary>
         public override void Flush()
         {
+            _shellControl.Refresh();
         }
 
         /// <summary>
