@@ -313,6 +313,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pick.
+        /// </summary>
+        internal static string PickCmd {
+            get {
+                return ResourceManager.GetString("PickCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pi.
         /// </summary>
         internal static string PiCmd {

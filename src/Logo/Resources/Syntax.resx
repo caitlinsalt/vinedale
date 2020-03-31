@@ -201,6 +201,9 @@
   <data name="OrCmd" xml:space="preserve">
     <value>or</value>
   </data>
+  <data name="PickCmd" xml:space="preserve">
+    <value>pick</value>
+  </data>
   <data name="PiCmd" xml:space="preserve">
     <value>pi</value>
   </data>
