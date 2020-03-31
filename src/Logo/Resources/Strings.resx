@@ -399,6 +399,9 @@
   <data name="CommandProductWrongTypeError" xml:space="preserve">
     <value>I can only use product on numbers.</value>
   </data>
+  <data name="CommandQuotientDivideByZeroError" xml:space="preserve">
+    <value>I can't divide by zero.</value>
+  </data>
   <data name="CommandQuotientExampleText" xml:space="preserve">
     <value>X Y</value>
   </data>
@@ -410,6 +413,9 @@
   </data>
   <data name="CommandRecycleHelpText" xml:space="preserve">
     <value>Recycles spare space that I was using.</value>
+  </data>
+  <data name="CommandRemainderDivideByZeroError" xml:space="preserve">
+    <value>I can't divide by zero.</value>
   </data>
   <data name="CommandRemainderExampleText" xml:space="preserve">
     <value>X Y</value>
