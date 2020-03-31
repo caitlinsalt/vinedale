@@ -880,6 +880,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandProductExampleText {
+            get {
+                return ResourceManager.GetString("CommandProductExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns X times Y..
+        /// </summary>
+        internal static string CommandProductHelpText {
+            get {
+                return ResourceManager.GetString("CommandProductHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use product on numbers..
+        /// </summary>
+        internal static string CommandProductWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandProductWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recycles spare space that I was using..
         /// </summary>
         internal static string CommandRecycleHelpText {

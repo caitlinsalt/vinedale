@@ -390,6 +390,15 @@
   <data name="CommandPrintHelpText" xml:space="preserve">
     <value>Prints the contents of a list.</value>
   </data>
+  <data name="CommandProductExampleText" xml:space="preserve">
+    <value>X Y</value>
+  </data>
+  <data name="CommandProductHelpText" xml:space="preserve">
+    <value>Returns X times Y.</value>
+  </data>
+  <data name="CommandProductWrongTypeError" xml:space="preserve">
+    <value>I can only use product on numbers.</value>
+  </data>
   <data name="CommandRecycleHelpText" xml:space="preserve">
     <value>Recycles spare space that I was using.</value>
   </data>
