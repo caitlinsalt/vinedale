@@ -790,6 +790,42 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t pick something from an empty list..
+        /// </summary>
+        internal static string CommandPickEmptyListError {
+            get {
+                return ResourceManager.GetString("CommandPickEmptyListError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [list].
+        /// </summary>
+        internal static string CommandPickExampleText {
+            get {
+                return ResourceManager.GetString("CommandPickExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picks a random thing from a list..
+        /// </summary>
+        internal static string CommandPickHelpText {
+            get {
+                return ResourceManager.GetString("CommandPickHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only pick something from a list..
+        /// </summary>
+        internal static string CommandPickWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandPickWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the number Pi (3.14159...)..
         /// </summary>
         internal static string CommandPiHelpText {
