@@ -385,6 +385,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to remainder.
+        /// </summary>
+        internal static string RemainderCmd {
+            get {
+                return ResourceManager.GetString("RemainderCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to repeat.
         /// </summary>
         internal static string RepeatCmd {
