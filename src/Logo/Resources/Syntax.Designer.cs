@@ -367,6 +367,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to quotient.
+        /// </summary>
+        internal static string QuotientCmd {
+            get {
+                return ResourceManager.GetString("QuotientCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to recycle.
         /// </summary>
         internal static string RecycleCmd {
