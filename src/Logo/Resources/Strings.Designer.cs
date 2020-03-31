@@ -1087,6 +1087,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can only use sqrt on numbers that are bigger than zero..
+        /// </summary>
+        internal static string CommandSqrtLessThanZeroError {
+            get {
+                return ResourceManager.GetString("CommandSqrtLessThanZeroError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I can only use sqrt on numbers..
         /// </summary>
         internal static string CommandSqrtWrongTypeError {

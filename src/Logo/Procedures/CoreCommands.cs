@@ -495,7 +495,7 @@ namespace Logo.Procedures
         /// <returns>A token containing the square root of the input.</returns>
         public static Token MathSqrt(InterpretorContext context, params LogoValue[] input)
         {
-            return MathsImpl(context, input[0], Strings.CommandSqrtWrongTypeError, Math.Sqrt);
+            return MathsImpl(context, input[0], Strings.CommandSqrtWrongTypeError, Math.Sqrt, x => x >= 0, Strings.CommandSqrtLessThanZeroError);
         }
 
         /// <summary>
@@ -571,8 +571,11 @@ namespace Logo.Procedures
         /// <param name="input">The input value.</param>
         /// <param name="wrongTypeErrorMsg">The error to output if the input is not a number.</param>
         /// <param name="implFunc">The underlying function to use to generate the output.</param>
+        /// <param name="checkFunc">An optional function to check whether or not the parameter meets any necessary constraints.</param>
+        /// <param name="checkFailureMessage">The failure message to output if the input is not within the necessary constraints.</param>
         /// <returns>A token containing the output value of the function.</returns>
-        private static Token MathsImpl(InterpretorContext context, LogoValue input, string wrongTypeErrorMsg, Func<double, double> implFunc)
+        private static Token MathsImpl(InterpretorContext context, LogoValue input, string wrongTypeErrorMsg, Func<double, double> implFunc, 
+            Func<double, bool> checkFunc = null, string checkFailureMessage = "")
         {
             if (context is null)
             {
@@ -584,7 +587,15 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(wrongTypeErrorMsg);
                 return null;
             }
-            decimal output = Convert.ToDecimal(implFunc(Convert.ToDouble((decimal)input.Value)));
+
+            double inputArg = Convert.ToDouble((decimal)input.Value);
+            if (checkFunc != null && !checkFunc(inputArg))
+            {
+                context.Interpretor.WriteOutputLine(checkFailureMessage);
+                return null;
+            }
+
+            decimal output = Convert.ToDecimal(implFunc(inputArg));
             return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Number, output));
         }
 
