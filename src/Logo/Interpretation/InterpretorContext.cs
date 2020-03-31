@@ -1,4 +1,5 @@
-﻿using Logo.Procedures;
+﻿using Logo.Interfaces;
+using Logo.Procedures;
 using Logo.Tokens;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Logo.Interpretation
         /// <summary>
         /// The interpretor running in this context.
         /// </summary>
-        public Interpretor Interpretor { get; private set; }
+        public IInterpretor Interpretor { get; private set; }
 
         /// <summary>
         /// The collection of <c>ICommandModule</c> classes which have been loaded into the environment.
@@ -32,6 +33,11 @@ namespace Logo.Interpretation
         /// </summary>
         public IDictionary<string, IList<LogoProcedure>> ProcedureNames { get; private set; }
 
+        /// <summary>
+        /// A random number source, so that all code requiring random numbers can use the same source of random numbers and it can be reset if needed.
+        /// </summary>
+        public Random RandomGenerator { get; private set; } = new Random();
+
         private Dictionary<string, LogoValue> Globals { get; set; }
 
         private Stack<Dictionary<string, LogoValue>> Locals { get; set; }
@@ -40,7 +46,7 @@ namespace Logo.Interpretation
         /// <c>InterpretorContext</c> has a single constructor which requires an interpretor.
         /// </summary>
         /// <param name="interp">The interpretor which this is to be the environment for.</param>
-        public InterpretorContext(Interpretor interp)
+        public InterpretorContext(IInterpretor interp)
         {
             Interpretor = interp;
             LoadedModules = new List<ICommandModule>();
