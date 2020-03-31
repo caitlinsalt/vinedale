@@ -216,6 +216,9 @@
   <data name="PrintCmd" xml:space="preserve">
     <value>print</value>
   </data>
+  <data name="ProductCmd" xml:space="preserve">
+    <value>product</value>
+  </data>
   <data name="RecycleCmd" xml:space="preserve">
     <value>recycle</value>
   </data>

@@ -358,6 +358,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to product.
+        /// </summary>
+        internal static string ProductCmd {
+            get {
+                return ResourceManager.GetString("ProductCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to recycle.
         /// </summary>
         internal static string RecycleCmd {
