@@ -459,6 +459,9 @@
   <data name="CommandSqrtHelpText" xml:space="preserve">
     <value>Returns the square root of a number.</value>
   </data>
+  <data name="CommandSqrtLessThanZeroError" xml:space="preserve">
+    <value>I can only use sqrt on numbers that are bigger than zero.</value>
+  </data>
   <data name="CommandSqrtWrongTypeError" xml:space="preserve">
     <value>I can only use sqrt on numbers.</value>
   </data>
