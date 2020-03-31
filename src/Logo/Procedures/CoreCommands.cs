@@ -539,7 +539,8 @@ namespace Logo.Procedures
         /// <returns>A token consisting of the quotient of the two input tokens.</returns>
         public static Token MathQuotient(InterpretorContext context, params LogoValue[] input)
         {
-            return MathsImpl(context, input[0], input[1], Strings.CommandQuotientWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x / y));
+            return MathsImpl(context, input[0], input[1], Strings.CommandQuotientWrongTypeError, (x, y) => x / y, (x, y) => y != 0,
+                Strings.CommandQuotientDivideByZeroError);
         }
 
         /// <summary>
@@ -550,7 +551,8 @@ namespace Logo.Procedures
         /// <returns>A token consisting of the modulus of the two input tokens.</returns>
         public static Token MathRemainder(InterpretorContext context, params LogoValue[] input)
         {
-            return MathsImpl(context, input[0], input[1], Strings.CommandRemainderWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x % y));
+            return MathsImpl(context, input[0], input[1], Strings.CommandRemainderWrongTypeError, (x, y) => x % y, (x, y) => y != 0,
+                Strings.CommandRemainderDivideByZeroError);
         }
 
         /// <summary>
@@ -656,8 +658,11 @@ namespace Logo.Procedures
         /// <param name="input1">The second input value.</param>
         /// <param name="wrongTypeErrorMsg">The error to output if the input is not a number.</param>
         /// <param name="implFunc">The underlying function to use to generate the output.</param>
+        /// <param name="checkFunc">An optional function to use to check input validity.</param>
+        /// <param name="checkFailureMessage">The message to output if the input validity check fails.</param>
         /// <returns>A token containing the output value of the function.</returns>
-        private static Token MathsImpl(InterpretorContext context, LogoValue input0, LogoValue input1, string wrongTypeErrorMsg, Func<decimal, decimal, decimal> implFunc)
+        private static Token MathsImpl(InterpretorContext context, LogoValue input0, LogoValue input1, string wrongTypeErrorMsg, 
+            Func<decimal, decimal, decimal> implFunc, Func<decimal, decimal, bool> checkFunc = null, string checkFailureMessage = "")
         {
             if (context is null)
             {
@@ -669,7 +674,16 @@ namespace Logo.Procedures
                 context.Interpretor.WriteOutputLine(wrongTypeErrorMsg);
                 return null;
             }
-            decimal output = implFunc((decimal)input0.Value, (decimal)input1.Value);
+
+            decimal inputParam0 = (decimal)input0.Value;
+            decimal inputParam1 = (decimal)input1.Value;
+            if (checkFunc != null && !checkFunc(inputParam0, inputParam1))
+            {
+                context.Interpretor.WriteOutputLine(checkFailureMessage);
+                return null;
+            }
+
+            decimal output = implFunc(inputParam0, inputParam1);
             return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Number, output));
         }
 

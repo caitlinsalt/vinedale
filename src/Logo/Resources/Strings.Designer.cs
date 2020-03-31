@@ -907,6 +907,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t divide by zero..
+        /// </summary>
+        internal static string CommandQuotientDivideByZeroError {
+            get {
+                return ResourceManager.GetString("CommandQuotientDivideByZeroError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X Y.
         /// </summary>
         internal static string CommandQuotientExampleText {
@@ -939,6 +948,15 @@ namespace Logo.Resources {
         internal static string CommandRecycleHelpText {
             get {
                 return ResourceManager.GetString("CommandRecycleHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t divide by zero..
+        /// </summary>
+        internal static string CommandRemainderDivideByZeroError {
+            get {
+                return ResourceManager.GetString("CommandRemainderDivideByZeroError", resourceCulture);
             }
         }
         
