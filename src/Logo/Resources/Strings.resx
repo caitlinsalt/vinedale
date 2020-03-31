@@ -411,6 +411,15 @@
   <data name="CommandRecycleHelpText" xml:space="preserve">
     <value>Recycles spare space that I was using.</value>
   </data>
+  <data name="CommandRemainderExampleText" xml:space="preserve">
+    <value>X Y</value>
+  </data>
+  <data name="CommandRemainderHelpText" xml:space="preserve">
+    <value>Returns the remainder after X is divided by Y.</value>
+  </data>
+  <data name="CommandRemainderWrongTypeError" xml:space="preserve">
+    <value>I can only use remainder on numbers.</value>
+  </data>
   <data name="CommandRepeatExampleText" xml:space="preserve">
     <value>X [list]</value>
   </data>

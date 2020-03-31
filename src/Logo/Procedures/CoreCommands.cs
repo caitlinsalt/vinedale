@@ -68,6 +68,8 @@ namespace Logo.Procedures
                     Strings.CommandProductExampleText),
                 new LogoCommand(Syntax.QuotientCmd, 2, RedefinabilityType.NonRedefinable, MathQuotient, Strings.CommandQuotientHelpText, 
                     Strings.CommandQuotientExampleText),
+                new LogoCommand(Syntax.RemainderCmd, 2, RedefinabilityType.NonRedefinable, MathRemainder, Strings.CommandRemainderHelpText,
+                    Strings.CommandRemainderExampleText),
             };
         }
 
@@ -537,7 +539,18 @@ namespace Logo.Procedures
         /// <returns>A token consisting of the quotient of the two input tokens.</returns>
         public static Token MathQuotient(InterpretorContext context, params LogoValue[] input)
         {
-            return MathsImpl(context, input[0], input[1], Strings.CommandProductWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x / y));
+            return MathsImpl(context, input[0], input[1], Strings.CommandQuotientWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x / y));
+        }
+
+        /// <summary>
+        /// Returns the modulus of two numbers.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of two number tokens.</param>
+        /// <returns>A token consisting of the modulus of the two input tokens.</returns>
+        public static Token MathRemainder(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], input[1], Strings.CommandRemainderWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x % y));
         }
 
         /// <summary>

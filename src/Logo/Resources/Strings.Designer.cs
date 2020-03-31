@@ -943,6 +943,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandRemainderExampleText {
+            get {
+                return ResourceManager.GetString("CommandRemainderExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the remainder after X is divided by Y..
+        /// </summary>
+        internal static string CommandRemainderHelpText {
+            get {
+                return ResourceManager.GetString("CommandRemainderHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use remainder on numbers..
+        /// </summary>
+        internal static string CommandRemainderWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandRemainderWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X [list].
         /// </summary>
         internal static string CommandRepeatExampleText {
