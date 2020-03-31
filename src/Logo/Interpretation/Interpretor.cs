@@ -1,4 +1,5 @@
-﻿using Logo.Procedures;
+﻿using Logo.Interfaces;
+using Logo.Procedures;
 using Logo.Resources;
 using Logo.Tokens;
 using System;
@@ -12,7 +13,7 @@ namespace Logo.Interpretation
     /// <summary>
     /// The core of the language interpretation engine.
     /// </summary>
-    public class Interpretor
+    public class Interpretor : IInterpretor
     {
         /// <summary>
         /// The system context for this interpretor, including the symbol table and object stack.

@@ -360,6 +360,18 @@
   <data name="CommandOrWrongTypeError" xml:space="preserve">
     <value>I can only use or on lists.</value>
   </data>
+  <data name="CommandPickEmptyListError" xml:space="preserve">
+    <value>I can't pick something from an empty list.</value>
+  </data>
+  <data name="CommandPickExampleText" xml:space="preserve">
+    <value>[list]</value>
+  </data>
+  <data name="CommandPickHelpText" xml:space="preserve">
+    <value>Picks a random thing from a list.</value>
+  </data>
+  <data name="CommandPickWrongTypeError" xml:space="preserve">
+    <value>I can only pick something from a list.</value>
+  </data>
   <data name="CommandPiHelpText" xml:space="preserve">
     <value>Returns the number Pi (3.14159...).</value>
   </data>

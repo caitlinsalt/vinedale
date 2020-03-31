@@ -57,6 +57,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.RoundCmd, 1, RedefinabilityType.NonRedefinable, MathRound, Strings.CommandRoundHelpText, Strings.CommandRoundExampleText),
                 new LogoCommand(Syntax.SqrtCmd, 1, RedefinabilityType.NonRedefinable, MathSqrt, Strings.CommandSqrtHelpText, Strings.CommandSqrtExampleText),
                 new LogoCommand(Syntax.MinusCmd, 1, RedefinabilityType.NonRedefinable, MathMinus, Strings.CommandMinusHelpText, Strings.CommandMinusExampleText),
+                new LogoCommand(Syntax.PickCmd, 1, RedefinabilityType.NonRedefinable, ListPick, Strings.CommandPickHelpText, Strings.CommandPickExampleText),
             };
         }
 
@@ -275,6 +276,37 @@ namespace Logo.Procedures
                 return null;
             }
             return inputList.Contents[idx - 1];
+        }
+
+        /// <summary>
+        /// Pick a random item from a list.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of one list token.</param>
+        /// <returns>A random item from the input list.</returns>
+        public static Token ListPick(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (!(input[0].Value is ListToken inputList))
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandPickWrongTypeError);
+                return null;
+            }
+            if (inputList.Contents.Count == 0)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandPickEmptyListError);
+                return null;
+            }
+            if (inputList.Contents.Count == 1)
+            {
+                return inputList.Contents[0];
+            }
+
+            return inputList.Contents[context.RandomGenerator.Next(inputList.Contents.Count)];
         }
 
         /// <summary>
