@@ -207,6 +207,9 @@
   <data name="PiCmd" xml:space="preserve">
     <value>pi</value>
   </data>
+  <data name="PowerCmd" xml:space="preserve">
+    <value>power</value>
+  </data>
   <data name="PrCmd" xml:space="preserve">
     <value>pr</value>
   </data>
