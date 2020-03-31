@@ -907,6 +907,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandQuotientExampleText {
+            get {
+                return ResourceManager.GetString("CommandQuotientExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns X divided by Y..
+        /// </summary>
+        internal static string CommandQuotientHelpText {
+            get {
+                return ResourceManager.GetString("CommandQuotientHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use quotient on numbers..
+        /// </summary>
+        internal static string CommandQuotientWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandQuotientWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recycles spare space that I was using..
         /// </summary>
         internal static string CommandRecycleHelpText {

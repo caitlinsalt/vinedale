@@ -219,6 +219,9 @@
   <data name="ProductCmd" xml:space="preserve">
     <value>product</value>
   </data>
+  <data name="QuotientCmd" xml:space="preserve">
+    <value>quotient</value>
+  </data>
   <data name="RecycleCmd" xml:space="preserve">
     <value>recycle</value>
   </data>

@@ -22,7 +22,8 @@ namespace Logo.Procedures
         {
             return new LogoProcedure[]
             {
-                new LogoCommand(Syntax.PrintCmd, Syntax.PrCmd, 1, RedefinabilityType.DefineAlongside, Print, Strings.CommandPrintHelpText, Strings.CommandPrintExampleText),
+                new LogoCommand(Syntax.PrintCmd, Syntax.PrCmd, 1, RedefinabilityType.DefineAlongside, Print, Strings.CommandPrintHelpText, 
+                    Strings.CommandPrintExampleText),
                 new LogoCommand(Syntax.NodesCmd, 0, RedefinabilityType.DefineAlongside, Nodes, Strings.CommandNodesHelpText),
                 new LogoCommand(Syntax.RecycleCmd, 0, RedefinabilityType.NonRedefinable, Recycle, Strings.CommandRecycleHelpText),
                 new LogoCommand(Syntax.RepeatCmd, 2, RedefinabilityType.NonRedefinable, Repeat, Strings.CommandRepeatHelpText, Strings.CommandRepeatExampleText),
@@ -35,16 +36,20 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.SinCmd, 1, RedefinabilityType.NonRedefinable, MathSin, Strings.CommandSinHelpText, Strings.CommandSinExampleText),
                 new LogoCommand(Syntax.TanCmd, 1, RedefinabilityType.NonRedefinable, MathTan, Strings.CommandTanHelpText, Strings.CommandTanExampleText),
                 new LogoCommand(Syntax.MakeCmd, 2, RedefinabilityType.NonRedefinable, MakeVariable, Strings.CommandMakeHelpText, Strings.CommandMakeExampleText),
-                new LogoCommand(Syntax.ClearnameCmd, 1, RedefinabilityType.NonRedefinable, ClearVariable, Strings.CommandClearnameHelpText, Strings.CommandClearnameExampleText),
+                new LogoCommand(Syntax.ClearnameCmd, 1, RedefinabilityType.NonRedefinable, ClearVariable, Strings.CommandClearnameHelpText, 
+                    Strings.CommandClearnameExampleText),
                 new LogoCommand(Syntax.ClearnamesCmd, 0, RedefinabilityType.NonRedefinable, ClearGlobalVariables, Strings.CommandClearnamesHelpText),
                 new LogoCommand(Syntax.HelpCmd, 1, RedefinabilityType.DefineAlongside, OutputHelpText, Strings.CommandHelpHelpText, Strings.CommandHelpExampleText),
                 new LogoCommand(Syntax.PiCmd, 0, RedefinabilityType.NonRedefinable, ReturnPi, Strings.CommandPiHelpText),
-                new LogoCommand(Syntax.ButfirstCmd, 1, RedefinabilityType.NonRedefinable, ListButFirst, Strings.CommandButfirstHelpText, Strings.CommandButfirstExampleText),
-                new LogoCommand(Syntax.ButlastCmd, 1, RedefinabilityType.NonRedefinable, ListButLast, Strings.CommandButlastHelpText, Strings.CommandButlastExampleText),
+                new LogoCommand(Syntax.ButfirstCmd, 1, RedefinabilityType.NonRedefinable, ListButFirst, Strings.CommandButfirstHelpText, 
+                    Strings.CommandButfirstExampleText),
+                new LogoCommand(Syntax.ButlastCmd, 1, RedefinabilityType.NonRedefinable, ListButLast, Strings.CommandButlastHelpText, 
+                    Strings.CommandButlastExampleText),
                 new LogoCommand(Syntax.AsciiCmd, 1, RedefinabilityType.NonRedefinable, AsciiValue, Strings.CommandAsciiHelpText, Strings.CommandAsciiExampleText),
                 new LogoCommand(Syntax.CharCmd, 1, RedefinabilityType.NonRedefinable, AsciiToChar, Strings.CommandCharHelpText, Strings.CommandCharExampleText),
                 new LogoCommand(Syntax.CountCmd, 1, RedefinabilityType.NonRedefinable, Count, Strings.CommandCountHelpText, Strings.CommandCountExampleText),
-                new LogoCommand(Syntax.DifferenceCmd, 2, RedefinabilityType.NonRedefinable, MathDifference, Strings.CommandDifferenceHelpText, Strings.CommandDifferenceExampleText),
+                new LogoCommand(Syntax.DifferenceCmd, 2, RedefinabilityType.NonRedefinable, MathDifference, Strings.CommandDifferenceHelpText, 
+                    Strings.CommandDifferenceExampleText),
                 new LogoCommand(Syntax.FputCmd, 2, RedefinabilityType.NonRedefinable, ListPrepend, Strings.CommandFputHelpText, Strings.CommandFputExampleText),
                 new LogoCommand(Syntax.LputCmd, 2, RedefinabilityType.NonRedefinable, ListAppend, Strings.CommandLputHelpText, Strings.CommandLputExampleText),
                 new LogoCommand(Syntax.IntCmd, 1, RedefinabilityType.NonRedefinable, MathFloor, Strings.CommandIntHelpText, Strings.CommandIntExampleText),
@@ -59,7 +64,10 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.MinusCmd, 1, RedefinabilityType.NonRedefinable, MathMinus, Strings.CommandMinusHelpText, Strings.CommandMinusExampleText),
                 new LogoCommand(Syntax.PickCmd, 1, RedefinabilityType.NonRedefinable, ListPick, Strings.CommandPickHelpText, Strings.CommandPickExampleText),
                 new LogoCommand(Syntax.PowerCmd, 2, RedefinabilityType.NonRedefinable, MathPower, Strings.CommandPowerHelpText, Strings.CommandPowerExampleText),
-                new LogoCommand(Syntax.ProductCmd, 2, RedefinabilityType.NonRedefinable, MathProduct, Strings.CommandProductHelpText, Strings.CommandProductExampleText),
+                new LogoCommand(Syntax.ProductCmd, 2, RedefinabilityType.NonRedefinable, MathProduct, Strings.CommandProductHelpText, 
+                    Strings.CommandProductExampleText),
+                new LogoCommand(Syntax.QuotientCmd, 2, RedefinabilityType.NonRedefinable, MathQuotient, Strings.CommandQuotientHelpText, 
+                    Strings.CommandQuotientExampleText),
             };
         }
 
@@ -519,6 +527,17 @@ namespace Logo.Procedures
         public static Token MathProduct(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], input[1], Strings.CommandProductWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x * y));
+        }
+
+        /// <summary>
+        /// Returns the quotient of two numbers.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should consist of two number tokens.</param>
+        /// <returns>A token consisting of the quotient of the two input tokens.</returns>
+        public static Token MathQuotient(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], input[1], Strings.CommandProductWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x / y));
         }
 
         /// <summary>
