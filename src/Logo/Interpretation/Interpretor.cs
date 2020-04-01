@@ -100,17 +100,6 @@ namespace Logo.Interpretation
 
             Context.RegisterModule(module);
 
-            //foreach (LogoProcedure p in module.RegisterProcedures())
-            //{
-            //    Context.RegisterProcedure(p);
-            //    if (DebugVerbosity >= DebugMessageLevel.Logorrheic)
-            //    {
-            //        DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorRegisteredProcedureDebugMessage, p.Name));
-            //    }
-            //}
-
-            //Context.LoadedModules.Add(module);
-
             if (DebugVerbosity >= DebugMessageLevel.Verbose)
             {
                 StandardOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorLoadedModuleDebugMessage, module.GetType().Name));

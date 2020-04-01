@@ -832,8 +832,6 @@ namespace Logo.Procedures
             return new ValueToken(Syntax.SpaceCmd, val);
         }
 
-        
-
         /// <summary>
         /// Prints the total number of defined procedures and the number of distinct procedure names and aliases in the interpretor context, to the context's output writer.
         /// </summary>
