@@ -1,4 +1,5 @@
-﻿using Logo.Interpretation;
+﻿using Logo.Interfaces;
+using Logo.Interpretation;
 using Logo.Resources;
 using Logo.Tokens;
 using System;
@@ -12,7 +13,7 @@ namespace Logo.Procedures
     /// <summary>
     /// This class contains the implementations of core language features.
     /// </summary>
-    public class CoreCommands : ICommandModule
+    public class CoreCommands : ICoreCommands
     {
         /// <summary>
         /// Provides the definitions of procedures implemented in this class.
@@ -72,6 +73,53 @@ namespace Logo.Procedures
                     Strings.CommandRemainderExampleText),
                 new LogoCommand(Syntax.SumCmd, 2, RedefinabilityType.NonRedefinable, MathSum, Strings.CommandSumHelpText, Strings.CommandSumExampleText),
             };
+        }
+
+        /// <summary>
+        /// Convert a value to a string for print.  The core of the print routine.
+        /// </summary>
+        /// <param name="interpretor">The interpretor, used to evaluate list arguments.</param>
+        /// <param name="value">The value to be printed.  If a list, it will be evaluated first.</param>
+        /// <returns><c>null</c>.</returns>
+        public string EvaluateForPrint(IInterpretor interpretor, LogoValue value)
+        {
+            if (interpretor is null)
+            {
+                throw new ArgumentNullException(nameof(interpretor));
+            }
+
+            string output = "";
+            if (value.Type == LogoValueType.List)
+            {
+                ListToken copiedList = new ListToken(((ListToken)value.Value).Contents);
+                if (interpretor.EvaluateListContents(copiedList, true) == InterpretationResultType.SuccessComplete)
+                {
+                    output = string.Join(" ", copiedList.Contents.Select(t => (t as ValueToken).Value.Value.ToString()));
+                }
+            }
+            else
+            {
+                output = value.Value.ToString();
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Outputs the first parameter token to the context's output writer, followed by a new line.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain one token whose value is to be printed.</param>
+        /// <returns><c>null</c></returns>
+        public Token Print(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            context.Interpretor.WriteOutputLine(EvaluateForPrint(context.Interpretor, input[0]));
+            return null;
         }
 
         /// <summary>
@@ -784,33 +832,7 @@ namespace Logo.Procedures
             return new ValueToken(Syntax.SpaceCmd, val);
         }
 
-        /// <summary>
-        /// Outputs the first parameter token to the context's output writer, followed by a new line.
-        /// </summary>
-        /// <param name="context">The interpretor context.</param>
-        /// <param name="output">Should contain one token whose value is to be printed.</param>
-        /// <returns><c>null</c></returns>
-        public static Token Print(InterpretorContext context, params LogoValue[] output)
-        {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (output[0].Type == LogoValueType.List)
-            {
-                ListToken copiedList = new ListToken(((ListToken)output[0].Value).Contents);
-                if (context.Interpretor.EvaluateListContents(copiedList, true) == InterpretationResultType.SuccessComplete)
-                {
-                    context.Interpretor.WriteOutputLine(string.Join(" ", copiedList.Contents.Select(t => (t as ValueToken).Value.Value.ToString())));
-                }
-            }
-            else
-            {
-                context.Interpretor.WriteOutputLine(output[0].Value.ToString());
-            }
-            return null;
-        }
+        
 
         /// <summary>
         /// Prints the total number of defined procedures and the number of distinct procedure names and aliases in the interpretor context, to the context's output writer.

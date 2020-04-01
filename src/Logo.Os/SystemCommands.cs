@@ -1,4 +1,5 @@
-﻿using Logo.Interpretation;
+﻿using Logo.Interfaces;
+using Logo.Interpretation;
 using Logo.Os.Resources;
 using Logo.Procedures;
 using Logo.Tokens;
