@@ -439,6 +439,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sum.
+        /// </summary>
+        internal static string SumCmd {
+            get {
+                return ResourceManager.GetString("SumCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tan.
         /// </summary>
         internal static string TanCmd {
