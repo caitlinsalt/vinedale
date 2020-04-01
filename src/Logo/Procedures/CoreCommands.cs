@@ -70,6 +70,7 @@ namespace Logo.Procedures
                     Strings.CommandQuotientExampleText),
                 new LogoCommand(Syntax.RemainderCmd, 2, RedefinabilityType.NonRedefinable, MathRemainder, Strings.CommandRemainderHelpText,
                     Strings.CommandRemainderExampleText),
+                new LogoCommand(Syntax.SumCmd, 2, RedefinabilityType.NonRedefinable, MathSum, Strings.CommandSumHelpText, Strings.CommandSumExampleText),
             };
         }
 
@@ -564,6 +565,17 @@ namespace Logo.Procedures
         public static Token MathDifference(InterpretorContext context, params LogoValue[] input)
         {
             return MathsImpl(context, input[0], input[1], Strings.CommandDifferenceTypeError, (Func<decimal, decimal, decimal>)((x, y) => x - y));
+        }
+
+        /// <summary>
+        /// Adds two numbers together.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain two tokens, both numbers.</param>
+        /// <returns>A token containing the sum of the input tokens.</returns>
+        public static Token MathSum(InterpretorContext context, params LogoValue[] input)
+        {
+            return MathsImpl(context, input[0], input[1], Strings.CommandSumWrongTypeError, (Func<decimal, decimal, decimal>)((x, y) => x + y));
         }
 
         /// <summary>

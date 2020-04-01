@@ -243,6 +243,9 @@
   <data name="SqrtCmd" xml:space="preserve">
     <value>sqrt</value>
   </data>
+  <data name="SumCmd" xml:space="preserve">
+    <value>sum</value>
+  </data>
   <data name="TanCmd" xml:space="preserve">
     <value>tan</value>
   </data>
