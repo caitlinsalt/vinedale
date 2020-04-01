@@ -61,6 +61,24 @@ namespace Vinedale.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Displays some text in a message box..
+        /// </summary>
+        internal static string CommandAnnounceHelpText {
+            get {
+                return ResourceManager.GetString("CommandAnnounceHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [list].
+        /// </summary>
+        internal static string CommandAnnountExampleText {
+            get {
+                return ResourceManager.GetString("CommandAnnountExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closes Vinedale..
         /// </summary>
         internal static string CommandByeHelpText {
