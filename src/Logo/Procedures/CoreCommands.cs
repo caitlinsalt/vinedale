@@ -74,6 +74,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.SumCmd, 2, RedefinabilityType.NonRedefinable, MathSum, Strings.CommandSumHelpText, Strings.CommandSumExampleText),
                 new LogoCommand(Syntax.GreaterpCmd, 2, RedefinabilityType.NonRedefinable, Greater, Strings.CommandGreaterpHelpText, Strings.CommandGreaterpExampleText),
                 new LogoCommand(Syntax.LesspCmd, 2, RedefinabilityType.NonRedefinable, Lesser, Strings.CommandLesspHelpText, Strings.CommandLesspExampleText),
+                new LogoCommand(Syntax.NumberpCmd, 1, RedefinabilityType.NonRedefinable, IsNumber, Strings.CommandNumberpHelpText, Strings.CommandNumberpExampleText),
             };
         }
 
@@ -981,6 +982,18 @@ namespace Logo.Procedures
                 return null;
             }
             bool output = predicate((decimal)input0.Value, (decimal)input1.Value);
+            return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Bool, output));
+        }
+
+        /// <summary>
+        /// Returns a boolean value according to whether or not the parameter is a number token.
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Should contain one token.</param>
+        /// <returns>A true token if the input token is a number, false if not.</returns>
+        public static Token IsNumber(InterpretorContext context, params LogoValue[] input)
+        {
+            bool output = input[0].Type == LogoValueType.Number;
             return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Bool, output));
         }
     }
