@@ -322,6 +322,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to numberp.
+        /// </summary>
+        internal static string NumberpCmd {
+            get {
+                return ResourceManager.GetString("NumberpCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to or.
         /// </summary>
         internal static string OrCmd {

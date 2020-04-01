@@ -369,6 +369,12 @@
   <data name="CommandNodesOutput" xml:space="preserve">
     <value>There are {0} procedures and {1} procedure names.</value>
   </data>
+  <data name="CommandNumberpExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandNumberpHelpText" xml:space="preserve">
+    <value>Decides whether X is a number or not.</value>
+  </data>
   <data name="CommandOrExampleText" xml:space="preserve">
     <value>[list]</value>
   </data>

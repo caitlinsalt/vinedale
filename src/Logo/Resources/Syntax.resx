@@ -204,6 +204,9 @@
   <data name="NodesCmd" xml:space="preserve">
     <value>nodes</value>
   </data>
+  <data name="NumberpCmd" xml:space="preserve">
+    <value>numberp</value>
+  </data>
   <data name="OrCmd" xml:space="preserve">
     <value>or</value>
   </data>
