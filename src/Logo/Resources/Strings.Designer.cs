@@ -628,6 +628,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandLesspExampleText {
+            get {
+                return ResourceManager.GetString("CommandLesspExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decides whether or not X is less than Y..
+        /// </summary>
+        internal static string CommandLesspHelpText {
+            get {
+                return ResourceManager.GetString("CommandLesspHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use lessp on numbers..
+        /// </summary>
+        internal static string CommandLesspWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandLesspWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
         internal static string CommandLnExampleText {
