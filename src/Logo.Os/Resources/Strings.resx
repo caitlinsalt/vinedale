@@ -154,6 +154,33 @@
   <data name="CommandDirectoriesHelpText" xml:space="preserve">
     <value>Returns the names of all directories inside the current "working directory".</value>
   </data>
+  <data name="CommandErfileDirectoryNotFoundError" xml:space="preserve">
+    <value>That file is in a place I can't read.</value>
+  </data>
+  <data name="CommandErfileExampleText" xml:space="preserve">
+    <value>FILE</value>
+  </data>
+  <data name="CommandErfileGeneralArgumentError" xml:space="preserve">
+    <value>That can't be a file name.</value>
+  </data>
+  <data name="CommandErfileHelpText" xml:space="preserve">
+    <value>Delete the file called FILE.</value>
+  </data>
+  <data name="CommandErfileIoError" xml:space="preserve">
+    <value>I can't delete that file because something else is using it.</value>
+  </data>
+  <data name="CommandErfileNotSupportedError" xml:space="preserve">
+    <value>That doesn't make sense as a file name.</value>
+  </data>
+  <data name="CommandErfilePathTooLongError" xml:space="preserve">
+    <value>That's too long to be a file name.</value>
+  </data>
+  <data name="CommandErfileUnauthorisedAccessError" xml:space="preserve">
+    <value>The computer won't let you do that.</value>
+  </data>
+  <data name="CommandErfileWrongTypeError" xml:space="preserve">
+    <value>I can't use that as a file name.</value>
+  </data>
   <data name="CommandFilesExampleText" xml:space="preserve">
     <value>EXT</value>
   </data>

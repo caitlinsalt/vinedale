@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CurrentDir" xml:space="preserve">
+  <data name="ChdirCmd" xml:space="preserve">
+    <value>chdir</value>
+  </data>
+  <data name="CurrentDirCmd" xml:space="preserve">
     <value>currentdir</value>
+  </data>
+  <data name="DirectoriesCmd" xml:space="preserve">
+    <value>directories</value>
+  </data>
+  <data name="ErfileCmd" xml:space="preserve">
+    <value>erfile</value>
+  </data>
+  <data name="FilesCmd" xml:space="preserve">
+    <value>files</value>
   </data>
 </root>

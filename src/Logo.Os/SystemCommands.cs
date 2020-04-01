@@ -24,10 +24,12 @@ namespace Logo.Os
         {
             return new LogoProcedure[]
             {
-                new LogoCommand("chdir", 1, RedefinabilityType.NonRedefinable, ChangeWorkingDirectory, Strings.CommandChdirHelpText, Strings.CommandChdirExampleText),
-                new LogoCommand("currentdir", 0, RedefinabilityType.NonRedefinable, GetWorkingDirectory, Strings.CommandCurrentdirHelpText),
-                new LogoCommand("directories", 0, RedefinabilityType.NonRedefinable, GetSubdirectories, Strings.CommandDirectoriesHelpText),
-                new LogoCommand("files", 1, RedefinabilityType.NonRedefinable, GetFiles, Strings.CommandFilesHelpText, Strings.CommandFilesExampleText),
+                new LogoCommand(Syntax.ChdirCmd, 1, RedefinabilityType.NonRedefinable, ChangeWorkingDirectory, Strings.CommandChdirHelpText, 
+                    Strings.CommandChdirExampleText),
+                new LogoCommand(Syntax.CurrentDirCmd, 0, RedefinabilityType.NonRedefinable, GetWorkingDirectory, Strings.CommandCurrentdirHelpText),
+                new LogoCommand(Syntax.DirectoriesCmd, 0, RedefinabilityType.NonRedefinable, GetSubdirectories, Strings.CommandDirectoriesHelpText),
+                new LogoCommand(Syntax.ErfileCmd, 1, RedefinabilityType.NonRedefinable, DeleteFile, Strings.CommandErfileHelpText, Strings.CommandErfileExampleText),
+                new LogoCommand(Syntax.FilesCmd, 1, RedefinabilityType.NonRedefinable, GetFiles, Strings.CommandFilesHelpText, Strings.CommandFilesExampleText),
             };
         }
 
@@ -39,7 +41,7 @@ namespace Logo.Os
         /// <returns>A token whose value is the current working directory.</returns>
         public static Token GetWorkingDirectory(InterpretorContext context, params LogoValue[] input)
         {
-            return new ValueToken(Syntax.CurrentDir, new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()));
+            return new ValueToken(Syntax.CurrentDirCmd, new LogoValue(LogoValueType.Text, Directory.GetCurrentDirectory()));
         }
 
 
@@ -140,6 +142,53 @@ namespace Logo.Os
                 context.Interpretor.WriteOutputLine(Strings.CommandChdirSecurityError);
             }
 
+            return null;
+        }
+
+        /// <summary>
+        /// Delete a file with the specified filename.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain a single token which is the name of the file to be deleted.</param>
+        /// <returns><c>null</c>.</returns>
+        public static Token DeleteFile(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (input[0].Type != LogoValueType.Text)
+            {
+                context.Interpretor.WriteOutput(Strings.CommandErfileWrongTypeError);
+            }
+            try
+            {
+                File.Delete((string)input[0].Value);
+            }
+            catch (ArgumentException)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandErfileGeneralArgumentError);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandErfileDirectoryNotFoundError);
+            }
+            catch (PathTooLongException)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandErfilePathTooLongError);
+            }
+            catch (IOException)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandErfileIoError);
+            }
+            catch (NotSupportedException)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandErfileNotSupportedError);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandErfileUnauthorisedAccessError);
+            }
             return null;
         }
     }
