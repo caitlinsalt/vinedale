@@ -169,6 +169,87 @@ namespace Logo.Os.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to That file is in a place I can&apos;t read..
+        /// </summary>
+        internal static string CommandErfileDirectoryNotFoundError {
+            get {
+                return ResourceManager.GetString("CommandErfileDirectoryNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FILE.
+        /// </summary>
+        internal static string CommandErfileExampleText {
+            get {
+                return ResourceManager.GetString("CommandErfileExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That can&apos;t be a file name..
+        /// </summary>
+        internal static string CommandErfileGeneralArgumentError {
+            get {
+                return ResourceManager.GetString("CommandErfileGeneralArgumentError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the file called FILE..
+        /// </summary>
+        internal static string CommandErfileHelpText {
+            get {
+                return ResourceManager.GetString("CommandErfileHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t delete that file because something else is using it..
+        /// </summary>
+        internal static string CommandErfileIoError {
+            get {
+                return ResourceManager.GetString("CommandErfileIoError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That doesn&apos;t make sense as a file name..
+        /// </summary>
+        internal static string CommandErfileNotSupportedError {
+            get {
+                return ResourceManager.GetString("CommandErfileNotSupportedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That&apos;s too long to be a file name..
+        /// </summary>
+        internal static string CommandErfilePathTooLongError {
+            get {
+                return ResourceManager.GetString("CommandErfilePathTooLongError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The computer won&apos;t let you do that..
+        /// </summary>
+        internal static string CommandErfileUnauthorisedAccessError {
+            get {
+                return ResourceManager.GetString("CommandErfileUnauthorisedAccessError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t use that as a file name..
+        /// </summary>
+        internal static string CommandErfileWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandErfileWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EXT.
         /// </summary>
         internal static string CommandFilesExampleText {

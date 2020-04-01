@@ -61,11 +61,47 @@ namespace Logo.Os.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to chdir.
+        /// </summary>
+        internal static string ChdirCmd {
+            get {
+                return ResourceManager.GetString("ChdirCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to currentdir.
         /// </summary>
-        internal static string CurrentDir {
+        internal static string CurrentDirCmd {
             get {
-                return ResourceManager.GetString("CurrentDir", resourceCulture);
+                return ResourceManager.GetString("CurrentDirCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to directories.
+        /// </summary>
+        internal static string DirectoriesCmd {
+            get {
+                return ResourceManager.GetString("DirectoriesCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to erfile.
+        /// </summary>
+        internal static string ErfileCmd {
+            get {
+                return ResourceManager.GetString("ErfileCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to files.
+        /// </summary>
+        internal static string FilesCmd {
+            get {
+                return ResourceManager.GetString("FilesCmd", resourceCulture);
             }
         }
     }
