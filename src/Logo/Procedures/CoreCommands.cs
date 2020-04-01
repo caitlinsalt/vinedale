@@ -72,6 +72,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.RemainderCmd, 2, RedefinabilityType.NonRedefinable, MathRemainder, Strings.CommandRemainderHelpText,
                     Strings.CommandRemainderExampleText),
                 new LogoCommand(Syntax.SumCmd, 2, RedefinabilityType.NonRedefinable, MathSum, Strings.CommandSumHelpText, Strings.CommandSumExampleText),
+                new LogoCommand(Syntax.GreaterpCmd, 2, RedefinabilityType.NonRedefinable, Greater, Strings.CommandGreaterpHelpText, Strings.CommandGreaterpExampleText),
             };
         }
 
@@ -942,6 +943,26 @@ namespace Logo.Procedures
                 return new ValueToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, (decimal)(parameters[0].Value as ListToken).Contents.Count));
             }
             return new ValueToken(Syntax.CountCmd, new LogoValue(LogoValueType.Number, 1m));
+        }
+
+        /// <summary>
+        /// Returns a boolean value according to whether or not one parameter is greater than the other.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain two number tokens.</param>
+        /// <returns>True if the first token's value is greater than the second, false otherwise.</returns>
+        public static Token Greater(InterpretorContext context, params LogoValue[] input)
+        {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (input[0].Type != LogoValueType.Number || input[1].Type != LogoValueType.Number)
+            {
+                context.Interpretor.WriteOutputLine(Strings.CommandGreaterpWrongTypeError);
+                return null;
+            }
+            return new ValueToken(Syntax.GreaterpCmd, new LogoValue(LogoValueType.Bool, (decimal)input[0].Value > (decimal)input[1].Value));
         }
     }
 }
