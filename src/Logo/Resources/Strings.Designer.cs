@@ -657,6 +657,24 @@ namespace Logo.Resources {
         /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
+        internal static string CommandListpExampleText {
+            get {
+                return ResourceManager.GetString("CommandListpExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decides whether X is a list or not..
+        /// </summary>
+        internal static string CommandListpHelpText {
+            get {
+                return ResourceManager.GetString("CommandListpHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
         internal static string CommandLnExampleText {
             get {
                 return ResourceManager.GetString("CommandLnExampleText", resourceCulture);

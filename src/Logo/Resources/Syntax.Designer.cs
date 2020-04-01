@@ -268,6 +268,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to listp.
+        /// </summary>
+        internal static string ListpCmd {
+            get {
+                return ResourceManager.GetString("ListpCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ln.
         /// </summary>
         internal static string LnCmd {

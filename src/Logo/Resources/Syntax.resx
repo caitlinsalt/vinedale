@@ -186,6 +186,9 @@
   <data name="LesspCmd" xml:space="preserve">
     <value>lessp</value>
   </data>
+  <data name="ListpCmd" xml:space="preserve">
+    <value>listp</value>
+  </data>
   <data name="LnCmd" xml:space="preserve">
     <value>ln</value>
   </data>

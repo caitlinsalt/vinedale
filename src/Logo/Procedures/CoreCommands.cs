@@ -75,6 +75,7 @@ namespace Logo.Procedures
                 new LogoCommand(Syntax.GreaterpCmd, 2, RedefinabilityType.NonRedefinable, Greater, Strings.CommandGreaterpHelpText, Strings.CommandGreaterpExampleText),
                 new LogoCommand(Syntax.LesspCmd, 2, RedefinabilityType.NonRedefinable, Lesser, Strings.CommandLesspHelpText, Strings.CommandLesspExampleText),
                 new LogoCommand(Syntax.NumberpCmd, 1, RedefinabilityType.NonRedefinable, IsNumber, Strings.CommandNumberpHelpText, Strings.CommandNumberpExampleText),
+                new LogoCommand(Syntax.ListpCmd, 1, RedefinabilityType.NonRedefinable, IsList, Strings.CommandListpHelpText, Strings.CommandListpExampleText),
             };
         }
 
@@ -993,7 +994,23 @@ namespace Logo.Procedures
         /// <returns>A true token if the input token is a number, false if not.</returns>
         public static Token IsNumber(InterpretorContext context, params LogoValue[] input)
         {
-            bool output = input[0].Type == LogoValueType.Number;
+            return SingleValuePredicate(input[0], t => t.Type == LogoValueType.Number);
+        }
+
+        /// <summary>
+        /// Returns a boolean value according to whether or not the parameter is a list token.
+        /// </summary>
+        /// <param name="context">Ignored.</param>
+        /// <param name="input">Should contain one token.</param>
+        /// <returns>A true token if the input token is a list, false if not.</returns>
+        public static Token IsList(InterpretorContext context, params LogoValue[] input)
+        {
+            return SingleValuePredicate(input[0], t => t.Type == LogoValueType.List);
+        }
+
+        private static Token SingleValuePredicate(LogoValue input, Func<LogoValue, bool> predicate)
+        {
+            bool output = predicate(input);
             return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Bool, output));
         }
     }
