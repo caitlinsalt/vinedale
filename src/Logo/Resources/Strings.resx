@@ -471,6 +471,15 @@
   <data name="CommandSqrtWrongTypeError" xml:space="preserve">
     <value>I can only use sqrt on numbers.</value>
   </data>
+  <data name="CommandSumExampleText" xml:space="preserve">
+    <value>X Y</value>
+  </data>
+  <data name="CommandSumHelpText" xml:space="preserve">
+    <value>Adds two numbers together.</value>
+  </data>
+  <data name="CommandSumWrongTypeError" xml:space="preserve">
+    <value>I can only use sum on numbers.</value>
+  </data>
   <data name="CommandTanExampleText" xml:space="preserve">
     <value>number</value>
   </data>

@@ -1123,6 +1123,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandSumExampleText {
+            get {
+                return ResourceManager.GetString("CommandSumExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds two numbers together..
+        /// </summary>
+        internal static string CommandSumHelpText {
+            get {
+                return ResourceManager.GetString("CommandSumHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use sum on numbers..
+        /// </summary>
+        internal static string CommandSumWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandSumWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to number.
         /// </summary>
         internal static string CommandTanExampleText {
