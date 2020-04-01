@@ -439,6 +439,33 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X Y.
+        /// </summary>
+        internal static string CommandGreaterpExampleText {
+            get {
+                return ResourceManager.GetString("CommandGreaterpExampleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decides whether or not X is greater than Y..
+        /// </summary>
+        internal static string CommandGreaterpHelpText {
+            get {
+                return ResourceManager.GetString("CommandGreaterpHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can only use greaterp on numbers..
+        /// </summary>
+        internal static string CommandGreaterpWrongTypeError {
+            get {
+                return ResourceManager.GetString("CommandGreaterpWrongTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} does {1} things..
         /// </summary>
         internal static string CommandHelpActionCountOutput {
