@@ -73,6 +73,7 @@ namespace Logo.Procedures
                     Strings.CommandRemainderExampleText),
                 new LogoCommand(Syntax.SumCmd, 2, RedefinabilityType.NonRedefinable, MathSum, Strings.CommandSumHelpText, Strings.CommandSumExampleText),
                 new LogoCommand(Syntax.GreaterpCmd, 2, RedefinabilityType.NonRedefinable, Greater, Strings.CommandGreaterpHelpText, Strings.CommandGreaterpExampleText),
+                new LogoCommand(Syntax.LesspCmd, 2, RedefinabilityType.NonRedefinable, Lesser, Strings.CommandLesspHelpText, Strings.CommandLesspExampleText),
             };
         }
 
@@ -953,16 +954,34 @@ namespace Logo.Procedures
         /// <returns>True if the first token's value is greater than the second, false otherwise.</returns>
         public static Token Greater(InterpretorContext context, params LogoValue[] input)
         {
+            return TwoNumberPredicate(context, input[0], input[1], Strings.CommandGreaterpWrongTypeError, (x, y) => x > y);
+        }
+
+        /// <summary>
+        /// Returns a boolean value according to whether or not one parameter is less than the other.
+        /// </summary>
+        /// <param name="context">The interpretor context.</param>
+        /// <param name="input">Should contain two number tokens.</param>
+        /// <returns>True if the first token's value is less than the second, false otherwise.</returns>
+        public static Token Lesser(InterpretorContext context, params LogoValue[] input)
+        {
+            return TwoNumberPredicate(context, input[0], input[1], Strings.CommandLesspWrongTypeError, (x, y) => x < y);
+        }
+
+        private static Token TwoNumberPredicate(InterpretorContext context, LogoValue input0, LogoValue input1, string typeError, 
+            Func<decimal, decimal, bool> predicate)
+        {
             if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            if (input[0].Type != LogoValueType.Number || input[1].Type != LogoValueType.Number)
+            if (input0.Type != LogoValueType.Number || input1.Type != LogoValueType.Number)
             {
-                context.Interpretor.WriteOutputLine(Strings.CommandGreaterpWrongTypeError);
+                context.Interpretor.WriteOutputLine(typeError);
                 return null;
             }
-            return new ValueToken(Syntax.GreaterpCmd, new LogoValue(LogoValueType.Bool, (decimal)input[0].Value > (decimal)input[1].Value));
+            bool output = predicate((decimal)input0.Value, (decimal)input1.Value);
+            return new ValueToken(output.ToString(CultureInfo.CurrentCulture), new LogoValue(LogoValueType.Bool, output));
         }
     }
 }
