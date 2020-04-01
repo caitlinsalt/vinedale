@@ -243,6 +243,15 @@
   <data name="CommandFputWrongTypeError" xml:space="preserve">
     <value>I can only fput something into a list.</value>
   </data>
+  <data name="CommandGreaterpExampleText" xml:space="preserve">
+    <value>X Y</value>
+  </data>
+  <data name="CommandGreaterpHelpText" xml:space="preserve">
+    <value>Decides whether or not X is greater than Y.</value>
+  </data>
+  <data name="CommandGreaterpWrongTypeError" xml:space="preserve">
+    <value>I can only use greaterp on numbers.</value>
+  </data>
   <data name="CommandHelpActionCountOutput" xml:space="preserve">
     <value>{0} does {1} things.</value>
   </data>

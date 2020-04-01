@@ -214,6 +214,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to greaterp.
+        /// </summary>
+        internal static string GreaterpCmd {
+            get {
+                return ResourceManager.GetString("GreaterpCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to help.
         /// </summary>
         internal static string HelpCmd {
