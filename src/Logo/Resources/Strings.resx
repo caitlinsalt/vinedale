@@ -315,6 +315,12 @@
   <data name="CommandLesspWrongTypeError" xml:space="preserve">
     <value>I can only use lessp on numbers.</value>
   </data>
+  <data name="CommandListpExampleText" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="CommandListpHelpText" xml:space="preserve">
+    <value>Decides whether X is a list or not.</value>
+  </data>
   <data name="CommandLnExampleText" xml:space="preserve">
     <value>X</value>
   </data>
