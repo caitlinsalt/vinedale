@@ -1,8 +1,10 @@
 ﻿using Logo.Interfaces;
 using Logo.Procedures;
+using Logo.Resources;
 using Logo.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Logo.Interpretation
@@ -22,6 +24,11 @@ namespace Logo.Interpretation
         /// The collection of <c>ICommandModule</c> classes which have been loaded into the environment.
         /// </summary>
         public IList<ICommandModule> LoadedModules { get; private set; }
+
+        /// <summary>
+        /// The module (if any) that implements core language functionality.
+        /// </summary>
+        public ICoreCommands CoreLanguageModule { get; private set; }
 
         /// <summary>
         /// The collection of all <c>LogoProcedure</c> definitions availanble in the environment, including both those with .NET definitions and those defined within Logo.
@@ -55,6 +62,32 @@ namespace Logo.Interpretation
             Globals = new Dictionary<string, LogoValue>();
             Locals = new Stack<Dictionary<string, LogoValue>>();
             Locals.Push(null);
+        }
+
+        /// <summary>
+        /// Register a command module with the context.
+        /// </summary>
+        /// <param name="module">The module to register.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the parameter is null.</exception>
+        public void RegisterModule(ICommandModule module)
+        {
+            if (module is null)
+            {
+                throw new ArgumentNullException(nameof(module));
+            }
+            foreach (LogoProcedure p in module.RegisterProcedures())
+            {
+                RegisterProcedure(p);
+                if (Interpretor.DebugVerbosity >= DebugMessageLevel.Logorrheic)
+                {
+                    Interpretor.DebugOutputWriter.WriteLine(string.Format(CultureInfo.CurrentCulture, Strings.InterpretorRegisteredProcedureDebugMessage, p.Name));
+                }
+            }
+            LoadedModules.Add(module);
+            if (module is ICoreCommands coreModule)
+            {
+                CoreLanguageModule = coreModule;
+            }
         }
 
         /// <summary>

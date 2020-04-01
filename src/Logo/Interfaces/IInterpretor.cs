@@ -15,6 +15,11 @@ namespace Logo.Interfaces
         TextWriter DebugOutputWriter { get; set; }
 
         /// <summary>
+        /// The debug output level of the interpretor.
+        /// </summary>
+        DebugMessageLevel DebugVerbosity { get; set; }
+
+        /// <summary>
         /// Evaluate the content of a list in place.
         /// </summary>
         /// <param name="list">The list of tokens to be evaluated.</param>

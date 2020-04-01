@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Logo.Procedures;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Logo.Procedures
+namespace Logo.Interfaces
 {
     /// <summary>
     /// The interface for classes which implement Logo commands in .NET.
