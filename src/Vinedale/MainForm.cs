@@ -29,7 +29,7 @@ namespace Vinedale
             _standardOutput = new StreamWriter(new ShellOutputStream(interpShell)) { AutoFlush = true };
             _interp = new Interpretor(_standardOutput, _debugOutput, DebugMessageLevel.Logorrheic);
             _interp.LoadModule(new SystemCommands());
-            _interp.LoadModule(new ShellCommands());
+            _interp.LoadModule(new ShellCommands(this));
             _interp.LoadModule(new TurtleCommands(_turtle));
             _interp.StartInteractiveInterpretor();
             interpShell.Enabled = true;
