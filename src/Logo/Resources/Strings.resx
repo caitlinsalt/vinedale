@@ -306,6 +306,15 @@
   <data name="CommandLastWrongTypeError" xml:space="preserve">
     <value>I can only use last on lists.</value>
   </data>
+  <data name="CommandLesspExampleText" xml:space="preserve">
+    <value>X Y</value>
+  </data>
+  <data name="CommandLesspHelpText" xml:space="preserve">
+    <value>Decides whether or not X is less than Y.</value>
+  </data>
+  <data name="CommandLesspWrongTypeError" xml:space="preserve">
+    <value>I can only use lessp on numbers.</value>
+  </data>
   <data name="CommandLnExampleText" xml:space="preserve">
     <value>X</value>
   </data>

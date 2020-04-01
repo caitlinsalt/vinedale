@@ -259,6 +259,15 @@ namespace Logo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to lessp.
+        /// </summary>
+        internal static string LesspCmd {
+            get {
+                return ResourceManager.GetString("LesspCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ln.
         /// </summary>
         internal static string LnCmd {
